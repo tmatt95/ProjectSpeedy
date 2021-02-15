@@ -13,6 +13,16 @@ export function Projects({globalMessage}) {
 
         {test.map((t, index) => <div key={index}>{t.name}</div>)}
 
+        <form onSubmit={(event) => {
+                            event.preventDefault();
+                            var myModalEl = document.getElementById('newProjectModal')
+                            var modal = bootstrap.Modal.getInstance(myModalEl)
+                            modal.hide();
+                            addItem(newProjectName);
+                            setNewProjectName("");
+                            globalMessage({message: "Item Added", class:"alert-success"});
+                            return false;
+                        }}>
         <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -22,27 +32,19 @@ export function Projects({globalMessage}) {
                     </div>
                     <div className="modal-body">
                         <p>Use the form to quickly add projects. These can be fleshed out after being created.</p>
-                        <form>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                                 <input type="text" className="form-control" value={newProjectName} onChange={(event) => setNewProjectName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
                                 <div id="nameHelp" className="form-text">The name you would like to call your new project.</div>
                             </div>
-                        </form>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={() => {
-                            var myModalEl = document.getElementById('newProjectModal')
-                            var modal = bootstrap.Modal.getInstance(myModalEl)
-                            modal.hide();
-                            addItem(newProjectName);
-                            setNewProjectName("");
-                            globalMessage({message: "Item Added", class:"alert-success"});
-                        }}>Add Project</button>
+                        <button type="submit" className="btn btn-primary">Add Project</button>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </>;
 }

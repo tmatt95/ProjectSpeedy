@@ -79,7 +79,7 @@ export default function App() {
                     <Topics />
                   </Route>
                   <Route path="/">
-                    <Projects globalMessage={(message) => setMessage(message)} />
+                    <Projects globalMessage={(alertMessage) => setMessage(alertMessage)} />
                   </Route>
                 </Switch>
               </div>

@@ -13,7 +13,7 @@ import {
 function GlobalMessage({message}){
   if(message !== ""){
     let classes=`alert ${message.class}`;
-    return <div class={classes} role="alert">
+    return <div className={classes} role="alert">
     {message.message}
   </div>;
   }
@@ -27,34 +27,31 @@ export default function App() {
   const [message, setMessage] = useState("");
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <a class="navbar-brand" href="#">Project Speedy</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container">
+          <a className="navbar-brand" href="#">Project Speedy</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Features</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Pricing</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
 
-      <div class="container">
-        <div class="row">
-          <div class="col">
+      <div className="container">
+        <div className="row">
+          <div className="col">
           <GlobalMessage message={message}/>
           <p>You clicked {count} times</p>
           <button onClick={() => setCount(count + 1)}>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Projects} from './Pages/Projects';
+import {Project} from './Pages/Project';
 
 import {
   BrowserRouter as Router,
@@ -57,7 +58,7 @@ export default function App() {
 
                 <Switch>
                 <Route path="/project">
-                    <ProjectSection />
+                    <ProjectSection globalMessage={(alertMessage) => setMessage(alertMessage)} />
                   </Route>
                   <Route path="/about">
                     <About />
@@ -82,7 +83,7 @@ function About() {
   return <h2>Abouts</h2>;
 }
 
-function ProjectSection() {
+function ProjectSection(props) {
   let match = useRouteMatch();
 
   return (
@@ -95,7 +96,7 @@ function ProjectSection() {
         <h3>Bet id not supplied</h3>
         </Route>
         <Route path={`${match.path}/:projectId`}>
-        <h3>Project</h3>
+        <Project globalMessage={props.globalMessage} />
         </Route>
         <Route path={match.path}>
           <h3>Project Id not supplied</h3>

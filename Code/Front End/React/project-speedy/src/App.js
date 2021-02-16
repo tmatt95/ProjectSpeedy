@@ -56,6 +56,9 @@ export default function App() {
                 </ul>
 
                 <Switch>
+                <Route path="/project">
+                    <ProjectSection />
+                  </Route>
                   <Route path="/about">
                     <About />
                   </Route>
@@ -77,6 +80,29 @@ export default function App() {
 
 function About() {
   return <h2>Abouts</h2>;
+}
+
+function ProjectSection() {
+  let match = useRouteMatch();
+
+  return (
+    <div>
+      <Switch>
+      <Route path={`${match.path}/:projectId/bet/:betId`}>
+        <h3>Bet</h3>
+        </Route>
+        <Route path={`${match.path}/:projectId/bet/`}>
+        <h3>Bet id not supplied</h3>
+        </Route>
+        <Route path={`${match.path}/:projectId`}>
+        <h3>Project</h3>
+        </Route>
+        <Route path={match.path}>
+          <h3>Project Id not supplied</h3>
+        </Route>
+      </Switch>
+    </div>
+  );
 }
 
 function Topics() {

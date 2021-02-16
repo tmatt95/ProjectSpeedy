@@ -1,28 +1,46 @@
 import React, { useState } from 'react';
 import * as bootstrap from 'bootstrap';
+import { CardGrid, Card } from '../Components/CardGrid'
 
 export function Projects({ globalMessage }) {
-    const [test, setTest] = useState([{ name: "Card 0" }, { name: "Card 1" }]);
-    const addItem = (name) => setTest(test.concat({ name: `Card ${test.length} - ${name}` }));
+    const [projects, setTest] = useState([
+        { name: "Card 0", address: "/project/1" },
+        { name: "Card 1", address: "/project/2" },
+        { name: "Card 2", address: "/project/3" },
+        { name: "Card 3", address: "/project/4" },
+        { name: "Card 4", address: "/project/5" },
+        { name: "Card 5", address: "/project/6" }]);
+    const addItem = (name) => setTest(projects.concat({ name: `Card ${projects.length} - ${name}` }));
     const [newProjectName, setNewProjectName] = useState("");
+
+    /**
+     * Create New Project
+     * @param {*} event The submit form event
+     */
+    const CreateNewProject = (event) => {
+        event.preventDefault();
+        var myModalEl = document.getElementById('newProjectModal')
+        var modal = bootstrap.Modal.getInstance(myModalEl)
+        modal.hide();
+        addItem(newProjectName);
+        setNewProjectName("");
+        globalMessage({ message: "Item Added", class: "alert-success" });
+    }
+
     return <>
         <h1>Projects</h1>
         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal">
             Launch demo modal
         </button>
 
-        {test.map((t, index) => <div key={index}>{t.name}</div>)}
+        <div className="row">
+            <div className="col-4 p-2">
+                <Card text="Add New Project" address="/about" />
+            </div>
+            <CardGrid data={projects} />
+        </div>
 
-        <form onSubmit={(event) => {
-            event.preventDefault();
-            var myModalEl = document.getElementById('newProjectModal')
-            var modal = bootstrap.Modal.getInstance(myModalEl)
-            modal.hide();
-            addItem(newProjectName);
-            setNewProjectName("");
-            globalMessage({ message: "Item Added", class: "alert-success" });
-            return false;
-        }}>
+        <form onSubmit={(event) => CreateNewProject(event)}>
             <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">

@@ -9,6 +9,7 @@ export function Card({ address, text }) {
     return <Link to={address}>
         <div className="card">
             <div className="card-body text-center">
+                <div><i class="bi bi-journal"></i></div>
                 {text}
             </div>
         </div>
@@ -26,6 +27,7 @@ export function CardGrid({ data }) {
                 <button data-bs-toggle="modal" className="btn btn-link p-0 w-100" data-bs-target="#newProjectModal">
                     <div className="card">
                         <div className="card-body text-center">
+                            <div><i class="bi bi-journal-plus"></i></div>
                             Add New
                         </div>
                     </div>

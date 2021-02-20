@@ -96,7 +96,10 @@ function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
   return (
     <>
       <Switch>
-      <Route path={`${match.path}/:projectId/:problemId`}>
+      <Route path={`${match.path}/:projectId/:problemId/:betId`}>
+          <h1>Bet</h1>
+        </Route>
+        <Route path={`${match.path}/:projectId/:problemId`}>
           <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={`${match.path}/:projectId`}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as bootstrap from 'bootstrap';
-import { CardGrid, Card } from '../Components/CardGrid'
+import { CardGrid } from '../Components/CardGrid'
 
 export function Projects({ globalMessage }) {
     const [projects, setTest] = useState([
@@ -28,17 +28,13 @@ export function Projects({ globalMessage }) {
     }
 
     return <>
-        <h1>Projects</h1>
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal">
-            Launch demo modal
-        </button>
-
         <div className="row">
-            <div className="col-4 p-2">
-                <Card text="Add New Project" address="/about" />
+            <div className="col">
+                <h1>Projects</h1>
             </div>
-            <CardGrid data={projects} />
         </div>
+
+        <CardGrid data={projects} />
 
         <form onSubmit={(event) => CreateNewProject(event)}>
             <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Projects } from './Pages/Projects';
 import { Project } from './Pages/Project';
+import { Problem } from './Pages/Problem';
 import { BreadCrumbs } from './Components/BreadCrumbs';
 import {
   BrowserRouter as Router,
@@ -31,12 +32,10 @@ function GlobalMessage({globalMessage, message }) {
 
 export default function App() {
   // Used to store page messages.
-  const [message, setMessage] = useState("");
+  const [globalMessage, setGlobalMessage] = useState("");
 
   // Used to store the data used to generate the breadcrumbs for the page.
-  const [breadCrumbs, setBreadCrumbs] = useState([
-    {text: "Projects", address:"/"}
-  ]);
+  const [breadCrumbs, setBreadCrumbs] = useState([{text: "Projects", address:"/"}]);
 
   return (
     <>
@@ -68,7 +67,7 @@ export default function App() {
         <div className="container">
           <div className="row">
             <div className="col">
-              <GlobalMessage globalMessage={(alertMessage) => setMessage(alertMessage)} message={message} />
+              <GlobalMessage globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} message={globalMessage} />
             </div>
           </div>
         </div>
@@ -76,10 +75,10 @@ export default function App() {
         <div className="container">
           <Switch>
             <Route path="/project">
-              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}} globalMessage={(alertMessage) => setMessage(alertMessage)} />
+              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}} globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
             </Route>
             <Route path="/">
-              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}}  globalMessage={(alertMessage) => setMessage(alertMessage)} />
+              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}}  globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
             </Route>
           </Switch>
         </div>
@@ -95,13 +94,10 @@ export default function App() {
 function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
   let match = useRouteMatch();
   return (
-    <div>
+    <>
       <Switch>
-        <Route path={`${match.path}/:projectId/bet/:betId`}>
-          <h3>Bet</h3>
-        </Route>
-        <Route path={`${match.path}/:projectId/bet/`}>
-          <h3>Bet id not supplied</h3>
+      <Route path={`${match.path}/:projectId/:problemId`}>
+          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) => {setBreadCrumbs(breadCrumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={`${match.path}/:projectId`}>
           <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) => {setBreadCrumbs(breadCrumbs)}} globalMessage={globalMessage} />
@@ -110,6 +106,6 @@ function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
           <h3>Project Id not supplied</h3>
         </Route>
       </Switch>
-    </div>
+    </>
   );
 }

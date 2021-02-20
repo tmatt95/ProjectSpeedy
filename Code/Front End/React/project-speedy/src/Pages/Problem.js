@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 
-export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     /**
      * GET parameters.
      */
-    let { projectId } = useParams();
+    let { problemId, projectId } = useParams();
 
     /**
      * Used to run code only once on page load.
@@ -15,8 +15,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     const [runOnce, setRunOnce] = useState(false);
     useEffect(() => {    
         if(runOnce === false){
-            document.title = `Project ${projectId}`;  
-            setBreadCrumbs(breadCrumbs.concat([{ address:"test", text:"text test" }]));
+            document.title = `Problem ${problemId}`;  
+            setBreadCrumbs(breadCrumbs.concat([{ address:`/`, text:"Project" }, [{ address:`/`, text:"Problem" }]]));
             setRunOnce(true);
         }  
     }, [runOnce, setBreadCrumbs, breadCrumbs, projectId]);
@@ -25,13 +25,13 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     /**
      * Dummy data containing exisiting bets.
      */
-    const [problems, setProblems] = useState([
-        { name: "Problem 0", address: "/project/1/1" },
-        { name: "Problem 1", address: "/project/2/2" },
-        { name: "Problem 2", address: "/project/3/3" },
-        { name: "Problem 3", address: "/project/4/4" },
-        { name: "Problem 4", address: "/project/5/5" },
-        { name: "Problem 5", address: "/project/6/6" }]);
+    const [bets, setBets] = useState([
+        { name: "Bet 0", address: "/project/1" },
+        { name: "Bet 1", address: "/project/2" },
+        { name: "Bet 2", address: "/project/3" },
+        { name: "Bet 3", address: "/project/4" },
+        { name: "Bet 4", address: "/project/5" },
+        { name: "Bet 5", address: "/project/6" }]);
 
     /**
      * The name of a new bet.
@@ -42,12 +42,12 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Create a new bet
      * @param {*} event The submit form event
      */
-    const CreateNewProblem = (event) => {
+    const CreateNewBet = (event) => {
         event.preventDefault();
         var myModalEl = document.getElementById('newProjectModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        setProblems(problems.concat({ name: `Problem ${problems.length} - ${newBetName}`, address:"/" }))
+        setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address:"/" }))
         setNewBetName("");
         globalMessage({ message: "Problem Added", class: "alert-success" });
     }
@@ -55,13 +55,13 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     return <>
         <div className="row">
             <div className="col">
-                <h1>Project {projectId}</h1>
+                <h1>Problem {problemId}</h1>
             </div>
         </div>
 
-        <CardGrid data={problems} />
+        <CardGrid data={bets} />
 
-        <form onSubmit={(event) => CreateNewProblem(event)}>
+        <form onSubmit={(event) => CreateNewBet(event)}>
             <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">

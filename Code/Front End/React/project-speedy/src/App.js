@@ -75,10 +75,10 @@ export default function App() {
         <div className="container">
           <Switch>
             <Route path="/project">
-              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}} globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
+              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) =>{setBreadCrumbs(crumbs)}} globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
             </Route>
             <Route path="/">
-              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}}  globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
+              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) =>{setBreadCrumbs(crumbs)}}  globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
             </Route>
           </Switch>
         </div>
@@ -97,10 +97,10 @@ function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     <>
       <Switch>
       <Route path={`${match.path}/:projectId/:problemId`}>
-          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) => {setBreadCrumbs(breadCrumbs)}} globalMessage={globalMessage} />
+          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={`${match.path}/:projectId`}>
-          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) => {setBreadCrumbs(breadCrumbs)}} globalMessage={globalMessage} />
+          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={match.path}>
           <h3>Project Id not supplied</h3>

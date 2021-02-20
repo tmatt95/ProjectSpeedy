@@ -47,7 +47,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         var myModalEl = document.getElementById('newProjectModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        setBets(bets.concat({ name: `Bet ${bets.length} - ${newBetName}` }))
+        setBets(bets.concat({ name: `Bet ${bets.length} - ${newBetName}`, address:"/" }))
         setNewBetName("");
         globalMessage({ message: "Bet Added", class: "alert-success" });
     }
@@ -79,7 +79,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" className="btn btn-primary">Add Project</button>
+                            <button type="submit" className="btn btn-primary">Add Bet</button>
                         </div>
                     </div>
                 </div>

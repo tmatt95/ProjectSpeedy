@@ -36,7 +36,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         modal.hide();
         addItem(newProjectName, projects.length +1);
         setNewProjectName("");
-        globalMessage({ message: "Item Added", class: "alert-success" });
+        globalMessage({ message: "Project added successfully", class: "alert-success" });
     }
 
     return <>

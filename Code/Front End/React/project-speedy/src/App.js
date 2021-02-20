@@ -14,16 +14,18 @@ import {
  * Display a global message across the website.
  * @param {*} Message object containing the message and display options.
  */
-function GlobalMessage({ message }) {
+function GlobalMessage({globalMessage, message }) {
   if (message !== "") {
     let classes = `alert alert-dismissible fade show ${message.class}`;
-    return <div className={classes} role="alert">
+    return <>
+    <div className={classes} role="alert">
       {message.message}
-      <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>;
+      <button type="button" className="btn-close" onClick={() => globalMessage({message:"", class:"d-none"})} aria-label="Close"></button>
+    </div>
+    </>;
   }
   else {
-    return <div></div>
+    return <></>
   }
 }
 
@@ -66,7 +68,7 @@ export default function App() {
         <div className="container">
           <div className="row">
             <div className="col">
-              <GlobalMessage message={message} />
+              <GlobalMessage globalMessage={(alertMessage) => setMessage(alertMessage)} message={message} />
             </div>
           </div>
         </div>

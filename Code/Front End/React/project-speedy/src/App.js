@@ -56,7 +56,7 @@ export default function App() {
         </nav>
 
         <div className="container">
-          <div className="row">
+          <div className="row mt-2">
             <div className="col">
               <BreadCrumbs breadCrumbs={breadCrumbs} />
             </div>

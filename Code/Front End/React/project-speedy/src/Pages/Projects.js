@@ -3,14 +3,14 @@ import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 
 export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
-    const [projects, setTest] = useState([
+    const [projects, setProjects] = useState([
         { name: "Card 0", address: "/project/1" },
         { name: "Card 1", address: "/project/2" },
         { name: "Card 2", address: "/project/3" },
         { name: "Card 3", address: "/project/4" },
         { name: "Card 4", address: "/project/5" },
         { name: "Card 5", address: "/project/6" }]);
-    const addItem = (name) => setTest(projects.concat({ name: `${name}` }));
+    const addItem = (name, id) => setProjects(projects.concat({ name: `${name}`, address: `/project/${id}` }));
     const [newProjectName, setNewProjectName] = useState("");
 
     /**
@@ -34,7 +34,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         var myModalEl = document.getElementById('newProjectModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        addItem(newProjectName);
+        addItem(newProjectName, projects.length +1);
         setNewProjectName("");
         globalMessage({ message: "Item Added", class: "alert-success" });
     }

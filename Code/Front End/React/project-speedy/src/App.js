@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Projects } from './Pages/Projects';
 import { Project } from './Pages/Project';
+import { BreadCrumbs } from './Components/BreadCrumbs';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,9 +16,10 @@ import {
  */
 function GlobalMessage({ message }) {
   if (message !== "") {
-    let classes = `alert ${message.class}`;
+    let classes = `alert alert-dismissible fade show ${message.class}`;
     return <div className={classes} role="alert">
       {message.message}
+      <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>;
   }
   else {
@@ -26,8 +28,14 @@ function GlobalMessage({ message }) {
 }
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  // Used to store page messages.
   const [message, setMessage] = useState("");
+
+  // Used to store the data used to generate the breadcrumbs for the page.
+  const [breadCrumbs, setBreadCrumbs] = useState([
+    {text: "Projects", address:"/"}
+  ]);
+
   return (
     <>
       <Router>
@@ -50,24 +58,28 @@ export default function App() {
         <div className="container">
           <div className="row">
             <div className="col">
-              <GlobalMessage message={message} />
-              <p>You clicked {count} times</p>
-              <button onClick={() => setCount(count + 1)}>
-                Click me
-              </button>
+              <BreadCrumbs breadCrumbs={breadCrumbs} />
             </div>
           </div>
         </div>
 
         <div className="container">
-        <Switch>
-          <Route path="/project">
-            <ProjectSection globalMessage={(alertMessage) => setMessage(alertMessage)} />
-          </Route>
-          <Route path="/">
-            <Projects globalMessage={(alertMessage) => setMessage(alertMessage)} />
-          </Route>
-        </Switch>
+          <div className="row">
+            <div className="col">
+              <GlobalMessage message={message} />
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <Switch>
+            <Route path="/project">
+              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}} globalMessage={(alertMessage) => setMessage(alertMessage)} />
+            </Route>
+            <Route path="/">
+              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) =>{setBreadCrumbs(breadCrumbs)}}  globalMessage={(alertMessage) => setMessage(alertMessage)} />
+            </Route>
+          </Switch>
         </div>
       </Router>
     </>
@@ -78,7 +90,7 @@ export default function App() {
  * Contains links to the project section of the application.
  * @param {*} props Properties sent into the section.
  */
-function ProjectSection(props) {
+function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
   let match = useRouteMatch();
   return (
     <div>
@@ -90,7 +102,7 @@ function ProjectSection(props) {
           <h3>Bet id not supplied</h3>
         </Route>
         <Route path={`${match.path}/:projectId`}>
-          <Project globalMessage={props.globalMessage} />
+          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(breadCrumbs) => {setBreadCrumbs(breadCrumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={match.path}>
           <h3>Project Id not supplied</h3>

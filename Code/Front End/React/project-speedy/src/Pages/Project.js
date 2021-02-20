@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 
-export function Project({ globalMessage }) {
+export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     /**
      * GET parameters.
      */
     let { projectId } = useParams();
+
+    /**
+     * Used to run code only once on page load.
+     */
+    const [runOnce, setRunOnce] = useState(false);
+    useEffect(() => {    
+        if(runOnce === false){
+            document.title = `Project ${projectId}`;  
+            setBreadCrumbs(breadCrumbs.concat([{ address:"test", text:"text test" }]));
+            setRunOnce(true);
+        }  
+    }, [runOnce, setBreadCrumbs, breadCrumbs, projectId]);
+
 
     /**
      * Dummy data containing exisiting bets.

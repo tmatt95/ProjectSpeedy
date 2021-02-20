@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 
-export function Projects({ globalMessage }) {
+export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     const [projects, setTest] = useState([
         { name: "Card 0", address: "/project/1" },
         { name: "Card 1", address: "/project/2" },
@@ -10,8 +10,20 @@ export function Projects({ globalMessage }) {
         { name: "Card 3", address: "/project/4" },
         { name: "Card 4", address: "/project/5" },
         { name: "Card 5", address: "/project/6" }]);
-    const addItem = (name) => setTest(projects.concat({ name: `Card ${projects.length} - ${name}` }));
+    const addItem = (name) => setTest(projects.concat({ name: `${name}` }));
     const [newProjectName, setNewProjectName] = useState("");
+
+    /**
+     * Used to run code only once on page load.
+     */
+    const [runOnce, setRunOnce] = useState(false);
+    useEffect(() => {    
+        if(runOnce === false){
+            document.title = `Projects`;  
+            setBreadCrumbs([{text: "Projects", address:"/" }]);
+            setRunOnce(true);
+        }  
+    }, [runOnce, setBreadCrumbs, breadCrumbs]);
 
     /**
      * Create New Project

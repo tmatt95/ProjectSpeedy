@@ -23,7 +23,7 @@ export function Card({ address, text }) {
 export function CardGrid({ data }) {
     return <>
         <div className="row">
-            <div className="col-4 p-2">
+            <div className="col-md-6 col-lg-4 p-2">
                 <button data-bs-toggle="modal" className="btn btn-link p-0 w-100 " data-bs-target="#newModal">
                     <div className="card">
                         <div className="card-body text-center">
@@ -34,7 +34,7 @@ export function CardGrid({ data }) {
                 </button>
             </div>
             {data.map((t, index) =>
-                <div key={index} className="col-4 p-2">
+                <div key={index} className="col-md-6 col-lg-4 p-2">
                     <Card address={t.address} text={t.name} />
                 </div>
             )}

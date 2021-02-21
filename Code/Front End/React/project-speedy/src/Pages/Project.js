@@ -34,9 +34,9 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         { name: "Problem 5", address: "/project/6/6" }]);
 
     /**
-     * The name of a new bet.
+     * The name of a new problem.
      */
-    const [newBetName, setNewBetName] = useState("");
+    const [newProblemName, setNewProblemName] = useState("");
 
     /**
      * Create a new bet
@@ -44,11 +44,11 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewProblem = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newProjectModal')
+        var myModalEl = document.getElementById('newModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        setProblems(problems.concat({ name: `Problem ${problems.length} - ${newBetName}`, address:"/" }))
-        setNewBetName("");
+        setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address:"/" }))
+        setNewProblemName("");
         globalMessage({ message: "Problem Added", class: "alert-success" });
     }
 
@@ -62,7 +62,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         <CardGrid data={problems} />
 
         <form onSubmit={(event) => CreateNewProblem(event)}>
-            <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -73,7 +73,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                             <p>Use the form to quickly add a problem. These can be fleshed out after being created.</p>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-                                <input type="text" className="form-control" value={newBetName} onChange={(event) => setNewBetName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
+                                <input type="text" className="form-control" value={newProblemName} onChange={(event) => setNewProblemName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
                                 <div id="nameHelp" className="form-text">The name of your problem.</div>
                             </div>
                         </div>

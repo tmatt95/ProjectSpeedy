@@ -44,7 +44,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewBet = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newProjectModal')
+        var myModalEl = document.getElementById('newModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
         setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address:"/" }))
@@ -62,7 +62,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         <CardGrid data={bets} />
 
         <form onSubmit={(event) => CreateNewBet(event)}>
-            <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -74,7 +74,6 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                                 <input type="text" className="form-control" value={newBetName} onChange={(event) => setNewBetName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
-                                <div id="nameHelp" className="form-text">The name of your problem.</div>
                             </div>
                         </div>
                         <div className="modal-footer">

@@ -24,7 +24,7 @@ export function CardGrid({ data }) {
     return <>
         <div className="row">
             <div className="col-4 p-2">
-                <button data-bs-toggle="modal" className="btn btn-link p-0 w-100" data-bs-target="#newProjectModal">
+                <button data-bs-toggle="modal" className="btn btn-link p-0 w-100" data-bs-target="#newModal">
                     <div className="card">
                         <div className="card-body text-center">
                             <div><i class="bi bi-journal-plus"></i></div>

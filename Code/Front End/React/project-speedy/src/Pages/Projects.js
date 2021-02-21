@@ -3,14 +3,27 @@ import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 
 export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+    /**
+     * Existing projects.
+     */
     const [projects, setProjects] = useState([
-        { name: "Card 0", address: "/project/1" },
-        { name: "Card 1", address: "/project/2" },
-        { name: "Card 2", address: "/project/3" },
-        { name: "Card 3", address: "/project/4" },
-        { name: "Card 4", address: "/project/5" },
-        { name: "Card 5", address: "/project/6" }]);
-    const addItem = (name, id) => setProjects(projects.concat({ name: `${name}`, address: `/project/${id}` }));
+        { name: "Project 0", address: "/project/1" },
+        { name: "Project 1", address: "/project/2" },
+        { name: "Project 2", address: "/project/3" },
+        { name: "Project 3", address: "/project/4" },
+        { name: "Project 4", address: "/project/5" },
+        { name: "Project 5", address: "/project/6" }]);
+
+    /**
+     * Add a project to the list of existing projects.
+     * @param {*} name Name of the project
+     * @param {*} id Id of the project
+     */
+    const addProject = (name, id) => setProjects(projects.concat({ name: `${name}`, address: `/project/${id}` }));
+
+    /**
+     * Name of the new project.
+     */
     const [newProjectName, setNewProjectName] = useState("");
 
     /**
@@ -31,10 +44,10 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewProject = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newProjectModal')
+        var myModalEl = document.getElementById('newModal')
         var modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        addItem(newProjectName, projects.length +1);
+        addProject(newProjectName, projects.length +1);
         setNewProjectName("");
         globalMessage({ message: "Project added successfully", class: "alert-success" });
     }
@@ -49,7 +62,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         <CardGrid data={projects} />
 
         <form onSubmit={(event) => CreateNewProject(event)}>
-            <div className="modal fade" id="newProjectModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -61,7 +74,6 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                                 <input type="text" className="form-control" value={newProjectName} onChange={(event) => setNewProjectName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
-                                <div id="nameHelp" className="form-text">The name you would like to call your new project.</div>
                             </div>
                         </div>
                         <div className="modal-footer">

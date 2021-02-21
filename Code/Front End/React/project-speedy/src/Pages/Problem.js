@@ -19,7 +19,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
             setBreadCrumbs(breadCrumbs.concat([{ address:`/`, text:"Project" }, [{ address:`/`, text:"Problem" }]]));
             setRunOnce(true);
         }  
-    }, [runOnce, setBreadCrumbs, breadCrumbs, projectId]);
+    }, [runOnce, setBreadCrumbs, breadCrumbs, projectId, problemId]);
 
 
     /**

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 import { Projects } from './Pages/Projects';
 import { Project } from './Pages/Project';
 import { Problem } from './Pages/Problem';

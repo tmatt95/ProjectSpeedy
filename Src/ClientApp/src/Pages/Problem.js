@@ -66,11 +66,11 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="newProjectModalLabel">New Problem</h5>
+                            <h5 className="modal-title" id="newProjectModalLabel">New Bet</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <p>Use the form to quickly add a problem. These can be fleshed out after being created.</p>
+                            <p>Use the form to quickly add a bet. These can be fleshed out after being created.</p>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
                                 <input type="text" className="form-control" value={newBetName} onChange={(event) => setNewBetName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
@@ -78,7 +78,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" className="btn btn-primary">Add Problem</button>
+                            <button type="submit" className="btn btn-primary">Add Bet</button>
                         </div>
                     </div>
                 </div>

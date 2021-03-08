@@ -8,7 +8,7 @@ tags:
   - name: "Bet Feedback"
 info:
   title: Project Speedy
-  description: The goal of project speedy is to create an application that makes running a lean project easy.
+  description: The goal of project speedy is to create an application that makes running a lean project easy<br/><br/> TODOS <ul><li>No way of updating a project in the wireframe.</li><li>Add User id to all elements</li></ul>
   contact:
     name: Matthew Turner
     email: tmatt95@gmail.com
@@ -19,7 +19,7 @@ paths:
       summary: Gets all projects
       tags: 
         - Projects
-      description: Projects allows the application to group problems and bets together in one place.
+      description: Projects allows the application to group problems and bets together in one place. This will return all of the projects in the applcation.
       responses:
         '200':
           description: A list of all the projects.
@@ -55,7 +55,7 @@ paths:
       description: Returns all the information on a project along with a list of problems attached to it.
       responses:
         '200':
-          description: project information and list of problems
+          description: Information on the project / a list of problems linked to it.
           content: 
             application/json:
               schema:
@@ -68,7 +68,7 @@ paths:
       summary: Update a project
       tags: 
         - Project
-      description: The create project action has been designed to be simple and contain the minimum number of fields. The user will need to have the ability to update the project as it continues or to add missing information.
+      description: The create project action has been designed to be simple and contain the minimum number of fields. The user will need to have the ability to update the project to add missing information <b>(TODO - no way of updating project on wireframe)</b>.
       requestBody:
         content: 
           application/json:
@@ -85,7 +85,7 @@ paths:
       summary: Delete a project
       tags:
         - Project
-      description: This action will delete the project and linked problems / bets (which could be active).
+      description: This action will delete the project and linked problems / bets.
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -100,7 +100,7 @@ paths:
       summary: Add a new problem
       tags: 
         - Problem
-      description: Add a new problem.
+      description: This will let you add a problem to a project. You will then be able to place bets against the problem and try and solve it.
       requestBody:
         content: 
           application/json:
@@ -120,10 +120,10 @@ paths:
       summary: Get problem information
       tags: 
         - Problem
-      description: Returns information on the problem.
+      description: This will get all the information on the problem (including a list of linked bets).
       responses:
         '200':
-          description: problem information and list of bets.
+          description: Problem information and list of bets.
           content: 
             application/json:
               schema:
@@ -136,7 +136,7 @@ paths:
       summary: Update a problem
       tags: 
         - Problem
-      description: Update information on a problem.
+      description: Ideally before adding bets, this API will be used to add as much information as possible to the problem. All the bets made will try and solve this.<br/> <br/> Try and make the desciption as clear as possible and the success criteria unambigous so it is clear when the project has been solved.
       requestBody:
         content: 
           application/json:
@@ -144,7 +144,7 @@ paths:
               $ref: '#/components/schemas/ProblemUpdate'
       responses:
         '202':
-          description: Problem added.
+          description: Problem updated.
         '403':
           $ref: '#/components/responses/UnAuthorised'
         '404':
@@ -153,7 +153,7 @@ paths:
       summary: Delete a problem
       tags:
         - Problem
-      description: This action will delete the problem and all linked bets (which could be active).
+      description: This action will delete the problem and all linked bets.
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -169,7 +169,7 @@ paths:
       summary: Update bet to say it is started
       tags: 
         - Bet
-      description: Once a bet has been created / when we are happy with it we want to start it. Once a bet is started there are some fields that will become uneditable.
+      description: Starting a bet tells the system that some one has actively started to work on determining if it will solve the problem. Once a bet has been started we will limit the editing of the bet so it cannot be altered. <br/> <br/>Instead of editing the bet if you need to alter it drastically, finish the bet, record the reasons and create a new linked bet.
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -181,12 +181,12 @@ paths:
       - $ref: '#/components/parameters/ProjectId'
       - $ref: '#/components/parameters/ProblemId'
       - $ref: '#/components/parameters/BetId'
-  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/stop:
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/end:
     post:
-      summary: Update bet to finish it early
+      summary: Update bet to finished
       tags: 
         - Bet
-      description: Allows the user to finish a bet early.
+      description: Bets will automatically finish when the time has ended. If the bet can be finished before then, this will give the user to set the bet to the review stage.
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -203,7 +203,7 @@ paths:
       summary: Add a new bet
       tags: 
         - Bet
-      description: Add a new bet.
+      description: Add a new bet to a problem. As with the problem and project this form only asks for the minimum amount of information. This can be added before the bet is started. 
       requestBody:
         content: 
           application/json:
@@ -211,7 +211,7 @@ paths:
               $ref: '#/components/schemas/BetNew'
       responses:
         '202':
-          description: Problem added.
+          description: Bet added.
         '403':
           $ref: '#/components/responses/UnAuthorised'
         '404':
@@ -220,7 +220,7 @@ paths:
       summary: Get bet information
       tags: 
         - Bet
-      description: View information on a bet.
+      description: Gets all the information related to a bet.
       responses:
         '200':
           description: problem information and list of bets.
@@ -283,18 +283,48 @@ paths:
           $ref: '#/components/responses/UnAuthorised'
         '404':
           $ref: '#/components/responses/NotFound'
-    get:
-      summary: Get comments linked to a bet
-      tags: 
+    delete:
+      summary: Delete comment
+      tags:
         - Bet Comments
-      description: View information on a bet.
+      description: Delete a comment.
       responses:
-        '200':
-          description: problem information and list of bets.
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BetView'
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/feedback:
+    put:
+      summary: Add feedback to a bet
+      tags: 
+        - Bet Feedback
+      description: Add comments to a bet.
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetNew'
+      responses:
+        '202':
+          description: Comment added.
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete feedback
+      tags:
+        - Bet Feedback
+      description: Delete a piece of feedback.
+      responses:
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
         '403':
           $ref: '#/components/responses/UnAuthorised'
         '404':
@@ -329,11 +359,12 @@ components:
           name:
             type: string
             example: Item Name
+          status:
+            type: string
+            example: not started
       ProjectView:
         description: Information on a single project / list of problems within it.
         type: object
-        required:
-          - name
         properties:
           id:
             type: string
@@ -393,13 +424,11 @@ components:
             type: string
             example: We will know this is no longer a problem when we have got 10 companies interested in using the application.
           createdFromPreviousBet:
-            type: boolean
-            example: false
+            type: string
+            example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
       ProblemView:
         description: Used to display information on a problem / list of basic information on bets linked to the problem.
         type: object
-        required:
-          - name
         properties:
           id:
             type: string
@@ -414,8 +443,8 @@ components:
             type: string
             example: We will know this is no longer a problem when we have got 10 companies interested in using the application.
           createdFromPreviousBet:
-            type: boolean
-            example: false
+            type: string
+            example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
           created:
             type: string
             readOnly: true
@@ -425,11 +454,43 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ListItem'
-      BetView:
-        description: All information on a bet.
+      BetComment:
+        description: A comment linked to a bet.
         type: object
         required:
           - name
+        properties:
+          comment:
+            type: string
+            example: I think this will be a cheap / easy bet to work on.
+          created:
+            type: string
+            readOnly: true
+            format: date-time
+            example: 02/03/2021
+          createdBy:
+            type: string
+            readOnly: true
+      BetFeedback:
+        description: A piece of feedback linked to a bet.
+        type: object
+        required:
+          - name
+        properties:
+          comment:
+            type: string
+            example: Was difficult to demo application to friends.
+          created:
+            type: string
+            readOnly: true
+            format: date-time
+            example: 02/03/2021
+          createdBy:
+            type: string
+            readOnly: true
+      BetView:
+        description: All information on a bet.
+        type: object
         properties:
           id:
             type: string
@@ -441,18 +502,20 @@ components:
           status:
             type: string
             example: not started
-          comments:
-            type: string
-            example: <List of comments here>
-          feedback:
-            type: string
-            example: <List of feedback here>
           timeTotal:
             type: number
             example: 10
           timeCurrent:
             type: number
             example: 5
+          comments:
+            type: array
+            items:
+              $ref: '#/components/schemas/BetComment'
+          feedback:
+            type: array
+            items:
+              $ref: '#/components/schemas/BetFeedback'
       BetNew:
         description: Used to create a new bet.
         type: object
@@ -465,7 +528,7 @@ components:
           description:
             type: string
             example: Suggesting the application to friends could be a good way to sow the seed and start to get the application out their. 
-          measureOfSuccess:
+          measuresOfSuccess:
             type: string
             example: At least one of them tries / continues to use the product or does not use it and provides a reason which can be addressed to make the application more attractive to future users.
       BetUpdate:
@@ -497,22 +560,25 @@ components:
     ProjectId:
       name: ProjectId
       in: path
-      description: ID of the project.
+      description: Unique project identifier.
       required: true
       schema:
-        type: integer
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
     ProblemId:
       name: ProblemId
       in: path
-      description: ID of the problem.
+      description: Unique problem identifier.
       required: true
       schema:
-        type: integer
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
     BetId:
       name: BetId
       in: path
-      description: ID of the bet.
+      description: Unique bet identifier.
       required: true
       schema:
-        type: integer
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
     

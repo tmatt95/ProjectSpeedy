@@ -6,6 +6,7 @@ tags:
   - name: "Bet"
   - name: "Bet Comments"
   - name: "Bet Feedback"
+  - name: "Bet Outcomes"
 info:
   title: Project Speedy
   description: The goal of project speedy is to create an application that makes running a lean project easy<br/><br/> TODOS <ul><li>No way of updating a project in the wireframe.</li><li>Add User id to all elements</li></ul>
@@ -275,7 +276,7 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/BetNew'
+              $ref: '#/components/schemas/BetCommentNew'
       responses:
         '202':
           description: Comment added.
@@ -309,7 +310,7 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/BetNew'
+              $ref: '#/components/schemas/BetFeedbackNew'
       responses:
         '202':
           description: Comment added.
@@ -321,7 +322,41 @@ paths:
       summary: Delete feedback
       tags:
         - Bet Feedback
-      description: Delete a piece of feedback.
+      description: Delete a piece of feedback from a bet.
+      responses:
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/outcome:
+    put:
+      summary: Add an outcome to a bet
+      tags: 
+        - Bet Outcomes
+      description: Use this form to add an outcome after a bet has finished.
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetOutcomeNew'
+      responses:
+        '202':
+          description: Comment added.
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Delete an outcome
+      tags:
+        - Bet Outcomes
+      description: Delete an outcome.
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -454,6 +489,15 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ListItem'
+      BetCommentNew:
+        description: Form used when adding a comment.
+        type: object
+        required:
+          - comment
+        properties:
+          comment:
+            type: string
+            example: Project Speedy
       BetComment:
         description: A comment linked to a bet.
         type: object
@@ -471,6 +515,15 @@ components:
           createdBy:
             type: string
             readOnly: true
+      BetFeedbackNew:
+        description: Form used when adding feedback.
+        type: object
+        required:
+          - comment
+        properties:
+          comment:
+            type: string
+            example: Project Speedy
       BetFeedback:
         description: A piece of feedback linked to a bet.
         type: object
@@ -480,6 +533,31 @@ components:
           comment:
             type: string
             example: Was difficult to demo application to friends.
+          created:
+            type: string
+            readOnly: true
+            format: date-time
+            example: 02/03/2021
+          createdBy:
+            type: string
+            readOnly: true
+      BetOutcomeNew:
+        description: Form used when adding an outcome.
+        type: object
+        required:
+          - comment
+        properties:
+          comment:
+            type: string
+            example: Project Speedy
+      BetOutcome:
+        description: An outcome linked to a bet.
+        type: object
+        required:
+          - name
+        properties:
+          comment:
+            type: string
           created:
             type: string
             readOnly: true
@@ -516,6 +594,13 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/BetFeedback'
+          outcomes:
+            type: array
+            items:
+              $ref: '#/components/schemas/BetOutcome'
+          outcome:
+            type: string
+            example: abandon
       BetNew:
         description: Used to create a new bet.
         type: object
@@ -549,6 +634,8 @@ components:
           timeTotal:
             type: number
             example: 10
+          outcome:
+            type: string
   responses:
     NotFound:
       description: Entity not found.

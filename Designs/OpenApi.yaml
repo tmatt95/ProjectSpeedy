@@ -284,6 +284,23 @@ paths:
           $ref: '#/components/responses/UnAuthorised'
         '404':
           $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/comment/{CommentId}:
+    post:
+      summary: Update a comment
+      tags:
+        - Bet Comments
+      description: Update a comment.
+      responses:
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
     delete:
       summary: Delete comment
       tags:
@@ -300,6 +317,7 @@ paths:
       - $ref: '#/components/parameters/ProjectId'
       - $ref: '#/components/parameters/ProblemId'
       - $ref: '#/components/parameters/BetId'
+      - $ref: '#/components/parameters/CommentId'
   /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/feedback:
     put:
       summary: Add feedback to a bet
@@ -310,22 +328,10 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/BetFeedbackNew'
+              $ref: '#/components/schemas/BetFeedbackNewUpdate'
       responses:
         '202':
           description: Comment added.
-        '403':
-          $ref: '#/components/responses/UnAuthorised'
-        '404':
-          $ref: '#/components/responses/NotFound'
-    delete:
-      summary: Delete feedback
-      tags:
-        - Bet Feedback
-      description: Delete a piece of feedback from a bet.
-      responses:
-        '202':
-          $ref: '#/components/responses/ActionSuccess'
         '403':
           $ref: '#/components/responses/UnAuthorised'
         '404':
@@ -334,6 +340,41 @@ paths:
       - $ref: '#/components/parameters/ProjectId'
       - $ref: '#/components/parameters/ProblemId'
       - $ref: '#/components/parameters/BetId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/feedback/{FeedbackId}:
+    delete:
+      summary: Delete feedback
+      tags:
+        - Bet Feedback
+      description: Deletes an outcome (linked to a bet).
+      responses:
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      summary: Update feeedback
+      tags: 
+        - Bet Feedback
+      description: Updates a piece of feedback against a bet.
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetFeedbackNewUpdate'
+      responses:
+        '202':
+          description: Comment added.
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+      - $ref: '#/components/parameters/FeedbackId'
   /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/outcome:
     put:
       summary: Add an outcome to a bet
@@ -344,19 +385,41 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/BetOutcomeNew'
+              $ref: '#/components/schemas/BetOutcomeNewUpdate'
       responses:
         '202':
-          description: Comment added.
+          description: Outcome added.
         '403':
           $ref: '#/components/responses/UnAuthorised'
         '404':
           $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/outcome/{OutcomeId}:
     delete:
       summary: Delete an outcome
       tags:
         - Bet Outcomes
-      description: Delete an outcome.
+      description: Deletes an outcome (linked to a bet).
+      responses:
+        '202':
+          $ref: '#/components/responses/ActionSuccess'
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      summary: Update information on an outcome.
+      tags:
+        - Bet Outcomes
+      description: Update information on an outcome (linked to a bet).
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetOutcomeNewUpdate'
       responses:
         '202':
           $ref: '#/components/responses/ActionSuccess'
@@ -368,6 +431,30 @@ paths:
       - $ref: '#/components/parameters/ProjectId'
       - $ref: '#/components/parameters/ProblemId'
       - $ref: '#/components/parameters/BetId'
+      - $ref: '#/components/parameters/OutcomeId'    
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/outcome/{OutcomeId}/linkedBet:
+    put:
+      summary: Add a linked bet to an outcome
+      tags: 
+        - Bet Outcomes
+      description: Use this form to add a linked bet to an outcome. The form is information on the new bet.
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetNew'
+      responses:
+        '202':
+          description: Outcome added.
+        '403':
+          $ref: '#/components/responses/UnAuthorised'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+      - $ref: '#/components/parameters/BetId'
+      - $ref: '#/components/parameters/OutcomeId'    
 components:
   schemas:
       ProjectUpdate:
@@ -515,7 +602,11 @@ components:
           createdBy:
             type: string
             readOnly: true
-      BetFeedbackNew:
+          linkedBets:
+            type: array
+            items:
+              $ref: '#/components/schemas/LinkedBet'
+      BetFeedbackNewUpdate:
         description: Form used when adding feedback.
         type: object
         required:
@@ -523,7 +614,7 @@ components:
         properties:
           comment:
             type: string
-            example: Project Speedy
+            example: Friends are finding it hard to introduce into the work place.
       BetFeedback:
         description: A piece of feedback linked to a bet.
         type: object
@@ -532,7 +623,7 @@ components:
         properties:
           comment:
             type: string
-            example: Was difficult to demo application to friends.
+            example: Friends are finding it hard to introduce into the work place.
           created:
             type: string
             readOnly: true
@@ -541,7 +632,11 @@ components:
           createdBy:
             type: string
             readOnly: true
-      BetOutcomeNew:
+          linkedBets:
+            type: array
+            items:
+              $ref: '#/components/schemas/LinkedBet'
+      BetOutcomeNewUpdate:
         description: Form used when adding an outcome.
         type: object
         required:
@@ -549,7 +644,7 @@ components:
         properties:
           comment:
             type: string
-            example: Project Speedy
+            example: It is very difficult for friends to introduce this into the work place.
       BetOutcome:
         description: An outcome linked to a bet.
         type: object
@@ -558,6 +653,7 @@ components:
         properties:
           comment:
             type: string
+            example: It is very difficult for friends to introduce this into the work place.
           created:
             type: string
             readOnly: true
@@ -566,6 +662,17 @@ components:
           createdBy:
             type: string
             readOnly: true
+          linkedBets:
+            type: array
+            items:
+              $ref: '#/components/schemas/LinkedBet'
+      LinkedBet:
+        description: A linked bet.
+        type: object
+        properties:
+          id:
+            type: string
+            example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
       BetView:
         description: All information on a bet.
         type: object
@@ -668,4 +775,27 @@ components:
       schema:
         type: string
         example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
-    
+    OutcomeId:
+      name: OutcomeId
+      in: path
+      description: Unique outcome identifier.
+      required: true
+      schema:
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
+    FeedbackId:
+      name: FeedbackId
+      in: path
+      description: Unique feedback identifier.
+      required: true
+      schema:
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"
+    CommentId:
+      name: CommentId
+      in: path
+      description: Unique comment identifier.
+      required: true
+      schema:
+        type: string
+        example: "44828849-d4fa-4945-a7c6-134e5fbc0a38"

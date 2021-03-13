@@ -167,7 +167,7 @@ paths:
       - $ref: '#/components/parameters/ProblemId'
   /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}/start:
     post:
-      summary: Update bet to say it is started
+      summary: Update bet to started
       tags: 
         - Bet
       description: Starting a bet tells the system that some one has actively started to work on determining if it will solve the problem. Once a bet has been started we will limit the editing of the bet so it cannot be altered. <br/> <br/>Instead of editing the bet if you need to alter it drastically, finish the bet, record the reasons and create a new linked bet.
@@ -199,7 +199,7 @@ paths:
       - $ref: '#/components/parameters/ProjectId'
       - $ref: '#/components/parameters/ProblemId'
       - $ref: '#/components/parameters/BetId'
-  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}:
+  /project/{ProjectId}/problem/{ProblemId}/bet:
     put:
       summary: Add a new bet
       tags: 
@@ -217,6 +217,10 @@ paths:
           $ref: '#/components/responses/UnAuthorised'
         '404':
           $ref: '#/components/responses/NotFound'
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProblemId'
+  /project/{ProjectId}/problem/{ProblemId}/bet/{BetId}:
     get:
       summary: Get bet information
       tags: 
@@ -237,7 +241,7 @@ paths:
       summary: Update a bet
       tags: 
         - Bet
-      description: Add a new bet.
+      description: Update a new bet.
       requestBody:
         content: 
           application/json:
@@ -276,7 +280,7 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: '#/components/schemas/BetCommentNew'
+              $ref: '#/components/schemas/BetCommentNewUpdate'
       responses:
         '202':
           description: Comment added.
@@ -576,7 +580,7 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ListItem'
-      BetCommentNew:
+      BetCommentNewUpdate:
         description: Form used when adding a comment.
         type: object
         required:

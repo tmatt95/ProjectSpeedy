@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy
 {
-    public class Program
+    protected class Program
     {
         public static void Main(string[] args)
         {

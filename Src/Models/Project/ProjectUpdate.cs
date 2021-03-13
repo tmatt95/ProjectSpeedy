@@ -1,4 +1,7 @@
-public class ProjectUpdate
+namespace ProjectSpeedy.Project
 {
-   // Fields, properties, methods and events go here...
+  public class ProjectUpdate
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

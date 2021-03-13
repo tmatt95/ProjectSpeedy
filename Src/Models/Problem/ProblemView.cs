@@ -1,4 +1,7 @@
-public class ProblemView
+namespace ProjectSpeedy.Problem
 {
-   // Fields, properties, methods and events go here...
+  public class ProblemView
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

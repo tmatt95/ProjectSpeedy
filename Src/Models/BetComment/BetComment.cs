@@ -1,4 +1,7 @@
-public class BetComment
+namespace ProjectSpeedy.BetComment
 {
-   // Fields, properties, methods and events go here...
+  public class BetComment
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

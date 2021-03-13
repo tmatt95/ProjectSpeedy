@@ -1,4 +1,7 @@
-public class ProjectView
+namespace ProjectSpeedy.Project
 {
-   // Fields, properties, methods and events go here...
+  public class ProjectView
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

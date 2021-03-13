@@ -1,4 +1,7 @@
-public class ListItem
+namespace ProjectSpeedy.General
 {
-   // Fields, properties, methods and events go here...
+  public class ListItem
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

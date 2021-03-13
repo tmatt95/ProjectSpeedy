@@ -1,4 +1,7 @@
-public class BetView
+namespace ProjectSpeedy.Bet
 {
-   // Fields, properties, methods and events go here...
+  public class BetView
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

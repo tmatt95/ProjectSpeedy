@@ -1,4 +1,4 @@
-namespace ProjectSpeedy
+namespace ProjectSpeedy.Bet
 {
    /**
    * Used to create a new bet.

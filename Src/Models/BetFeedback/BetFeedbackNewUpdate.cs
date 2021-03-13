@@ -1,4 +1,7 @@
-public class ProjectFeedbackNewUpdate
+namespace ProjectSpeedy.BetFeedback
 {
-   // Fields, properties, methods and events go here...
+  public class ProjectFeedbackNewUpdate
+  {
+     // Fields, properties, methods and events go here...
+  }
 }

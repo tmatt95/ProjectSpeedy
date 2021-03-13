@@ -81,7 +81,7 @@ namespace ProjectSpeedy
             });
         }
 
-        private void CheckSameSite(HttpContext httpContext, CookieOptions options)
+        private static void CheckSameSite(HttpContext httpContext, CookieOptions options)
         {
             if (options.SameSite == SameSiteMode.None)
             {

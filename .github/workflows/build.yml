@@ -47,5 +47,3 @@ jobs:
           dotnet clean
           dotnet build
           ~/sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3

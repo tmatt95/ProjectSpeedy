@@ -17,8 +17,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -49,3 +47,5 @@ jobs:
           dotnet clean
           dotnet build
           dotnet .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3

@@ -42,4 +42,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-        cd .\.sonar\scanner\dotnet-sonarscanner
+          cd .\.sonar\scanner\dotnet-sonarscanner

@@ -36,5 +36,5 @@ jobs:
         run: |
           mkdir -p .\.sonar\scanner
           dotnet tool install dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Setup tmate session
+      - name: Setup tmate sessionn
         uses: mxschmitt/action-tmate@v3

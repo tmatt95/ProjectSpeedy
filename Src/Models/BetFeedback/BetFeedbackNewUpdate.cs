@@ -1,7 +1,13 @@
 namespace ProjectSpeedy.BetFeedback
 {
-  public class BetFeedbackNewUpdate
-  {
-     // Fields, properties, methods and events go here...
-  }
+    /**
+    * Used when adding or updating feedback.
+    **/
+    public class BetFeedbackNewUpdate
+    {
+        /**
+        * Gets or sets the comment.
+        **/
+        public string Comment { get; set; }
+    }
 }

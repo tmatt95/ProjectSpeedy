@@ -1,7 +1,13 @@
 namespace ProjectSpeedy.BetOutcome
 {
-  public class BetOutcomeNewUpdate
-  {
-     // Fields, properties, methods and events go here...
-  }
+    /**
+    * Used when adding or updating an outcome.
+    **/
+    public class BetOutcomeNewUpdate
+    {
+        /**
+        * Gets or sets the comment.
+        **/
+        public string Comment { get; set; }
+    }
 }

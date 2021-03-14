@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
     public class ProjectsController : ControllerBase
     {
         /**
@@ -22,7 +21,7 @@ namespace ProjectSpeedy.Controllers
         * Projects allows the application to group problems and bets together in one place. This will 
         * return all of the projects in the applcation.
         **/
-        [HttpGet]
+        [HttpGet("/api/projects")]
         public ActionResult Get()
         {
             try{

@@ -21,8 +21,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpGet]
-        public ActionResult Get()
+        [HttpGet("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
+        public ActionResult Get(string projectId, string problemId, string betId, string commentId)
         {
             try{
                 return this.Ok();
@@ -36,8 +36,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpPut]
-        public ActionResult Put()
+        [HttpPut("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment")]
+        public ActionResult Put(string projectId, string problemId, string betId)
         {
             try{
                 return this.Accepted();
@@ -51,8 +51,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpPost]
-        public ActionResult Post()
+        [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
+        public ActionResult Post(string projectId, string problemId, string betId, string commentId)
         {
             try{
                 return this.Accepted();
@@ -66,8 +66,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpDelete]
-        public ActionResult Delete()
+        [HttpDelete("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
+        public ActionResult Delete(string projectId, string problemId, string betId, string commentId)
         {
             try{
                 return this.Accepted();

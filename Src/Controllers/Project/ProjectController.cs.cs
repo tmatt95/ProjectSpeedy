@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
     public class ProjectController : ControllerBase
     {
         /**
@@ -22,7 +21,7 @@ namespace ProjectSpeedy.Controllers
         * Projects allows the application to group problems and bets together in one place. This will 
         * return all of the projects in the applcation.
         **/
-        [HttpGet("{projectId}")]
+        [HttpGet("/api/project/{projectId}")]
         public ActionResult Get(string projectId)
         {
             try{
@@ -39,7 +38,7 @@ namespace ProjectSpeedy.Controllers
         * This lets the user create a new project. Very little information is required when creating 
         * a project. This can be filled in at a later date (as it might not be known at the time).
         **/
-        [HttpPut]
+        [HttpPut("/api/project")]
         public ActionResult Put(Project.ProjectNew form)
         {
             try{
@@ -55,7 +54,7 @@ namespace ProjectSpeedy.Controllers
         * The create project action has been designed to be simple and contain the minimum number of fields.
         * The user will need to have the ability to update the project to add missing information.
         **/
-        [HttpPost("{projectId}")]
+        [HttpPost("/api/project/{projectId}")]
         public ActionResult Post(string projectId, Project.ProjectUpdate form)
         {
             try{
@@ -70,7 +69,7 @@ namespace ProjectSpeedy.Controllers
         /**
         * This action will delete the project and linked problems / bets.
         **/
-        [HttpDelete("{projectId}")]
+        [HttpDelete("/api/project/{projectId}")]
         public ActionResult Delete(string projectId)
         {
             try{

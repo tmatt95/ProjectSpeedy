@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class BetFeedbackController : ControllerBase
     {
         /**
@@ -21,8 +20,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpGet]
-        public ActionResult Get()
+        [HttpGet("/api/project/{projectId}/problem/{problemId}/bet/{betId}/feedback/{feedbackId}")]
+        public ActionResult Get(string projectId, string problemId, string betId, string feedbackId)
         {
             try{
                 return this.Ok();
@@ -36,8 +35,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpPut]
-        public ActionResult Put()
+        [HttpPut("/api/project/{projectId}/problem/{problemId}/bet/{betId}/feedback")]
+        public ActionResult Put(string projectId, string problemId, string betId)
         {
             try{
                 return this.Accepted();
@@ -51,8 +50,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpPost]
-        public ActionResult Post()
+        [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}/feedback/{feedbackId}")]
+        public ActionResult Post(string projectId, string problemId, string betId, string feedbackId)
         {
             try{
                 return this.Accepted();
@@ -66,8 +65,8 @@ namespace ProjectSpeedy.Controllers
         /**
         * 
         **/
-        [HttpDelete]
-        public ActionResult Delete()
+        [HttpDelete("/api/project/{projectId}/problem/{problemId}/bet/{betId}/feedback/{feedbackId}")]
+        public ActionResult Delete(string projectId, string problemId, string betId, string feedbackId)
         {
             try{
                 return this.Accepted();

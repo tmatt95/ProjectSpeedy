@@ -3,7 +3,7 @@ namespace ProjectSpeedy.Bet
    /**
    * Used to create a new bet.
    **/
-   class BetNew
+   public class BetNew
    {
       /**
       * Gets or sets the name of the bet.

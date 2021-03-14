@@ -1,7 +1,13 @@
 namespace ProjectSpeedy.Project
 {
-  public class ProjectNew
-  {
-     // Fields, properties, methods and events go here...
-  }
+    /**
+    * Add a new project.
+    **/
+    public class ProjectNew
+    {
+        /**
+         * Gets or sets the name of the project.
+         **/
+        public string Name { get; set; }
+    }
 }

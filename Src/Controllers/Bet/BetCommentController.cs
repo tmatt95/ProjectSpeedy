@@ -47,9 +47,10 @@ namespace ProjectSpeedy.Controllers
         /// <param name="problemId">Problem identifier</param>
         /// <param name="betId">Bet identifier</param>
         /// <param name="commentId">Comment identifier</param>
+        /// <param name="form">Form containing the comment.</param>
         /// <returns>If the comment was updated successfully.</returns>
         [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
-        public ActionResult Post(string projectId, string problemId, string betId, string commentId)
+        public ActionResult Post(string projectId, string problemId, string betId, string commentId, BetComment.BetCommentNewUpdate form)
         {
             try
             {

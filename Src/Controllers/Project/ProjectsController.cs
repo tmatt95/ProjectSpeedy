@@ -7,9 +7,9 @@ namespace ProjectSpeedy.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        /**
-        * Used to capture any errors this controller encounters.
-        **/
+        /// <summary>
+        /// Used to capture any errors this controller encounters.
+        /// </summary>
         private readonly ILogger<ProjectsController> _logger;
 
         public ProjectsController(ILogger<ProjectsController> logger)
@@ -17,17 +17,20 @@ namespace ProjectSpeedy.Controllers
             _logger = logger;
         }
 
-        /**
-        * Projects allows the application to group problems and bets together in one place. This will 
-        * return all of the projects in the applcation.
-        **/
+        /// <summary>
+        /// Projects allows the application to group problems and bets together in one place. 
+        /// This will return all of the projects in the applcation.
+        /// </summary>
+        /// <returns>List of projects in the application.</returns>
         [HttpGet("/api/projects")]
         public ActionResult Get()
         {
-            try{
+            try
+            {
                 return this.Ok();
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }

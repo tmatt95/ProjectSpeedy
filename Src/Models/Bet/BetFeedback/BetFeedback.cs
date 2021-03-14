@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace ProjectSpeedy.BetFeedback
 {
-    /**
-    * A piece of feedback linked to a bet.
-    **/
+    /// <summary>
+    /// A piece of feedback linked to a bet.
+    /// </summary>
     public class BetFeedback
     {
-        /**
-         * Gets or sets the comment.
-         **/
+        /// <summary>
+        /// Gets or sets the comment.
+        /// </summary>
         public string Comment { get; set; }
 
-        /**
-        * Gets or sets the date the feedback was created (added).
-        **/
+        /// <summary>
+        /// Gets or sets the date the feedback was created (added).
+        /// </summary>
         public DateTime Created { get; set; }
 
-        /**
-        * Gets or sets the name of the person who added the feedback.
-        **/
+        /// <summary>
+        /// Gets or sets the name of the person who added the feedback.
+        /// </summary>
         public string CreatedBy { get; set; }
 
-        /**
-        * Gets or sets the list of bets linked to this feedback.
-        **/
+        /// <summary>
+        /// Gets or sets the list of bets linked to this feedback.
+        /// </summary>
         public List<ProjectSpeedy.General.ListItem> LinkedBets { get; set; }
     }
 }

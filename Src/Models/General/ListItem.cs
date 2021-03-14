@@ -1,23 +1,23 @@
 namespace ProjectSpeedy.General
 {
-    /**
-    * Used to display brief information on an item (generally used to populate the tiles).
-    **/
+    /// <summary>
+    /// Used to display brief information on an item (generally used to populate the tiles).
+    /// </summary>
     public class ListItem
     {
-        /**
-        * Gets or sets the unique identifier of the item.
-        **/
+        /// <summary>
+        /// Gets or sets the unique identifier of the item.
+        /// </summary>
         public string Id { get; set; }
 
-        /**
-        * Gets or sets the name of the item.
-        **/
+        /// <summary>
+        /// Gets or sets the name of the item.
+        /// </summary>
         public string Name { get; set; }
 
-        /**
-        * Gets or sets the status of the item.
-        **/
+        /// <summary>
+        /// Gets or sets the status of the item.
+        /// </summary>
         public string Status { get; set; }
     }
 }

@@ -1,29 +1,29 @@
 namespace ProjectSpeedy.Problem
 {
 
-  /**
-  * Used to update problem details.
-  **/
-  public class ProblemUpdate
-  {
-     /**
-      * Gets or sets the name of the bet.
-      **/
-      public string Name {get; set;}
+    /// <summary>
+    /// Used to update problem details.
+    /// </summary>
+    public class ProblemUpdate
+    {
+        /// <summary>
+        /// Gets or sets the name of the bet.
+        /// </summary>
+        public string Name { get; set; }
 
-      /**
-      * Gets or sets the description of the bet.
-      **/
-      public string Description {get; set;}
+        /// <summary>
+        /// Gets or sets the description of the bet.
+        /// </summary>
+        public string Description { get; set; }
 
-      /**
-      * Gets or sets the criteria that will determine when we have solved the problem.
-      **/
-      public string SuccessCriteria {get; set;}
+        /// <summary>
+        /// Gets or sets the criteria that will determine when we have solved the problem.
+        /// </summary>
+        public string SuccessCriteria { get; set; }
 
-      /**
-      * Gets or sets a link to the bet the problem was created from.
-      **/
-      public string creeatedFromPreviousBet {get; set;}
-  }
+        /// <summary>
+        /// Gets or sets a link to the bet the problem was created from.
+        /// </summary>
+        public string creeatedFromPreviousBet { get; set; }
+    }
 }

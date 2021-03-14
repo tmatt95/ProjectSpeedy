@@ -1,6 +1,6 @@
-namespace ProjectSpeedy.BetFeedback
+namespace ProjectSpeedy.BetOutcome
 {
-  public class BetFeedback
+  public class BetOutcomeNewUpdate
   {
      // Fields, properties, methods and events go here...
   }

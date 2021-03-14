@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy.Controllers
@@ -11,11 +7,9 @@ namespace ProjectSpeedy.Controllers
     [Route("[controller]")]
     public class ProjectsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        /**
+        * Used to capture any errors this controller encounters.
+        **/
         private readonly ILogger<ProjectsController> _logger;
 
         public ProjectsController(ILogger<ProjectsController> logger)
@@ -23,17 +17,14 @@ namespace ProjectSpeedy.Controllers
             _logger = logger;
         }
 
+        /**
+        * Projects allows the application to group problems and bets together in one place. This will 
+        * return all of the projects in the applcation.
+        **/
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public ActionResult Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return this.Ok();
         }
     }
 }

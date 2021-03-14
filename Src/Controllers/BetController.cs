@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy.Controllers
@@ -23,7 +24,13 @@ namespace ProjectSpeedy.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return this.Ok();
+            try{
+                return this.Ok();
+            }
+            catch(Exception e){
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
+            }
         }
 
         /**
@@ -32,7 +39,13 @@ namespace ProjectSpeedy.Controllers
         [HttpPut]
         public ActionResult Put()
         {
-            return this.Accepted();
+            try{
+                return this.Accepted();
+            }
+            catch(Exception e){
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
+            }
         }
 
         /**
@@ -41,7 +54,13 @@ namespace ProjectSpeedy.Controllers
         [HttpPost]
         public ActionResult Post()
         {
-            return this.Accepted();
+            try{
+                return this.Accepted();
+            }
+            catch(Exception e){
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
+            }
         }
 
         /**
@@ -50,7 +69,13 @@ namespace ProjectSpeedy.Controllers
         [HttpDelete]
         public ActionResult Delete()
         {
-            return this.Accepted();
+            try{
+                return this.Accepted();
+            }
+            catch(Exception e){
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
+            }
         }
     }
 }

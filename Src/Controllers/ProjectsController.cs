@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy.Controllers
@@ -24,7 +25,13 @@ namespace ProjectSpeedy.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return this.Ok();
+            try{
+                return this.Ok();
+            }
+            catch(Exception e){
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
+            }
         }
     }
 }

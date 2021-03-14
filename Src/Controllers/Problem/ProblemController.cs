@@ -7,9 +7,9 @@ namespace ProjectSpeedy.Controllers
     [ApiController]
     public class ProblemController : ControllerBase
     {
-        /**
-        * Used to capture any errors this controller encounters.
-        **/
+        /// <summary>
+        /// Used to capture any errors this controller encounters.
+        /// </summary>
         private readonly ILogger<ProblemController> _logger;
 
         public ProblemController(ILogger<ProblemController> logger)
@@ -23,10 +23,12 @@ namespace ProjectSpeedy.Controllers
         [HttpGet("/api/project/{projectId]/problem/{problemId}")]
         public ActionResult Get(string projectId, string problemId)
         {
-            try{
+            try
+            {
                 return this.Ok();
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
@@ -38,10 +40,12 @@ namespace ProjectSpeedy.Controllers
         [HttpPut("/api/project/{projectId]/problem")]
         public ActionResult Put(string projectId)
         {
-            try{
+            try
+            {
                 return this.Accepted();
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
@@ -53,10 +57,12 @@ namespace ProjectSpeedy.Controllers
         [HttpPost("/api/project/{projectId]/problem/{problemId}")]
         public ActionResult Post(string projectId, string problemId)
         {
-            try{
+            try
+            {
                 return this.Accepted();
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
@@ -68,10 +74,12 @@ namespace ProjectSpeedy.Controllers
         [HttpDelete("/api/project/{projectId]/problem/{problemId}")]
         public ActionResult Delete(string projectId, string problemId)
         {
-            try{
+            try
+            {
                 return this.Accepted();
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }

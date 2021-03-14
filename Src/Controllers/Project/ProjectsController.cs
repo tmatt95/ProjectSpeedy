@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class ProjectsController : ControllerBase
     {
         /**

@@ -4,6 +4,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy.Controllers
 {
+    /// <summary>
+    /// Actions which relate to more than one project.
+    /// TODO Add authentication.
+    /// </summary>
     [ApiController]
     public class ProjectsController : ControllerBase
     {

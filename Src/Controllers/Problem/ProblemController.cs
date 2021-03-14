@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     /// <summary>
+    /// All problem related actions.
     /// TODO Add authentication.
     /// </summary>
     [ApiController]

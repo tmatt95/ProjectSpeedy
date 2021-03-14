@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace ProjectSpeedy.Controllers
 {
     /// <summary>
+    /// Actions which relate to adding or updating a comment against a bet.
     /// TODO Add authentication.
     /// </summary>
     [ApiController]

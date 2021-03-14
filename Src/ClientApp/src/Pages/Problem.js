@@ -44,8 +44,8 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewBet = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newModal')
-        var modal = bootstrap.Modal.getInstance(myModalEl)
+        let myModalEl = document.getElementById('newModal')
+        let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
         setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address:"/" }))
         setNewBetName("");

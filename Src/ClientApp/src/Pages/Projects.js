@@ -44,8 +44,8 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewProject = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newModal')
-        var modal = bootstrap.Modal.getInstance(myModalEl)
+        let myModalEl = document.getElementById('newModal')
+        let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
         addProject(newProjectName, projects.length +1);
         setNewProjectName("");

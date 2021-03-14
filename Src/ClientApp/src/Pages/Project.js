@@ -44,8 +44,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      */
     const CreateNewProblem = (event) => {
         event.preventDefault();
-        var myModalEl = document.getElementById('newModal')
-        var modal = bootstrap.Modal.getInstance(myModalEl)
+        let myModalEl = document.getElementById('newModal')
+        let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
         setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address:"/" }))
         setNewProblemName("");

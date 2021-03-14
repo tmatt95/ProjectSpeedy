@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ProjectSpeedy.Controllers
 {
+    /// <summary>
+    /// TODO Add authentication.
+    /// </summary>
     [ApiController]
     public class BetFeedbackController : ControllerBase
     {

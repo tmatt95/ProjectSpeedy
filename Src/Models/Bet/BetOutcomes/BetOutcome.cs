@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.BetOutcome
+namespace ProjectSpeedy.Models.BetOutcome
 {
     /// <summary>
     /// An outcome linked to a bet.
@@ -31,7 +31,7 @@ namespace ProjectSpeedy.BetOutcome
             /// <summary>
             /// Gets or sets the list of bets linked to this outcome.
             /// </summary>
-            public List<ProjectSpeedy.General.ListItem> LinkedBets { get; set; }
+            public List<ProjectSpeedy.Models.General.ListItem> LinkedBets { get; set; }
         }
     }
 }

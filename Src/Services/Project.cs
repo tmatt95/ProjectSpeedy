@@ -1,4 +1,4 @@
-using ProjectSpeedy.Project;
+using ProjectSpeedy.Models.Projects;
 
 namespace ProjectSpeedy.Services
 {
@@ -8,7 +8,7 @@ namespace ProjectSpeedy.Services
     public class Project : IProject
     {
         /// <inheritdoc />
-        public bool Create(ProjectUpdate form)
+        public bool Create(Models.Project.ProjectUpdate form)
         {
             throw new System.NotImplementedException();
         }
@@ -20,7 +20,13 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, ProjectUpdate form)
+        public ProjectsView GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public bool Update(string projectId, Models.Project.ProjectUpdate form)
         {
             throw new System.NotImplementedException();
         }

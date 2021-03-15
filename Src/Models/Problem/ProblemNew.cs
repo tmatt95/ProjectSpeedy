@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.Problem
+namespace ProjectSpeedy.Models.Problem
 {
     /// <summary>
     /// Used to add a new problem to the application.

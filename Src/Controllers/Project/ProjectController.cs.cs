@@ -50,7 +50,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the new project was added successfully.</returns>
         [HttpPut("/api/project")]
-        public ActionResult Put(Project.ProjectNew form)
+        public ActionResult Put(Project.Models.ProjectNew form)
         {
             try
             {

@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.General
+namespace ProjectSpeedy.Models.General
 {
     /// <summary>
     /// Used to display brief information on an item (generally used to populate the tiles).

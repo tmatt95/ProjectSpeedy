@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.BetComment
+namespace ProjectSpeedy.Models.BetComment
 {
     /// <summary>
     /// Used when adding or updating a comment against a bet.

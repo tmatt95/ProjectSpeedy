@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.BetFeedback
+namespace ProjectSpeedy.Models.BetFeedback
 {
     /// <summary>
     /// Used when adding or updating feedback.

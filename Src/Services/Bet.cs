@@ -1,5 +1,3 @@
-using ProjectSpeedy.Bet;
-
 namespace ProjectSpeedy.Services
 {
     /// <summary>
@@ -8,7 +6,7 @@ namespace ProjectSpeedy.Services
     public class Bet : IBet
     {
         /// <inheritdoc />
-        public bool Create(string projectId, string problemId, BetNew form)
+        public bool Create(string projectId, string problemId, Models.Bet.BetNew form)
         {
             throw new System.NotImplementedException();
         }
@@ -20,13 +18,13 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public BetView Get(string projectId, string problemId, string betId)
+        public Models.Bet.BetView Get(string projectId, string problemId, string betId)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, string problemId, string betId, BetNew form)
+        public bool Update(string projectId, string problemId, string betId, Models.Bet.BetNew form)
         {
             throw new System.NotImplementedException();
         }

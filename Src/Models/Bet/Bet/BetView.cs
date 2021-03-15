@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.Bet
+namespace ProjectSpeedy.Models.Bet
 {
     /// <summary>
     /// All information on a bet.

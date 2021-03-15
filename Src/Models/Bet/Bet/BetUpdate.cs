@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.Bet
+namespace ProjectSpeedy.Models.Bet
 {
     /// <summary>
     /// Used to update a bet before it has started.

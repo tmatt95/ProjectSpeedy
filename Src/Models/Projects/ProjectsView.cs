@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.Projects
+namespace ProjectSpeedy.Models.Projects
 {
     /// <summary>
     /// Information on all projects in the application.

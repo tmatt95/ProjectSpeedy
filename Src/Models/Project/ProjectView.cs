@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.Project
+namespace ProjectSpeedy.Models.Project
 {
     /// <summary>
     /// Information on a single project.

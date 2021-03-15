@@ -1,5 +1,3 @@
-using ProjectSpeedy.Problem;
-
 namespace ProjectSpeedy.Services
 {
     /// <summary>
@@ -8,7 +6,7 @@ namespace ProjectSpeedy.Services
     public class Problem : IProblem
     {
         /// <inheritdoc />
-        public bool Create(string projectId, string problemId, ProblemNew form)
+        public bool Create(string projectId, string problemId, Models.Problem.ProblemNew form)
         {
             throw new System.NotImplementedException();
         }
@@ -20,13 +18,13 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public ProblemView Get(string projectId, string problemId)
+        public Models.Problem.ProblemView Get(string projectId, string problemId)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, ProblemUpdate form)
+        public bool Update(string projectId, Models.Problem.ProblemUpdate form)
         {
             throw new System.NotImplementedException();
         }

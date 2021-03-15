@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.Project
+namespace ProjectSpeedy.Models.Project
 {
     /// <summary>
     /// Add a new project.

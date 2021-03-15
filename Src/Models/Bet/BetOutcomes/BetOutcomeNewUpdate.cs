@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.BetOutcome
+namespace ProjectSpeedy.Models.BetOutcome
 {
     /// <summary>
     /// Used when adding or updating an outcome.

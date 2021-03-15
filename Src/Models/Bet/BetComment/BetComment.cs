@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.BetComment
+namespace ProjectSpeedy.Models.BetComment
 {
     /// <summary>
     /// A comment linked to a bet.
@@ -26,6 +26,6 @@ namespace ProjectSpeedy.BetComment
         /// <summary>
         /// Gets or sets the list of bets linked to this comment.
         /// </summary>
-        public List<ProjectSpeedy.General.ListItem> LinkedBets { get; set; }
+        public List<ProjectSpeedy.Models.General.ListItem> LinkedBets { get; set; }
     }
 }

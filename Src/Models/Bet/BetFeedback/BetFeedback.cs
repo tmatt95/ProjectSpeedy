@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.BetFeedback
+namespace ProjectSpeedy.Models.BetFeedback
 {
     /// <summary>
     /// A piece of feedback linked to a bet.
@@ -26,6 +26,6 @@ namespace ProjectSpeedy.BetFeedback
         /// <summary>
         /// Gets or sets the list of bets linked to this feedback.
         /// </summary>
-        public List<ProjectSpeedy.General.ListItem> LinkedBets { get; set; }
+        public List<ProjectSpeedy.Models.General.ListItem> LinkedBets { get; set; }
     }
 }

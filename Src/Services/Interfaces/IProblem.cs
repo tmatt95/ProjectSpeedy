@@ -11,7 +11,7 @@ namespace ProjectSpeedy.Services
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
         /// <returns>Information on a problem.</returns>
-        ProjectSpeedy.Problem.ProblemView Get(string projectId, string problemId);
+        ProjectSpeedy.Models.Problem.ProblemView Get(string projectId, string problemId);
 
         /// <summary>
         /// This will let you add a problem to a project. You will then be able to place bets against
@@ -19,7 +19,7 @@ namespace ProjectSpeedy.Services
         /// </summary>
         /// <param name="projectId">Project identifier</param>
         /// <returns>If the problem was added successfully.</returns>
-        bool Create(string projectId, string problemId, ProjectSpeedy.Problem.ProblemNew form);
+        bool Create(string projectId, string problemId, ProjectSpeedy.Models.Problem.ProblemNew form);
 
         /// <summary>
         /// Ideally before adding bets, this API will be used to add as much information as possible to the 

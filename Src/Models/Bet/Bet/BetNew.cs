@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.Bet
+namespace ProjectSpeedy.Models.Bet
 {
     /// <summary>
     /// Used to create a new bet.

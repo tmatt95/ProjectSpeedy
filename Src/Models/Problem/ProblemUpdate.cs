@@ -1,4 +1,4 @@
-namespace ProjectSpeedy.Problem
+namespace ProjectSpeedy.Models.Problem
 {
 
     /// <summary>

@@ -51,7 +51,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the new bet.</param>
         /// <returns>If the bet was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet")]
-        public ActionResult Put(string projectId, string problemId, Bet.BetNew form)
+        public ActionResult Put(string projectId, string problemId, Models.Bet.BetNew form)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing updated bet information.</param>
         /// <returns>If the update was a success.</returns>
         [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}")]
-        public ActionResult Post(string projectId, string problemId, string betId, Bet.BetUpdate form)
+        public ActionResult Post(string projectId, string problemId, string betId, Models.Bet.BetUpdate form)
         {
             try
             {

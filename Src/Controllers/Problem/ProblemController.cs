@@ -27,7 +27,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">problem identifier</param>
         /// <returns>Information on a problem.</returns>
-        [HttpGet("/api/project/{projectId]/problem/{problemId}")]
+        [HttpGet("/api/project/{projectId}/problem/{problemId}")]
         public ActionResult Get(string projectId, string problemId)
         {
             try
@@ -47,7 +47,7 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         /// <param name="projectId">Project identifier</param>
         /// <returns>If the problem was added successfully.</returns>
-        [HttpPut("/api/project/{projectId]/problem")]
+        [HttpPut("/api/project/{projectId}/problem")]
         public ActionResult Put(string projectId)
         {
             try
@@ -69,7 +69,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
         /// <returns>If the problem was updated successfully.</returns>
-        [HttpPost("/api/project/{projectId]/problem/{problemId}")]
+        [HttpPost("/api/project/{projectId}/problem/{problemId}")]
         public ActionResult Post(string projectId, string problemId)
         {
             try
@@ -89,7 +89,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
         /// <returns>If the problem was deleted successfully.</returns>
-        [HttpDelete("/api/project/{projectId]/problem/{problemId}")]
+        [HttpDelete("/api/project/{projectId}/problem/{problemId}")]
         public ActionResult Delete(string projectId, string problemId)
         {
             try

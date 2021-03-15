@@ -29,7 +29,7 @@ namespace ProjectSpeedy.Services
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
         /// <returns>If the problem was updated successfully.</returns>
-        bool Update(string projectId, ProjectSpeedy.Problem.ProblemUpdate form);
+        bool Update(string projectId, ProjectSpeedy.Models.Problem.ProblemUpdate form);
 
         /// <summary>
         /// This action will delete the problem and all linked bets.

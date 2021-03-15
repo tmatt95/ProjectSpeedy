@@ -50,7 +50,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the new project was added successfully.</returns>
         [HttpPut("/api/project")]
-        public ActionResult Put(Project.Models.ProjectNew form)
+        public ActionResult Put(Models.Project.ProjectNew form)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the project has been updated successfully.</returns>
         [HttpPost("/api/project/{projectId}")]
-        public ActionResult Post(string projectId, Project.ProjectUpdate form)
+        public ActionResult Post(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form)
         {
             try
             {

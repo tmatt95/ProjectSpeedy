@@ -30,7 +30,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the comment.</param>
         /// <returns>If the comment was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment")]
-        public ActionResult Put(string projectId, string problemId, string betId, BetComment.BetCommentNewUpdate form)
+        public ActionResult Put(string projectId, string problemId, string betId, Models.BetComment.BetCommentNewUpdate form)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the comment.</param>
         /// <returns>If the comment was updated successfully.</returns>
         [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
-        public ActionResult Post(string projectId, string problemId, string betId, string commentId, BetComment.BetCommentNewUpdate form)
+        public ActionResult Post(string projectId, string problemId, string betId, string commentId, Models.BetComment.BetCommentNewUpdate form)
         {
             try
             {

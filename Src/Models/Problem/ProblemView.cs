@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectSpeedy.Problem
+namespace ProjectSpeedy.Models.Problem
 {
     /// <summary>
     /// Used to display information on a problem / list of basic information on bets linked to the problem.

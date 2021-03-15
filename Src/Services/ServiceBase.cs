@@ -38,7 +38,7 @@ namespace ProjectSpeedy.Services
                 //The Id of the new document
                 string newId = await GenerateId();
 
-                // Convert document to json
+                // Convert document to json 
                 //Taken from https://stackoverflow.com/questions/58469794/c-net-core3-0-system-text-json-jsonserializer-serializeasync
                 await JsonSerializer.SerializeAsync(stream, document);
                 stream.Position = 0;

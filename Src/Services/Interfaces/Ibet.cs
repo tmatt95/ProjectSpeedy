@@ -3,7 +3,7 @@ namespace ProjectSpeedy.Services
     /// <summary>
     /// All bet related services.
     /// </summary>
-    interface BetInterface
+    interface IBet
     {
         /// <summary>
         /// Gets all the information related to a bet.

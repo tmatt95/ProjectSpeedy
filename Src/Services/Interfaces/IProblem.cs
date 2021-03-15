@@ -3,7 +3,7 @@ namespace ProjectSpeedy.Services
     /// <summary>
     /// All problem related services.
     /// </summary>
-    interface ProblemInterface
+    interface IProblem
     {
         /// <summary>
         /// This will get all the information on the problem (including a list of linked bets).

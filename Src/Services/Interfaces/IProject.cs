@@ -3,7 +3,7 @@ namespace ProjectSpeedy.Services
     /// <summary>
     /// All project related services.
     /// </summary>
-    interface ProjectInterface
+    interface IProject
     {
         bool Create();
 

@@ -5,7 +5,7 @@ namespace ProjectSpeedy.Services
     /// <summary>
     /// All bet related services.
     /// </summary>
-    public class Bet : BetInterface
+    public class Bet : IBet
     {
         /// <inheritdoc />
         public bool Create(string projectId, string problemId, BetNew form)

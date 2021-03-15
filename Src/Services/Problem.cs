@@ -5,7 +5,7 @@ namespace ProjectSpeedy.Services
     /// <summary>
     /// All problem related services.
     /// </summary>
-    public class Problem : ProblemInterface
+    public class Problem : IProblem
     {
         /// <inheritdoc />
         public bool Create(string projectId, string problemId, ProblemNew form)

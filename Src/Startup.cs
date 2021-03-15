@@ -40,6 +40,11 @@ namespace ProjectSpeedy
                     CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
+            // Add services
+            services.AddScoped<ProjectSpeedy.Services.IBet, ProjectSpeedy.Services.Bet>();
+            services.AddScoped<ProjectSpeedy.Services.IProblem, ProjectSpeedy.Services.Problem>();
+            services.AddScoped<ProjectSpeedy.Services.IProject, ProjectSpeedy.Services.Project>();
+
             services.AddRazorPages();
         }
 

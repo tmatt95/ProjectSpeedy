@@ -10,6 +10,7 @@ namespace ProjectSpeedy.Projects
     {
         /// <summary>
         /// Gets or sets the list of projects.
+        /// TODO Move into Project service to match controller folder structure.
         /// </summary>
         public List<General.ListItem> Projects { get; set; }
     }

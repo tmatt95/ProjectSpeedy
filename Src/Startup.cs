@@ -44,8 +44,10 @@ namespace ProjectSpeedy
             services.AddScoped<ProjectSpeedy.Services.IBet, ProjectSpeedy.Services.Bet>();
             services.AddScoped<ProjectSpeedy.Services.IProblem, ProjectSpeedy.Services.Problem>();
             services.AddScoped<ProjectSpeedy.Services.IProject, ProjectSpeedy.Services.Project>();
+            services.AddScoped<ProjectSpeedy.Services.IServiceBase, ProjectSpeedy.Services.ServiceBase>();
 
             services.AddRazorPages();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

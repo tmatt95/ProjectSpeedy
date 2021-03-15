@@ -5,6 +5,7 @@ namespace ProjectSpeedy.Models.Project
 {
     /// <summary>
     /// Information on a single project.
+    /// TODO Maybe rename to Project
     /// </summary>
     public class ProjectView
     {
@@ -26,6 +27,6 @@ namespace ProjectSpeedy.Models.Project
         /// <summary>
         /// Gets or sets the list of problems linked to the project.
         /// </summary>
-        public List<General.ListItem> Problems { get; set; }
+        public List<General.ListItem> Problems { get; set; } = new List<General.ListItem>();
     }
 }

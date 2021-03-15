@@ -16,9 +16,15 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<ProjectsController> _logger;
 
-        public ProjectsController(ILogger<ProjectsController> logger)
+        /// <summary>
+        /// Used to access project services.
+        /// </summary>
+        private readonly Services.IProject _iProject;
+
+        public ProjectsController(ILogger<ProjectsController> logger, Services.IProject iProject)
         {
             _logger = logger;
+            _iProject = iProject;
         }
 
         /// <summary>
@@ -31,7 +37,7 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
-                return this.Ok();
+                return this.Ok(this._iProject.GetAll());
             }
             catch (Exception e)
             {

@@ -1,15 +1,17 @@
+using System.Threading.Tasks;
+
 namespace ProjectSpeedy.Services
 {
     /// <summary>
     /// All project related services.
     /// </summary>
-    interface IProject
+    public interface IProject
     {
         /// <summary>
         /// Gets information on all projects in the application.
         /// </summary>
         /// <returns>Information on all projects in the application.</returns>
-        ProjectSpeedy.Models.Projects.ProjectsView GetAll();
+        Task<ProjectSpeedy.Models.Projects.ProjectsView> GetAll();
 
         /// <summary>
         /// Every bet needs to be linked to a problem and a problem needs to be linked to a project. 

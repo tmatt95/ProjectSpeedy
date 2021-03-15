@@ -5,6 +5,20 @@ namespace ProjectSpeedy.Services
     /// </summary>
     public class Problem : IProblem
     {
+        /// <summary>
+        /// Contains helper functions needed for all services to work
+        /// </summary>
+        private IServiceBase _serviceBase;
+
+        /// <summary>
+        /// All problem related services.
+        /// </summary>
+        /// <param name="serviceBase">Contains helper functions needed for all services to work.</param>
+        public Problem(IServiceBase serviceBase)
+        {
+            this._serviceBase = serviceBase;
+        }
+
         /// <inheritdoc />
         public bool Create(string projectId, string problemId, Models.Problem.ProblemNew form)
         {

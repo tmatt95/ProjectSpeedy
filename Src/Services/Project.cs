@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using ProjectSpeedy.Models.Projects;
 
 namespace ProjectSpeedy.Services
@@ -7,6 +9,20 @@ namespace ProjectSpeedy.Services
     /// </summary>
     public class Project : IProject
     {
+        /// <summary>
+        /// Contains helper functions needed for all services to work
+        /// </summary>
+        private IServiceBase _serviceBase;
+
+        /// <summary>
+        /// All project related services.
+        /// </summary>
+        /// <param name="serviceBase">Contains helper functions needed for all services to work.</param>
+        public Project(IServiceBase serviceBase)
+        {
+            this._serviceBase = serviceBase;
+        }
+
         /// <inheritdoc />
         public bool Create(Models.Project.ProjectUpdate form)
         {
@@ -20,9 +36,15 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public ProjectsView GetAll()
+        public async Task<ProjectsView> GetAll()
         {
-            throw new System.NotImplementedException();
+            var test = await this._serviceBase.DocumetCreate(new Models.Project.ProjectView()
+            {
+                Name = "Project Name",
+                Created = DateTime.UtcNow
+            }, "project");
+
+            return new ProjectsView();
         }
 
         /// <inheritdoc />

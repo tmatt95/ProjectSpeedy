@@ -8,9 +8,8 @@ namespace ProjectSpeedy.Models.Projects
     public class ProjectsView
     {
         /// <summary>
-        /// Gets or sets the list of projects.
-        /// TODO Move into Project service to match controller folder structure.
+        /// Gets or sets the rows containing the projects that are in the project.
         /// </summary>
-        public List<General.ListItem> Projects { get; set; }
+        public List<General.ViewResult> rows { get; set; }
     }
 }

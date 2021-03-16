@@ -57,7 +57,6 @@ namespace ProjectSpeedy.Services
 
                 // Convert response to output
                 var response = await client.SendAsync(request);
-                await response.Content.ReadAsStringAsync();
 
                 // Ensures is has created ok.
                 response.EnsureSuccessStatusCode();
@@ -65,6 +64,24 @@ namespace ProjectSpeedy.Services
                 // Returns the Id of the newly created record.
                 return document.GetType().Name + ":" + newId;
             }
+        }
+
+        /// <inheritdoc />
+        public async Task<HttpContent> GetView(string viewName, string partition)
+        {
+            // Send the request to add the new document
+            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/_partition/" + partition + "/_design/projects/_view/" + viewName);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
+            var client = _clientFactory.CreateClient();
+
+            // Convert response to output
+            var response = await client.SendAsync(request);
+
+            // Ensures is has created ok.
+            response.EnsureSuccessStatusCode();
+
+            // Returns the Id of the newly created record.
+            return response.Content;
         }
 
         /// <inheritdoc />

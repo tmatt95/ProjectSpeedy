@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ProjectSpeedy.Models.Projects;
 
@@ -49,13 +50,10 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
-            await this._serviceBase.DocumetCreate(new Models.Project.Project()
-            {
-                Name = "Project Name",
-                Created = DateTime.UtcNow
-            }, "project");
-
-            return new ProjectsView();
+            var viewData = await this._serviceBase.GetView("projects", "project");
+            using var responseStream = await viewData.ReadAsStreamAsync();
+            var projectsView = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Projects.ProjectsView>(responseStream);
+            return projectsView;
         }
 
         /// <inheritdoc />

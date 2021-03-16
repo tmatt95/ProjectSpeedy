@@ -7,7 +7,7 @@ namespace ProjectSpeedy.Models.Project
     /// Information on a single project.
     /// TODO Maybe rename to Project
     /// </summary>
-    public class ProjectView
+    public class Project
     {
         /// <summary>
         /// Gets or sets the name of the project.

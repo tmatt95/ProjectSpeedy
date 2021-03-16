@@ -6,7 +6,7 @@ namespace ProjectSpeedy.Models.Bet
     /// <summary>
     /// All information on a bet.
     /// </summary>
-    public class BetView
+    public class Bet
     {
         /// <summary>
         /// Gets or sets the unique identifier of the record.

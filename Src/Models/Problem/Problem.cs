@@ -6,7 +6,7 @@ namespace ProjectSpeedy.Models.Problem
     /// <summary>
     /// Used to display information on a problem / list of basic information on bets linked to the problem.
     /// </summary>
-    public class ProblemView
+    public class Problem
     {
         /// <summary>
         /// Gets or sets the unique identifier of the record.

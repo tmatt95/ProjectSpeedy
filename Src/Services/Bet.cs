@@ -32,7 +32,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public Models.Bet.BetView Get(string projectId, string problemId, string betId)
+        public Models.Bet.Bet Get(string projectId, string problemId, string betId)
         {
             throw new System.NotImplementedException();
         }

@@ -38,7 +38,7 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
-            await this._serviceBase.DocumetCreate(new Models.Project.ProjectView()
+            await this._serviceBase.DocumetCreate(new Models.Project.Project()
             {
                 Name = "Project Name",
                 Created = DateTime.UtcNow

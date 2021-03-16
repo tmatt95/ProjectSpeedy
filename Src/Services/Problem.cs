@@ -32,7 +32,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public Models.Problem.ProblemView Get(string projectId, string problemId)
+        public Models.Problem.Problem Get(string projectId, string problemId)
         {
             throw new System.NotImplementedException();
         }

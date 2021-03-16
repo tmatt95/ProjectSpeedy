@@ -12,7 +12,7 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// Contains helper functions needed for all services to work
         /// </summary>
-        private IServiceBase _serviceBase;
+        private readonly IServiceBase _serviceBase;
 
         /// <summary>
         /// All project related services.
@@ -38,7 +38,7 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
-            var test = await this._serviceBase.DocumetCreate(new Models.Project.ProjectView()
+            await this._serviceBase.DocumetCreate(new Models.Project.ProjectView()
             {
                 Name = "Project Name",
                 Created = DateTime.UtcNow

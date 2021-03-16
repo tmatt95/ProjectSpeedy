@@ -13,9 +13,14 @@ namespace ProjectSpeedy.Services
     /// </summary>
     public class ServiceBase : IServiceBase
     {
+        /// <summary>
+        /// This will make the API calls without using a third party library.
+        /// </summary>
         private readonly IHttpClientFactory _clientFactory;
 
-        // requires using Microsoft.Extensions.Configuration;
+        /// <summary>
+        /// Needed to read the CouchDB settings for the application from appsettings.
+        /// </summary>
         private readonly IConfiguration _configuration;
 
         /// <summary>
@@ -32,7 +37,6 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<string> DocumetCreate(object document, string partition)
         {
-            string json = string.Empty;
             using (var stream = new MemoryStream())
             {
                 //The Id of the new document
@@ -46,14 +50,14 @@ namespace ProjectSpeedy.Services
                 string content = await reader.ReadToEndAsync();
 
                 // Send the request to add the new document
-                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:url"] + partition + ":" + newId);
+                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + partition + ":" + newId);
                 request.Content = new StringContent(content);
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
                 var client = _clientFactory.CreateClient();
 
                 // Convert response to output
                 var response = await client.SendAsync(request);
-                var test = await response.Content.ReadAsStringAsync();
+                await response.Content.ReadAsStringAsync();
 
                 // Ensures is has created ok.
                 response.EnsureSuccessStatusCode();
@@ -66,7 +70,7 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<string> GenerateId()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://127.0.0.1:5984/_uuids");
+            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + "_uuids");
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
             using var responseStream = await response.Content.ReadAsStreamAsync();

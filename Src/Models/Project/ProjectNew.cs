@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ProjectSpeedy.Models.Project
 {
     /// <summary>
@@ -8,6 +10,7 @@ namespace ProjectSpeedy.Models.Project
         /// <summary>
         /// Gets or sets the name of the project.
         /// </summary>
+        [Required]
         public string Name { get; set; }
     }
 }

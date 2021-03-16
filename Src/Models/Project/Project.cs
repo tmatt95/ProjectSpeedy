@@ -17,7 +17,7 @@ namespace ProjectSpeedy.Models.Project
         /// <summary>
         /// Gets or sets the description of the project. 
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// Gets or sets the date the comment was created (added).

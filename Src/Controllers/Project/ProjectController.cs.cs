@@ -17,9 +17,15 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<ProjectsController> _logger;
 
-        public ProjectController(ILogger<ProjectsController> logger)
+        /// <summary>
+        /// Contains services needed to interact with projects.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProject _projectServices;
+
+        public ProjectController(ILogger<ProjectsController> logger, ProjectSpeedy.Services.IProject projectServices)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._projectServices = projectServices;
         }
 
         /// <summary>
@@ -50,11 +56,25 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the new project was added successfully.</returns>
         [HttpPut("/api/project")]
-        public ActionResult Put(Models.Project.ProjectNew form)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(Models.Project.ProjectNew form)
         {
             try
             {
-                return this.Accepted();
+                // Checks we have a valid request.
+                if (!ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Try and add the project.
+                if (await this._projectServices.CreateAsync(form))
+                {
+                    return this.Accepted();
+                }
+
+                // We should not get here unless something has gone wrong.
+                throw new Exception("Problem adding project");
+
             }
             catch (Exception e)
             {

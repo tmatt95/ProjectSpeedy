@@ -24,9 +24,20 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Create(Models.Project.ProjectUpdate form)
+        public async Task<bool> CreateAsync(Models.Project.ProjectNew form)
         {
-            throw new System.NotImplementedException();
+            // TODO We need to ensure that there is not another project with the same name.
+
+            // The new project object
+            var newProject = new ProjectSpeedy.Models.Project.Project()
+            {
+                Name = form.Name,
+                Created = DateTime.UtcNow
+            };
+
+            // Creates the project and checks if the id is returned.
+            var newId = await this._serviceBase.DocumetCreate(newProject, "project");
+            return !string.IsNullOrWhiteSpace(newId);
         }
 
         /// <inheritdoc />

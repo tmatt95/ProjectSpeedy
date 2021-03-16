@@ -20,7 +20,7 @@ namespace ProjectSpeedy.Services
         /// </summary>
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the new project was added successfully.</returns>
-        bool Create(ProjectSpeedy.Models.Project.ProjectUpdate form);
+        Task<bool> CreateAsync(ProjectSpeedy.Models.Project.ProjectNew form);
 
         /// <summary>
         /// The create project action has been designed to be simple and contain the minimum number of fields. 

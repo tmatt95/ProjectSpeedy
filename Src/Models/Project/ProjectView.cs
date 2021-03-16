@@ -15,7 +15,7 @@ namespace ProjectSpeedy.Models.Project
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the description of the project.
+        /// Gets or sets the description of the project. 
         /// </summary>
         public string Description { get; set; }
 

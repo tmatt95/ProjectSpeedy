@@ -41,6 +41,6 @@ namespace ProjectSpeedy.Models.Problem
         /// <summary>
         /// Gets or sets a list of bets linked to the problem.
         /// </summary>
-        public List<General.ListItem> Bets { get; set; }
+        public List<General.ListItem> Bets { get; set; } = new List<General.ListItem>();
     }
 }

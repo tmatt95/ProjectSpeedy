@@ -42,17 +42,17 @@ namespace ProjectSpeedy.Models.Bet
         /// <summary>
         /// Gets or sets the list of comments linked to the bet.
         /// </summary>
-        public List<BetComment.BetComment> Comments { get; set; }
+        public List<BetComment.BetComment> Comments { get; set; } = new List<BetComment.BetComment>();
 
         /// <summary>
         /// Gets or sets the feedback linked to the bet.
         /// </summary>
-        public List<BetFeedback.BetFeedback> Feedback { get; set; }
+        public List<BetFeedback.BetFeedback> Feedback { get; set; } = new List<BetFeedback.BetFeedback>();
 
         /// <summary>
         /// Gets or sets the outcomes linked to the bet.
         /// </summary>
-        public List<BetOutcome.BetOutcome> Outcomes { get; set; }
+        public List<BetOutcome.BetOutcome> Outcomes { get; set; } = new List<BetOutcome.BetOutcome>();
 
         /// <summary>
         /// Gets or sets the outcome of the bet.

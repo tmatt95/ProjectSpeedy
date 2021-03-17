@@ -37,7 +37,7 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
-                return this.Ok(await this._iProject.GetAll());
+                return this.Ok(await this._projectServices.GetAll());
             }
             catch (Exception e)
             {

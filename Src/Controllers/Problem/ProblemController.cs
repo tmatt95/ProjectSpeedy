@@ -16,12 +16,15 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<ProblemController> _logger;
 
-        private ProjectSpeedy.Services.IProblem _iproblem;
+        /// <summary>
+        /// Contains services needed to interact with problems.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProblem _problemServices;
 
-        public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem iProblem)
+        public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem problemServices)
         {
             this._logger = logger;
-            this._iproblem = iProblem;
+            this._problemServices = problemServices;
         }
 
         /// <summary>

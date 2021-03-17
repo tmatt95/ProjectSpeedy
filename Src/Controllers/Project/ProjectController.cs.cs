@@ -72,9 +72,7 @@ namespace ProjectSpeedy.Controllers
                     return this.Accepted();
                 }
 
-                // We should not get here unless something has gone wrong.
-                throw new Exception("Problem adding project");
-
+                return this.Problem();
             }
             catch (Exception e)
             {

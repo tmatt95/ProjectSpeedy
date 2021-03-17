@@ -6,7 +6,6 @@ namespace ProjectSpeedy.Controllers
 {
     /// <summary>
     /// All problem related actions.
-    /// TODO Add authentication.
     /// </summary>
     [ApiController]
     public class ProblemController : ControllerBase
@@ -65,7 +64,7 @@ namespace ProjectSpeedy.Controllers
                 }
 
                 // Try and add the project.
-                if (await this._iproblem.CreateAsync(projectId, form))
+                if (await this._problemServices.CreateAsync(projectId, form))
                 {
                     return this.Accepted();
                 }

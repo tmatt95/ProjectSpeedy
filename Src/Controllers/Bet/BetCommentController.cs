@@ -6,7 +6,6 @@ namespace ProjectSpeedy.Controllers
 {
     /// <summary>
     /// Actions which relate to adding or updating a comment against a bet.
-    /// TODO Add authentication.
     /// </summary>
     [ApiController]
     public class BetCommentController : ControllerBase

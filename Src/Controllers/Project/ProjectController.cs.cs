@@ -7,7 +7,6 @@ namespace ProjectSpeedy.Controllers
     /// <summary>
     /// All actions linked to an individual project (there is also projects for actions which affect more 
     /// than one project).
-    /// TODO Add authentication.
     /// </summary>
     [ApiController]
     public class ProjectController : ControllerBase

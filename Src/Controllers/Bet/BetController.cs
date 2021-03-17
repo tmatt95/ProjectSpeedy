@@ -6,7 +6,6 @@ namespace ProjectSpeedy.Controllers
 {
     /// <summary>
     /// Actions which relate to a bet.
-    /// TODO Add authentication.
     /// </summary>
     [ApiController]
     public class BetController : ControllerBase

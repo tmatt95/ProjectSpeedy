@@ -8,7 +8,7 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// Contains helper functions needed for all services to work
         /// </summary>
-        private IServiceBase _serviceBase;
+        private readonly IServiceBase _serviceBase;
 
         /// <summary>
         /// All bet related services.

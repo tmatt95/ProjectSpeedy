@@ -19,12 +19,12 @@ namespace ProjectSpeedy.Controllers
         /// <summary>
         /// Used to access project services.
         /// </summary>
-        private readonly Services.IProject _iProject;
+        private readonly ProjectSpeedy.Services.IProject _projectServices;
 
-        public ProjectsController(ILogger<ProjectsController> logger, Services.IProject iProject)
+        public ProjectsController(ILogger<ProjectsController> logger, Services.IProject projectServices)
         {
             _logger = logger;
-            _iProject = iProject;
+            _projectServices = projectServices;
         }
 
         /// <summary>

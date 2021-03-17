@@ -15,12 +15,22 @@ namespace ProjectSpeedy.Services
         Task<string> GenerateId();
 
         /// <summary>
+        /// Gets an individual document.
+        /// </summary>
+        /// <param name="documentId">The id of the document</param>
+        /// <returns>Http content containing the document.</returns>
+        Task<HttpContent> GetDocument(string documentId);
+
+        /// <summary>
         /// Call a view and return the JSON to convert into a 
         /// </summary>
-        /// <param name="viewName">Name of the view to call</param>
         /// <param name="partition">The partition to create the document in</param>
+        /// <param name="designDocumentName">Name of the design document the view is attached to.</param>
+        /// <param name="viewName">Name of the view to call</param>
+        /// <param name="startKey">Start key for view search</param>
+        /// <param name="endKey">End key for view search</param>
         /// <returns>Http content containing the view.</returns>
-        Task<HttpContent> GetView(string viewName, string partition);
+        Task<HttpContent> GetView(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "");
 
         /// <summary>
         /// Create a new document

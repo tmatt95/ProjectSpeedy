@@ -19,7 +19,7 @@ namespace ProjectSpeedy.Services
         /// </summary>
         /// <param name="projectId">Project identifier</param>
         /// <returns>If the problem was added successfully.</returns>
-        bool Create(string projectId, string problemId, ProjectSpeedy.Models.Problem.ProblemNew form);
+        System.Threading.Tasks.Task<bool> CreateAsync(string projectId, ProjectSpeedy.Models.Problem.ProblemNew form);
 
         /// <summary>
         /// Ideally before adding bets, this API will be used to add as much information as possible to the 

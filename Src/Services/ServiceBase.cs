@@ -67,10 +67,28 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public async Task<HttpContent> GetView(string viewName, string partition)
+        public async Task<HttpContent> GetView(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "")
         {
             // Send the request to add the new document
-            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/_partition/" + partition + "/_design/projects/_view/" + viewName);
+            string requestAddress = "";
+
+            // Sets the start and end key if specified
+            if (string.IsNullOrWhiteSpace(startKey) || string.IsNullOrWhiteSpace(endKey))
+            {
+                requestAddress = this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/_partition/" + partition + "/_design/" + designDocumentName + "/_view/" + viewName;
+            }
+            else
+            {
+                requestAddress = this._configuration["couchdb:base_url"] +
+                    this._configuration["couchdb:database_name"] +
+                    "/_partition/" +
+                    partition +
+                    "/_design/" + designDocumentName + "/_view/" +
+                    viewName + "?startkey=%22" + startKey + "%22&endkey=%22" + endKey + "%22";
+            }
+
+            // Makes the request
+            var request = new HttpRequestMessage(HttpMethod.Get, requestAddress);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
             var client = _clientFactory.CreateClient();
 
@@ -94,6 +112,24 @@ namespace ProjectSpeedy.Services
             var uUIDs = await JsonSerializer.DeserializeAsync
                 <Models.CouchDb.UUIDs>(responseStream);
             return uUIDs.uuids.First();
+        }
+
+        /// <inheritdoc />
+        public async Task<HttpContent> GetDocument(string documentId)
+        {
+            // Send the request to add the new document
+            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + documentId);
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
+            var client = _clientFactory.CreateClient();
+
+            // Convert response to output
+            var response = await client.SendAsync(request);
+
+            // Ensures is has created ok.
+            response.EnsureSuccessStatusCode();
+
+            // Returns the Id of the newly created record.
+            return response.Content;
         }
     }
 }

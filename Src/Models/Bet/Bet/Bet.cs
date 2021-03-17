@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectSpeedy.Models.Bet
 {
@@ -14,8 +15,21 @@ namespace ProjectSpeedy.Models.Bet
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the id of the project the problem is linked to.
+        /// </summary>
+        [Required]
+        public string ProjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the problem the bet is linked to.
+        /// </summary>
+        [Required]
+        public string ProblemId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the bet.
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>

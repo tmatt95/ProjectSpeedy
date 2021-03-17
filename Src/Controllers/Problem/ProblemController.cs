@@ -16,9 +16,12 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<ProblemController> _logger;
 
-        public ProblemController(ILogger<ProblemController> logger)
+        private ProjectSpeedy.Services.IProblem _iproblem;
+
+        public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem iProblem)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._iproblem = iProblem;
         }
 
         /// <summary>
@@ -48,11 +51,25 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <returns>If the problem was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem")]
-        public ActionResult Put(string projectId)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(string projectId, ProjectSpeedy.Models.Problem.ProblemNew form)
         {
             try
             {
-                return this.Accepted();
+                // Checks we have a valid request.
+                if (!ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Try and add the project.
+                if (await this._iproblem.CreateAsync(projectId, form))
+                {
+                    return this.Accepted();
+                }
+
+                // We should not get here unless something has gone wrong.
+                throw new Exception("Problem adding problem");
+
             }
             catch (Exception e)
             {

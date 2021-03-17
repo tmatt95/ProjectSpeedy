@@ -8,6 +8,13 @@ namespace ProjectSpeedy.Services
     public interface IProject
     {
         /// <summary>
+        /// Gets an individual project.
+        /// </summary>
+        /// <param name="projectId">Id of the project.</param>
+        /// <returns>Information on all projects in the application.</returns>
+        Task<ProjectSpeedy.Models.Project.Project> Get(string projectId);
+
+        /// <summary>
         /// Gets information on all projects in the application.
         /// </summary>
         /// <returns>Information on all projects in the application.</returns>

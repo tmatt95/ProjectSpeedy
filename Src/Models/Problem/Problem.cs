@@ -9,24 +9,24 @@ namespace ProjectSpeedy.Models.Problem
     public class Problem
     {
         /// <summary>
-        /// Gets or sets the unique identifier of the record.
+        /// Gets or sets the id of the project the problem is linked to.
         /// </summary>
-        public string Id { get; set; }
+        public string ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the bet.
+        /// Gets or sets the name of the problem.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         /// <summary>
-        /// Gets or sets the description of the bet.
+        /// Gets or sets the description of the problem.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// Gets or sets the criteria that will determine when we have solved the problem.
         /// </summary>
-        public string SuccessCriteria { get; set; }
+        public string SuccessCriteria { get; set; } = "";
 
         /// <summary>
         /// Gets or sets a link to the bet the problem was created from.

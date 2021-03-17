@@ -35,11 +35,11 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <returns>Information on the project.</returns>
         [HttpGet("/api/project/{projectId}")]
-        public ActionResult Get(string projectId)
+        public async System.Threading.Tasks.Task<ActionResult> GetAsync(string projectId)
         {
             try
             {
-                return this.Ok();
+                return this.Ok(await this._projectServices.Get(projectId));
             }
             catch (Exception e)
             {

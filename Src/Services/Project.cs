@@ -50,10 +50,28 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
-            var viewData = await this._serviceBase.GetView("projects", "project");
+            var viewData = await this._serviceBase.GetView("projects", "project", "projects");
             using var responseStream = await viewData.ReadAsStreamAsync();
             var projectsView = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Projects.ProjectsView>(responseStream);
             return projectsView;
+        }
+
+        /// <inheritdoc />
+        public async Task<ProjectSpeedy.Models.Project.Project> Get(string projectId)
+        {
+            // Id of the project in couchDb.
+            var couchProjectId = "project:" + projectId;
+
+            // Gets the base project.
+            var viewData = await this._serviceBase.GetDocument(couchProjectId);
+            using var responseStream = await viewData.ReadAsStreamAsync();
+            var project = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Project.Project>(responseStream);
+
+            // Populates the list of linked problems.
+            var problemData = await this._serviceBase.GetView("problem", "problems", "problems", couchProjectId, couchProjectId);
+            using var responseStreamProblems = await problemData.ReadAsStreamAsync();
+            project.Problems = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.General.ViewResult>(responseStreamProblems);
+            return project;
         }
 
         /// <inheritdoc />

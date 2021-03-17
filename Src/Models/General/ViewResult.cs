@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ProjectSpeedy.Models.General
 {
     /// <summary>
@@ -6,18 +8,18 @@ namespace ProjectSpeedy.Models.General
     public class ViewResult
     {
         /// <summary>
-        /// Gets or sets the unique identifier of the item.
+        /// Tiotal number of rows in the view result
         /// </summary>
-        public string id { get; set; }
+        public int total_rows { get; set; }
 
         /// <summary>
-        /// Gets or sets the items key.
+        /// offset applied to list
         /// </summary>
-        public string key { get; set; }
+        public int offset { get; set; }
 
         /// <summary>
         /// Gets or sets the items value.
         /// </summary>
-        public string value { get; set; }
+        public List<ProjectSpeedy.Models.General.ListItem> rows { get; set; }
     }
 }

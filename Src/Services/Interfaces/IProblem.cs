@@ -11,7 +11,7 @@ namespace ProjectSpeedy.Services
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
         /// <returns>Information on a problem.</returns>
-        ProjectSpeedy.Models.Problem.Problem Get(string projectId, string problemId);
+        System.Threading.Tasks.Task<Models.Problem.Problem> GetAsync(string projectId, string problemId);
 
         /// <summary>
         /// This will let you add a problem to a project. You will then be able to place bets against

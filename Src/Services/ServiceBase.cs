@@ -125,6 +125,8 @@ namespace ProjectSpeedy.Services
             // Convert response to output
             var response = await client.SendAsync(request);
 
+            // TODO If 404 then throw not found
+
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
 

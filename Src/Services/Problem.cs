@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 
 namespace ProjectSpeedy.Services
 {
@@ -48,9 +49,16 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public Models.Problem.Problem Get(string projectId, string problemId)
+        public async System.Threading.Tasks.Task<Models.Problem.Problem> GetAsync(string projectId, string problemId)
         {
-            throw new System.NotImplementedException();
+            // Id of the project in couchDb.
+            var couchProjectId = "problem:" + problemId;
+
+            // Gets the base project.
+            var viewData = await this._serviceBase.GetDocument(couchProjectId);
+            using var responseStream = await viewData.ReadAsStreamAsync();
+            var problem = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Problem.Problem>(responseStream);
+            return problem;
         }
 
         /// <inheritdoc />

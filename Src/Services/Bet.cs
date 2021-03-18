@@ -1,3 +1,5 @@
+using System;
+
 namespace ProjectSpeedy.Services
 {
     /// <summary>
@@ -20,9 +22,24 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Create(string projectId, string problemId, Models.Bet.BetNew form)
+        public async System.Threading.Tasks.Task<bool> CreateAsync(string projectId, string problemId, Models.Bet.BetNew form)
         {
-            throw new System.NotImplementedException();
+            // TODO We need to ensure that the project exists with the supplied Id.
+
+            // TODO We need to ensure that there is not another problem with the same name.
+
+            // The new project object
+            var newBet = new ProjectSpeedy.Models.Bet.Bet()
+            {
+                Name = form.Name,
+                Created = DateTime.UtcNow,
+                ProjectId = "project:" + projectId,
+                ProblemId = "problem:" + problemId
+            };
+
+            // Creates the project and checks if the id is returned.
+            var newId = await this._serviceBase.DocumetCreate(newBet, "bet");
+            return !string.IsNullOrWhiteSpace(newId);
         }
 
         /// <inheritdoc />

@@ -15,9 +15,15 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<BetController> _logger;
 
-        public BetController(ILogger<BetController> logger)
+        /// <summary>
+        /// Used to interact with bet data.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IBet _betService;
+
+        public BetController(ILogger<BetController> logger, ProjectSpeedy.Services.IBet betService)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._betService = betService;
         }
 
         /// <summary>
@@ -50,11 +56,23 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the new bet.</param>
         /// <returns>If the bet was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet")]
-        public ActionResult Put(string projectId, string problemId, Models.Bet.BetNew form)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(Models.Bet.BetNew form)
         {
             try
             {
-                return this.Accepted();
+                // Checks we have a valid request.
+                if (!ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Try and add the project.
+                // if (await this._projectServices.CreateAsync(form))
+                // {
+                //     return this.Accepted();
+                // }
+
+                return this.Problem();
             }
             catch (Exception e)
             {

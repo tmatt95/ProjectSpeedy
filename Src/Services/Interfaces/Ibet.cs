@@ -22,7 +22,7 @@ namespace ProjectSpeedy.Services
         /// <param name="problemId">Problem identifier</param>
         /// <param name="form">Form containing the new bet.</param>
         /// <returns>If the bet was added successfully.</returns>
-        bool Create(string projectId, string problemId, ProjectSpeedy.Models.Bet.BetNew form);
+        System.Threading.Tasks.Task<bool> CreateAsync(string projectId, string problemId, ProjectSpeedy.Models.Bet.BetNew form);
 
         /// <summary>
         /// Update a new bet (once a bet has been started it cannot be updated).

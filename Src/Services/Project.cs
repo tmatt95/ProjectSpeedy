@@ -50,10 +50,13 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
-            var viewData = await this._serviceBase.GetView("projects", "project", "projects");
+            var viewData = await this._serviceBase.GetView("project", "projects", "projects");
             using var responseStream = await viewData.ReadAsStreamAsync();
-            var projectsView = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Projects.ProjectsView>(responseStream);
-            return projectsView;
+            var projects = new ProjectSpeedy.Models.Projects.ProjectsView()
+            {
+                rows = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.General.ViewResult>(responseStream)
+            };
+            return projects;
         }
 
         /// <inheritdoc />

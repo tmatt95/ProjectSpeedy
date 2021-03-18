@@ -10,6 +10,6 @@ namespace ProjectSpeedy.Models.Projects
         /// <summary>
         /// Gets or sets the rows containing the projects that are in the project.
         /// </summary>
-        public List<General.ViewResult> rows { get; set; }
+        public General.ViewResult rows { get; set; }
     }
 }

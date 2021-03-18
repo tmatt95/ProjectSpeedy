@@ -95,6 +95,8 @@ namespace ProjectSpeedy.Services
             // Convert response to output
             var response = await client.SendAsync(request);
 
+            // TODO we need some couchdb view classes and then we can convert the views into output which links to swagger files / makes more sense.
+
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
 

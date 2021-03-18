@@ -14,5 +14,10 @@ namespace ProjectSpeedy.Models.General
         /// 
         /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string status { get; set; }
     }
 }

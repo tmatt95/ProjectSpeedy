@@ -27,6 +27,6 @@ namespace ProjectSpeedy.Models.Project
         /// <summary>
         /// Gets or sets the list of problems linked to the project.
         /// </summary>
-        public General.ViewResult Problems { get; set; } = new General.ViewResult();
+        public List<General.ListItem> Problems { get; set; } = new List<General.ListItem>();
     }
 }

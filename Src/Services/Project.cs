@@ -50,12 +50,23 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectsView> GetAll()
         {
+            // Gets the data for from the couchdb view.
             var viewData = await this._serviceBase.GetView("project", "projects", "projects");
             using var responseStream = await viewData.ReadAsStreamAsync();
-            var projects = new ProjectSpeedy.Models.Projects.ProjectsView()
+
+            // Converts the couchdb view model to an output class.
+            var projects = new ProjectSpeedy.Models.Projects.ProjectsView();
+            var rawProjects = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.CouchDb.View.ViewResult>(responseStream);
+            foreach (var record in rawProjects.rows)
             {
-                rows = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.General.ViewResult>(responseStream)
-            };
+                projects.rows.Add(new Models.General.ListItem()
+                {
+                    Id = record.value.id,
+                    Name = record.value.name
+                });
+            }
+
+            // Returns the list of projects.
             return projects;
         }
 
@@ -73,7 +84,16 @@ namespace ProjectSpeedy.Services
             // Populates the list of linked problems.
             var problemData = await this._serviceBase.GetView("problem", "problems", "problems", couchProjectId, couchProjectId);
             using var responseStreamProblems = await problemData.ReadAsStreamAsync();
-            project.Problems = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.General.ViewResult>(responseStreamProblems);
+
+            var rawProblems = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.CouchDb.View.ViewResult>(responseStreamProblems);
+            foreach (var record in rawProblems.rows)
+            {
+                project.Problems.Add(new Models.General.ListItem()
+                {
+                    Id = record.value.id,
+                    Name = record.value.name
+                });
+            }
             return project;
         }
 

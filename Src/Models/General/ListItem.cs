@@ -6,18 +6,18 @@ namespace ProjectSpeedy.Models.General
     public class ListItem
     {
         /// <summary>
-        /// 
+        /// Gets or sets the unique identifier of the item.
         /// </summary>
-        public string id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the name of the item.
         /// </summary>
-        public string key { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the status of the item.
         /// </summary>
-        public ListItemValue value { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -13,12 +13,12 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {    
-        if(runOnce === false){
-            document.title = `Problem ${problemId}`;  
-            setBreadCrumbs(breadCrumbs.concat([{ address:`/`, text:"Project" }, [{ address:`/`, text:"Problem" }]]));
+    useEffect(() => {
+        if (runOnce === false) {
+            document.title = `Problem ${problemId}`;
+            setBreadCrumbs(breadCrumbs.concat([{ address: `/`, text: "Project" }, [{ address: `/`, text: "Problem" }]]));
             setRunOnce(true);
-        }  
+        }
     }, [runOnce, setBreadCrumbs, breadCrumbs, projectId, problemId]);
 
 
@@ -47,7 +47,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         let myModalEl = document.getElementById('newModal')
         let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address:"/" }))
+        setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address: "/" }))
         setNewBetName("");
         globalMessage({ message: "Problem Added", class: "alert-success" });
     }

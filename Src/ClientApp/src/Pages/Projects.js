@@ -30,6 +30,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
             setBreadCrumbs([{ text: "Projects", address: "/" }]);
             setRunOnce(true);
 
+            // Loads the projects onto the page
             fetch("/api/projects")
                 .then(res => res.json())
                 .then(
@@ -44,7 +45,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                         //setIsLoaded(true);
                         //setError(error);
                     }
-                )
+                );
         }
     }, [runOnce, setBreadCrumbs, breadCrumbs]);
 

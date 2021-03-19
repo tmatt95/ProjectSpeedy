@@ -13,25 +13,42 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {    
-        if(runOnce === false){
-            document.title = `Project ${projectId}`;  
-            setBreadCrumbs(breadCrumbs.concat([{ address:"test", text:"text test" }]));
+    useEffect(() => {
+        if (runOnce === false) {
+            document.title = `Project ${projectId}`;
             setRunOnce(true);
-        }  
+
+            // Loads the projects onto the page
+            fetch(`/api/project/${projectId}`)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        //setIsLoaded(true);
+
+                        // Sets the model against the page.
+                        setProject(result);
+
+                        // Set the breadcrumbs.
+                        setBreadCrumbs([]);
+                        setBreadCrumbs(breadCrumbs.concat([{ address: "/", text: "Projects" }]));
+                        setBreadCrumbs(breadCrumbs.concat([{ text: result.name }]));
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+                        //setIsLoaded(true);
+                        //setError(error);
+                    }
+                );
+        }
     }, [runOnce, setBreadCrumbs, breadCrumbs, projectId]);
 
 
     /**
      * Dummy data containing exisiting bets.
      */
-    const [problems, setProblems] = useState([
-        { name: "Problem 0", address: "/project/1/1" },
-        { name: "Problem 1", address: "/project/2/2" },
-        { name: "Problem 2", address: "/project/3/3" },
-        { name: "Problem 3", address: "/project/4/4" },
-        { name: "Problem 4", address: "/project/5/5" },
-        { name: "Problem 5", address: "/project/6/6" }]);
+    const [project, setProject] = useState(null);
 
     /**
      * The name of a new problem.
@@ -47,19 +64,28 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         let myModalEl = document.getElementById('newModal')
         let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address:"/" }))
-        setNewProblemName("");
+        //setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address: "/" }))
+        //setNewProblemName("");
         globalMessage({ message: "Problem Added", class: "alert-success" });
+    }
+
+    // contains the project grid if one to render
+    let projectGrid = null;
+    let projectName = "";
+    if (project != null) {
+        projectName = project.name;
+        projectGrid = <CardGrid data={project.problems} />
     }
 
     return <>
         <div className="row">
             <div className="col">
-                <h1>Project {projectId}</h1>
+                <h1>{projectName}</h1>
+                <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
             </div>
         </div>
 
-        <CardGrid data={problems} />
+        {projectGrid}
 
         <form onSubmit={(event) => CreateNewProblem(event)}>
             <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">

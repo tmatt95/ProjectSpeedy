@@ -10,11 +10,6 @@ namespace ProjectSpeedy.Models.Bet
     public class Bet
     {
         /// <summary>
-        /// Gets or sets the unique identifier of the record.
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
         /// Gets or sets the id of the project the problem is linked to.
         /// </summary>
         [Required]

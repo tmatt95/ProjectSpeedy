@@ -34,11 +34,11 @@ namespace ProjectSpeedy.Controllers
         /// <param name="betId">Bet identifier</param>
         /// <returns>Information on the bet.</returns>
         [HttpGet("/api/project/{projectId}/problem/{problemId}/bet/{betId}")]
-        public ActionResult Get(string projectId, string problemId, string betId)
+        public async System.Threading.Tasks.Task<ActionResult> GetAsync(string projectId, string problemId, string betId)
         {
             try
             {
-                return this.Ok();
+                return this.Ok(await this._betService.GetAsync(projectId, problemId, betId));
             }
             catch (Exception e)
             {
@@ -56,7 +56,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the new bet.</param>
         /// <returns>If the bet was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet")]
-        public async System.Threading.Tasks.Task<ActionResult> PutAsync(Models.Bet.BetNew form)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(string projectId, string problemId, Models.Bet.BetNew form)
         {
             try
             {
@@ -66,11 +66,11 @@ namespace ProjectSpeedy.Controllers
                     return this.BadRequest();
                 }
 
-                // Try and add the project.
-                // if (await this._projectServices.CreateAsync(form))
-                // {
-                //     return this.Accepted();
-                // }
+                // Try and add the bet.
+                if (await this._betService.CreateAsync(projectId, problemId, form))
+                {
+                    return this.Accepted();
+                }
 
                 return this.Problem();
             }

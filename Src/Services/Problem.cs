@@ -51,13 +51,27 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async System.Threading.Tasks.Task<Models.Problem.Problem> GetAsync(string projectId, string problemId)
         {
-            // Id of the project in couchDb.
-            var couchProjectId = "problem:" + problemId;
+            // Id of the problem in couchDb.
+            var couchProblemId = "problem:" + problemId;
 
-            // Gets the base project.
-            var viewData = await this._serviceBase.GetDocument(couchProjectId);
+            // Gets the base problem.
+            var viewData = await this._serviceBase.GetDocument(couchProblemId);
             using var responseStream = await viewData.ReadAsStreamAsync();
             var problem = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Problem.Problem>(responseStream);
+
+            var problemData = await this._serviceBase.GetView("bet", "bets", "bets", couchProblemId, couchProblemId);
+            using var responseStreamProblems = await problemData.ReadAsStreamAsync();
+
+            var rawBets = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.CouchDb.View.ViewResult>(responseStreamProblems);
+            foreach (var record in rawBets.rows)
+            {
+                problem.Bets.Add(new Models.General.ListItem()
+                {
+                    Id = record.value.id,
+                    Name = record.value.name,
+                    Status = record.value.status
+                });
+            }
             return problem;
         }
 

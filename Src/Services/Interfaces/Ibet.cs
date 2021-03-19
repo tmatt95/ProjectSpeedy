@@ -12,7 +12,7 @@ namespace ProjectSpeedy.Services
         /// <param name="problemId">Problem identifier</param>
         /// <param name="betId">Bet identifier</param>
         /// <returns>Information on the bet.</returns>
-        ProjectSpeedy.Models.Bet.Bet Get(string projectId, string problemId, string betId);
+        System.Threading.Tasks.Task<Models.Bet.Bet> GetAsync(string projectId, string problemId, string betId);
 
         /// <summary>
         /// Add a new bet to a problem. As with the problem and project this form only asks for the minimum

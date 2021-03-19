@@ -62,7 +62,8 @@ namespace ProjectSpeedy.Services
                 projects.rows.Add(new Models.General.ListItem()
                 {
                     Id = record.value.id,
-                    Name = record.value.name
+                    Name = record.value.name,
+                    Address = "/project/" + record.value.id.Replace("project:", "")
                 });
             }
 

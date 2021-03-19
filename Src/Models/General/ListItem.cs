@@ -19,5 +19,10 @@ namespace ProjectSpeedy.Models.General
         /// Gets or sets the status of the item.
         /// </summary>
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address of the item.
+        /// </summary>
+        public string Address { get; set; }
     }
 }

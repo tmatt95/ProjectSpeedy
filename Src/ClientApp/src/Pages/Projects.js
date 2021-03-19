@@ -6,13 +6,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     /**
      * Existing projects.
      */
-    const [projects, setProjects] = useState([
-        { name: "Project 0", address: "/project/1" },
-        { name: "Project 1", address: "/project/2" },
-        { name: "Project 2", address: "/project/3" },
-        { name: "Project 3", address: "/project/4" },
-        { name: "Project 4", address: "/project/5" },
-        { name: "Project 5", address: "/project/6" }]);
+    const [projects, setProjects] = useState([]);
 
     /**
      * Add a project to the list of existing projects.
@@ -30,12 +24,28 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {    
-        if(runOnce === false){
-            document.title = `Projects`;  
-            setBreadCrumbs([{text: "Projects", address:"/" }]);
+    useEffect(() => {
+        if (runOnce === false) {
+            document.title = `Projects`;
+            setBreadCrumbs([{ text: "Projects", address: "/" }]);
             setRunOnce(true);
-        }  
+
+            fetch("/api/projects")
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        //setIsLoaded(true);
+                        setProjects(result.rows);
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+                        //setIsLoaded(true);
+                        //setError(error);
+                    }
+                )
+        }
     }, [runOnce, setBreadCrumbs, breadCrumbs]);
 
     /**
@@ -47,7 +57,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         let myModalEl = document.getElementById('newModal')
         let modal = bootstrap.Modal.getInstance(myModalEl)
         modal.hide();
-        addProject(newProjectName, projects.length +1);
+        addProject(newProjectName, projects.length + 1);
         setNewProjectName("");
         globalMessage({ message: "Project added successfully", class: "alert-success" });
     }

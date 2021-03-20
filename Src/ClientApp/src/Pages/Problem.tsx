@@ -1,21 +1,24 @@
-import React, { useState, useEffect, Dispatch, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
-import { BreadCrumbItem } from '../Components/BreadCrumbs';
+import { IPage } from '../Interfaces/IPage';
 
-export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: {message: string, class: string}) => void}) {
+export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
+{
     /**
      * GET parameters.
      */
-    let { problemId, projectId }: {problemId: string, projectId: string} = useParams();
+    let { problemId, projectId }: { problemId: string, projectId: string } = useParams();
 
     /**
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {
-        if (runOnce === false) {
+    useEffect(() =>
+    {
+        if (runOnce === false)
+        {
             document.title = `Problem ${problemId}`;
             setBreadCrumbs(breadCrumbs.concat([{ address: `/`, text: "Project", isLast: false }, { address: `/`, text: "Problem", isLast: false }]));
             setRunOnce(true);
@@ -43,17 +46,18 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
      * Create a new bet
      * @param {*} event The submit form event
      */
-    const CreateNewBet = (event: FormEvent<HTMLFormElement>) => {
+    const CreateNewBet = (event: FormEvent<HTMLFormElement>) =>
+    {
         event.preventDefault();
         let myModalEl: HTMLElement | null = document.getElementById('newModal')
-        
+
         if (myModalEl != null)
         {
             let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
             modal.hide();
             setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address: "/" }))
             setNewBetName("");
-            globalMessage({ message: "Problem Added", class: "alert-success" });   
+            globalMessage({ message: "Problem Added", class: "alert-success" });
         }
     }
 

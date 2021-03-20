@@ -3,19 +3,23 @@ import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { BreadCrumbItem } from '../Components/BreadCrumbs';
+import { IPage } from '../Interfaces/IPage';
 
-export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: {message: string, class: string}) => void}) {
+export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
+{
     /**
      * GET parameters.
      */
-    let { projectId }: {projectId: string} = useParams();
+    let { projectId }: { projectId: string } = useParams();
 
     /**
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {
-        if (runOnce === false) {
+    useEffect(() =>
+    {
+        if (runOnce === false)
+        {
             document.title = `Project ${projectId}`;
             setRunOnce(true);
 
@@ -23,7 +27,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
             fetch(`/api/project/${projectId}`)
                 .then(res => res.json())
                 .then(
-                    (result) => {
+                    (result) =>
+                    {
                         //setIsLoaded(true);
 
                         // Sets the model against the page.
@@ -37,7 +42,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
                     // Note: it's important to handle errors here
                     // instead of a catch() block so that we don't swallow
                     // exceptions from actual bugs in components.
-                    (error) => {
+                    (error) =>
+                    {
                         //setIsLoaded(true);
                         //setError(error);
                     }
@@ -49,7 +55,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
     /**
      * Dummy data containing exisiting bets.
      */
-    const [project, setProject]: [{ name: string, problems: CardItem[]}, Dispatch<{ name: string, problems: CardItem[]}>] | [null, Dispatch<SetStateAction<null>>] = useState(null);
+    const [project, setProject]: [{ name: string, problems: CardItem[] }, Dispatch<{ name: string, problems: CardItem[] }>] | [null, Dispatch<SetStateAction<null>>] = useState(null);
 
     /**
      * The name of a new problem.
@@ -60,7 +66,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
      * Create a new bet
      * @param {*} event The submit form event
      */
-    const CreateNewProblem = (event: FormEvent<HTMLFormElement>) => {
+    const CreateNewProblem = (event: FormEvent<HTMLFormElement>) =>
+    {
         event.preventDefault();
         let myModalEl: HTMLElement | null = document.getElementById('newModal');
 
@@ -70,7 +77,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBre
             modal.hide();
             //setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address: "/" }))
             //setNewProblemName("");
-            globalMessage({ message: "Problem Added", class: "alert-success" }); 
+            globalMessage({ message: "Problem Added", class: "alert-success" });
         }
 
     }

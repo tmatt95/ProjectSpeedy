@@ -1,9 +1,9 @@
-import { useState, useEffect, FormEvent, Dispatch } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
-import { BreadCrumbItem } from '../Components/BreadCrumbs';
+import { IPage } from '../Interfaces/IPage';
 
-export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: { message: string, class: string }) => void })
+export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
 {
     /**
      * Existing projects.

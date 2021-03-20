@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, FormEvent } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
+import { BreadCrumbItem } from '../Components/BreadCrumbs';
 
-export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: {message: string, class: string}) => void}) {
     /**
      * GET parameters.
      */
-    let { problemId, projectId } = useParams();
+    let { problemId, projectId }: {problemId: string, projectId: string} = useParams();
 
     /**
      * Used to run code only once on page load.
@@ -16,7 +17,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     useEffect(() => {
         if (runOnce === false) {
             document.title = `Problem ${problemId}`;
-            setBreadCrumbs(breadCrumbs.concat([{ address: `/`, text: "Project" }, [{ address: `/`, text: "Problem" }]]));
+            setBreadCrumbs(breadCrumbs.concat([{ address: `/`, text: "Project", isLast: false }, { address: `/`, text: "Problem", isLast: false }]));
             setRunOnce(true);
         }
     }, [runOnce, setBreadCrumbs, breadCrumbs, projectId, problemId]);
@@ -42,14 +43,18 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Create a new bet
      * @param {*} event The submit form event
      */
-    const CreateNewBet = (event) => {
+    const CreateNewBet = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        let myModalEl = document.getElementById('newModal')
-        let modal = bootstrap.Modal.getInstance(myModalEl)
-        modal.hide();
-        setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address: "/" }))
-        setNewBetName("");
-        globalMessage({ message: "Problem Added", class: "alert-success" });
+        let myModalEl: HTMLElement | null = document.getElementById('newModal')
+        
+        if (myModalEl != null)
+        {
+            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+            setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address: "/" }))
+            setNewBetName("");
+            globalMessage({ message: "Problem Added", class: "alert-success" });   
+        }
     }
 
     return <>
@@ -62,7 +67,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         <CardGrid data={bets} />
 
         <form onSubmit={(event) => CreateNewBet(event)}>
-            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

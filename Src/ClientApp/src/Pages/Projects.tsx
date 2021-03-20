@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent, Dispatch } from 'react';
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
+import { BreadCrumbItem } from '../Components/BreadCrumbs';
 
-export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: { message: string, class: string }) => void })
+{
     /**
      * Existing projects.
      */
@@ -13,7 +15,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * @param {*} name Name of the project
      * @param {*} id Id of the project
      */
-    const addProject = (name, id) => setProjects(projects.concat({ name: `${name}`, address: `/project/${id}` }));
+    const addProject = (name: string, id: number) => setProjects(projects);
 
     /**
      * Name of the new project.
@@ -24,24 +26,28 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
-    useEffect(() => {
-        if (runOnce === false) {
+    useEffect(() =>
+    {
+        if (runOnce === false)
+        {
             document.title = `Projects`;
-            setBreadCrumbs([{ text: "Projects", address: "/" }]);
+            setBreadCrumbs([{ text: "Projects", address: "/", isLast: false }]);
             setRunOnce(true);
 
             // Loads the projects onto the page
             fetch("/api/projects")
                 .then(res => res.json())
                 .then(
-                    (result) => {
+                    (result) =>
+                    {
                         //setIsLoaded(true);
                         setProjects(result.rows);
                     },
                     // Note: it's important to handle errors here
                     // instead of a catch() block so that we don't swallow
                     // exceptions from actual bugs in components.
-                    (error) => {
+                    (error) =>
+                    {
                         //setIsLoaded(true);
                         //setError(error);
                     }
@@ -53,17 +59,22 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Create New Project
      * @param {*} event The submit form event
      */
-    const CreateNewProject = (event) => {
+    const CreateNewProject = (event: FormEvent<HTMLFormElement>) =>
+    {
         event.preventDefault();
-        let myModalEl = document.getElementById('newModal')
-        let modal = bootstrap.Modal.getInstance(myModalEl)
-        modal.hide();
-        addProject(newProjectName, projects.length + 1);
-        setNewProjectName("");
-        globalMessage({ message: "Project added successfully", class: "alert-success" });
+        let myModalEl: HTMLElement | null = document.getElementById('newModal');
+
+        if (myModalEl != null)
+        {
+            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+            addProject(newProjectName, projects.length + 1);
+            setNewProjectName("");
+            globalMessage({ message: "Project added successfully", class: "alert-success" });
+        }
     }
 
-    return <>
+    return (<>
         <div className="row">
             <div className="col">
                 <h1>Projects</h1>
@@ -73,7 +84,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         <CardGrid data={projects} />
 
         <form onSubmit={(event) => CreateNewProject(event)}>
-            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -95,5 +106,5 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }) {
                 </div>
             </div>
         </form>
-    </>;
+    </>);
 }

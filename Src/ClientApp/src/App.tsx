@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import './App.css';
 import { Projects } from './Pages/Projects';
 import { Project } from './Pages/Project';
 import { Problem } from './Pages/Problem';
-import { BreadCrumbs } from './Components/BreadCrumbs';
+import { IGlobalMessage  } from './Interfaces/Components';
+import { BreadCrumbItem, BreadCrumbs } from './Components/BreadCrumbs';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,12 +13,15 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
+
 /**
- * Display a global message across the website.
- * @param {*} Message object containing the message and display options.
+ * Show / hide / update the global message at the top of the page.
+ * @param param0 
+ * @returns 
  */
-function GlobalMessage({globalMessage, message }) {
-  if (message !== "") {
+function GlobalMessage({ globalMessage, message }: { globalMessage: ({}: IGlobalMessage) => void, message: IGlobalMessage })
+{
+  if (message !== null) {
     let classes = `alert alert-dismissible fade show ${message.class}`;
     return <>
     <div className={classes} role="alert">
@@ -33,10 +37,11 @@ function GlobalMessage({globalMessage, message }) {
 
 export default function App() {
   // Used to store page messages.
-  const [globalMessage, setGlobalMessage] = useState("");
+  const [globalMessage, setGlobalMessage]: [IGlobalMessage, Dispatch<IGlobalMessage>] = useState({message: "", class: "d-none"});
 
   // Used to store the data used to generate the breadcrumbs for the page.
-  const [breadCrumbs, setBreadCrumbs] = useState([{text: "Projects", address:"/"}]);
+  var initalCrumbs: BreadCrumbItem[] = [{ text: "Projects", address: "/", isLast: true }];
+  const [breadCrumbs, setBreadCrumbs]: [BreadCrumbItem[], Dispatch<BreadCrumbItem[]>] = useState(initalCrumbs);
 
   return (
     <>
@@ -76,10 +81,10 @@ export default function App() {
         <div className="container">
           <Switch>
             <Route path="/project">
-              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) =>{setBreadCrumbs(crumbs)}} globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
+              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) =>{setBreadCrumbs(crumbs)}} globalMessage={(alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage)} />
             </Route>
             <Route path="/">
-              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) =>{setBreadCrumbs(crumbs)}}  globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} />
+              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) =>{setBreadCrumbs(crumbs)}}  globalMessage={(alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage)} />
             </Route>
           </Switch>
         </div>
@@ -92,7 +97,7 @@ export default function App() {
  * Contains links to the project section of the application.
  * @param {*} props Properties sent into the section.
  */
-function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }: {setBreadCrumbs: (crumbs: BreadCrumbItem[]) => void, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: IGlobalMessage) => void}) {
   let match = useRouteMatch();
   return (
     <>
@@ -101,10 +106,10 @@ function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }) {
           <h1>Bet</h1>
         </Route>
         <Route path={`${match.path}/:projectId/:problemId`}>
-          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
+          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={`${match.path}/:projectId`}>
-          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
+          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => {setBreadCrumbs(crumbs)}} globalMessage={globalMessage} />
         </Route>
         <Route path={match.path}>
           <h3>Project Id not supplied</h3>

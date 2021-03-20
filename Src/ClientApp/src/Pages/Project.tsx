@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, FormEvent, SetStateAction } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
-import { CardGrid } from '../Components/CardGrid'
+import { CardGrid, CardItem } from '../Components/CardGrid'
+import { BreadCrumbItem } from '../Components/BreadCrumbs';
 
-export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
+export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: Dispatch<BreadCrumbItem[]>, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: {message: string, class: string}) => void}) {
     /**
      * GET parameters.
      */
-    let { projectId } = useParams();
+    let { projectId }: {projectId: string} = useParams();
 
     /**
      * Used to run code only once on page load.
@@ -30,8 +31,8 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
 
                         // Set the breadcrumbs.
                         setBreadCrumbs([]);
-                        setBreadCrumbs(breadCrumbs.concat([{ address: "/", text: "Projects" }]));
-                        setBreadCrumbs(breadCrumbs.concat([{ text: result.name }]));
+                        setBreadCrumbs(breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
+                        setBreadCrumbs(breadCrumbs.concat([{ address: "", text: result.name, isLast: true }]));
                     },
                     // Note: it's important to handle errors here
                     // instead of a catch() block so that we don't swallow
@@ -48,7 +49,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
     /**
      * Dummy data containing exisiting bets.
      */
-    const [project, setProject] = useState(null);
+    const [project, setProject]: [{ name: string, problems: CardItem[]}, Dispatch<{ name: string, problems: CardItem[]}>] | [null, Dispatch<SetStateAction<null>>] = useState(null);
 
     /**
      * The name of a new problem.
@@ -59,23 +60,28 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
      * Create a new bet
      * @param {*} event The submit form event
      */
-    const CreateNewProblem = (event) => {
+    const CreateNewProblem = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        let myModalEl = document.getElementById('newModal')
-        let modal = bootstrap.Modal.getInstance(myModalEl)
-        modal.hide();
-        //setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address: "/" }))
-        //setNewProblemName("");
-        globalMessage({ message: "Problem Added", class: "alert-success" });
+        let myModalEl: HTMLElement | null = document.getElementById('newModal');
+
+        if (myModalEl != null)
+        {
+            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+            //setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address: "/" }))
+            //setNewProblemName("");
+            globalMessage({ message: "Problem Added", class: "alert-success" }); 
+        }
+
     }
 
     // contains the project grid if one to render
     let projectGrid = null;
     let projectName = "";
-    if (project != null) {
-        projectName = project.name;
-        projectGrid = <CardGrid data={project.problems} />
-    }
+    // if (project != null) {
+    //     projectName = project.name;
+    //     projectGrid = <CardGrid data={project.problems} />
+    // }
 
     return <>
         <div className="row">
@@ -88,7 +94,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }) {
         {projectGrid}
 
         <form onSubmit={(event) => CreateNewProblem(event)}>
-            <div className="modal fade" id="newModal" tabIndex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

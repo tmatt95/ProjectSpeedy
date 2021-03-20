@@ -2,15 +2,31 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 /**
+ * Represents an individual breadcrumb item.
+ */
+ export interface CardItem
+ {
+     /**
+      * Address the user is taken to when they click a breadcrumb.
+      */
+     address: string;
+ 
+     /**
+      * Text to display in the breadcrumb.
+      */
+     name: string;
+ }
+
+/**
 * Will render a card used extensively across all the menues in the application.
-* @param {props} props Object properties 
+* @param CardItem props Object properties 
 */
-export function Card({ address, text }) {
+export function Card({ address, name }: CardItem) {
     return <Link to={address}>
         <div className="card">
             <div className="card-body text-center">
                 <div><i className="bi bi-journal grid-card-icon"></i></div>
-                {text}
+                {name}
             </div>
         </div>
     </Link>
@@ -20,7 +36,7 @@ export function Card({ address, text }) {
  * Will render a grid of cards.
  * @param {*} param0 
  */
-export function CardGrid({ data }) {
+export function CardGrid({ data }: {data: CardItem[]}) {
     return <>
         <div className="row">
             <div className="col-md-6 col-lg-4 pt-2">
@@ -33,9 +49,9 @@ export function CardGrid({ data }) {
                     </div>
                 </button>
             </div>
-            {data.map((t, index) =>
+            {data.map((t, index: number) =>
                 <div key={index} className="col-md-6 col-lg-4 pt-2">
-                    <Card address={t.address} text={t.name} />
+                    <Card address={t.address} name={t.name} />
                 </div>
             )}
         </div>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Dispatch, FormEvent, SetStateAction } from 'react';
+import { useState, useEffect, Dispatch, FormEvent } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
-import { BreadCrumbItem } from '../Components/BreadCrumbs';
-import { IPage } from '../Interfaces/IPage';
+import { IPage, IProject } from '../Interfaces/IPage';
 
 export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
 {
@@ -27,12 +26,11 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
             fetch(`/api/project/${projectId}`)
                 .then(res => res.json())
                 .then(
-                    (result) =>
+                    (result: IProject) =>
                     {
-                        //setIsLoaded(true);
-
                         // Sets the model against the page.
                         setProject(result);
+                        result.isLoaded = true;
 
                         // Set the breadcrumbs.
                         setBreadCrumbs([]);
@@ -53,9 +51,10 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
 
 
     /**
-     * Dummy data containing exisiting bets.
+     * Page model definition.
      */
-    const [project, setProject]: [{ name: string, problems: CardItem[] }, Dispatch<{ name: string, problems: CardItem[] }>] | [null, Dispatch<SetStateAction<null>>] = useState(null);
+    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false };
+    const [project, setProject]: [IProject, Dispatch<IProject>] = useState(defaultProject);
 
     /**
      * The name of a new problem.
@@ -75,30 +74,20 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
         {
             let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
             modal.hide();
-            //setProblems(problems.concat({ name: `Problem ${problems.length} - ${newProblemName}`, address: "/" }))
-            //setNewProblemName("");
             globalMessage({ message: "Problem Added", class: "alert-success" });
         }
-
     }
 
-    // contains the project grid if one to render
-    let projectGrid = null;
-    let projectName = "";
-    // if (project != null) {
-    //     projectName = project.name;
-    //     projectGrid = <CardGrid data={project.problems} />
-    // }
-
+    // Output the page view.
     return <>
         <div className="row">
             <div className="col">
-                <h1>{projectName}</h1>
+                <h1>{project.name}</h1>
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
             </div>
         </div>
 
-        {projectGrid}
+        <CardGrid data={project.problems} />
 
         <form onSubmit={(event) => CreateNewProblem(event)}>
             <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">

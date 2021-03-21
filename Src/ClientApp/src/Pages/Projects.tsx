@@ -1,6 +1,6 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react';
 import * as bootstrap from 'bootstrap';
-import { CardGrid } from '../Components/CardGrid'
+import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
 
 export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
@@ -8,14 +8,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
     /**
      * Existing projects.
      */
-    const [projects, setProjects] = useState([]);
-
-    /**
-     * Add a project to the list of existing projects.
-     * @param {*} name Name of the project
-     * @param {*} id Id of the project
-     */
-    const addProject = (name: string, id: number) => setProjects(projects);
+    const [projects, setProjects]: [CardItem[], Dispatch<SetStateAction<CardItem[]>>] = useState(new Array<CardItem>());
 
     /**
      * Name of the new project.
@@ -66,9 +59,8 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
 
         if (myModalEl != null)
         {
-            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
+            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
             modal.hide();
-            addProject(newProjectName, projects.length + 1);
             setNewProjectName("");
             globalMessage({ message: "Project added successfully", class: "alert-success" });
         }

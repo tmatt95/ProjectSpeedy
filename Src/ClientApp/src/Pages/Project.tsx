@@ -4,12 +4,18 @@ import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
 
-export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
+export function Project(pageProps: IPage)
 {
     /**
      * GET parameters.
      */
     let { projectId }: { projectId: string } = useParams();
+
+    /**
+     * Page model definition.
+     */
+    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false };
+    const [project, setProject]: [IProject, Dispatch<IProject>] = useState(defaultProject);
 
     /**
      * Used to run code only once on page load.
@@ -19,7 +25,6 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
     {
         if (runOnce === false)
         {
-            document.title = `Project ${projectId}`;
             setRunOnce(true);
 
             // Loads the projects onto the page
@@ -32,10 +37,13 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
                         setProject(result);
                         result.isLoaded = true;
 
+                        // Sets the project name.
+                        document.title = `Project ${project.name}`;
+
                         // Set the breadcrumbs.
-                        setBreadCrumbs([]);
-                        setBreadCrumbs(breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
-                        setBreadCrumbs(breadCrumbs.concat([{ address: "", text: result.name, isLast: true }]));
+                        pageProps.setBreadCrumbs([]);
+                        pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
+                        pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "", text: result.name, isLast: true }]));
                     },
                     // Note: it's important to handle errors here
                     // instead of a catch() block so that we don't swallow
@@ -47,14 +55,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
                     }
                 );
         }
-    }, [runOnce, setBreadCrumbs, breadCrumbs, projectId]);
-
-
-    /**
-     * Page model definition.
-     */
-    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false };
-    const [project, setProject]: [IProject, Dispatch<IProject>] = useState(defaultProject);
+    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs, projectId, project.name]);
 
     /**
      * The name of a new problem.
@@ -74,7 +75,7 @@ export function Project({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
         {
             let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
             modal.hide();
-            globalMessage({ message: "Problem Added", class: "alert-success" });
+            pageProps.globalMessage({ message: "Problem Added", class: "alert-success" });
         }
     }
 

@@ -3,7 +3,7 @@ import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
 
-export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
+export function Projects(pageProps: IPage)
 {
     /**
      * Existing projects.
@@ -23,8 +23,8 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
     {
         if (runOnce === false)
         {
-            document.title = `Projects`;
-            setBreadCrumbs([{ text: "Projects", address: "/", isLast: false }]);
+            document.title = 'Projects';
+            pageProps.setBreadCrumbs([{ text: "Projects", address: "/", isLast: true }]);
             setRunOnce(true);
 
             // Loads the projects onto the page
@@ -33,7 +33,6 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
                 .then(
                     (result) =>
                     {
-                        //setIsLoaded(true);
                         setProjects(result.rows);
                     },
                     // Note: it's important to handle errors here
@@ -41,12 +40,10 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
                     // exceptions from actual bugs in components.
                     (error) =>
                     {
-                        //setIsLoaded(true);
-                        //setError(error);
                     }
                 );
         }
-    }, [runOnce, setBreadCrumbs, breadCrumbs]);
+    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs]);
 
     /**
      * Create New Project
@@ -62,7 +59,7 @@ export function Projects({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
             let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
             modal.hide();
             setNewProjectName("");
-            globalMessage({ message: "Project added successfully", class: "alert-success" });
+            pageProps.globalMessage({ message: "Project added successfully", class: "alert-success" });
         }
     }
 

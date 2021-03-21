@@ -1,10 +1,10 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
 
-export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
+export function Problem(pageProps: IPage)
 {
     /**
      * GET parameters.
@@ -20,10 +20,12 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
         if (runOnce === false)
         {
             document.title = `Problem ${problemId}`;
-            setBreadCrumbs(breadCrumbs.concat([{ address: `/`, text: "Project", isLast: false }, { address: `/`, text: "Problem", isLast: false }]));
+            pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([
+                { address: `/`, text: "Project", isLast: false },
+                { address: `/`, text: "Problem", isLast: false }]));
             setRunOnce(true);
         }
-    }, [runOnce, setBreadCrumbs, breadCrumbs, projectId, problemId]);
+    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs, projectId, problemId]);
 
 
     /**
@@ -57,7 +59,7 @@ export function Problem({ setBreadCrumbs, breadCrumbs, globalMessage }: IPage)
             modal.hide();
             setBets(bets.concat({ name: `Problem ${bets.length} - ${newBetName}`, address: "/" }))
             setNewBetName("");
-            globalMessage({ message: "Problem Added", class: "alert-success" });
+            pageProps.globalMessage({ message: "Problem Added", class: "alert-success" });
         }
     }
 

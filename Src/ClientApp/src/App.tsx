@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import { Dispatch, useState } from 'react';
 import './App.css';
 import { Projects } from './Pages/Projects';
 import { Project } from './Pages/Project';
@@ -6,13 +6,15 @@ import { Problem } from './Pages/Problem';
 import { IGlobalMessage } from './Interfaces/Components';
 import { BreadCrumbItem, BreadCrumbs } from './Components/BreadCrumbs';
 import
-  {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-  } from "react-router-dom";
+{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
+import { Bet } from './Pages/Bet';
+import { IPage } from './Interfaces/IPage';
 
 
 /**
@@ -46,6 +48,12 @@ export default function App()
   // Used to store the data used to generate the breadcrumbs for the page.
   var initalCrumbs: BreadCrumbItem[] = [{ text: "Projects", address: "/", isLast: true }];
   const [breadCrumbs, setBreadCrumbs]: [BreadCrumbItem[], Dispatch<BreadCrumbItem[]>] = useState(initalCrumbs);
+
+  var pageProps: IPage = {
+    breadCrumbs: breadCrumbs,
+    setBreadCrumbs: (crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) },
+    globalMessage: (alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage),
+  }
 
   return (
     <>
@@ -85,12 +93,12 @@ export default function App()
         <div className="container">
           <Switch>
             <Route path="/project">
-              <ProjectSection breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) }} globalMessage={(alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage)} />
+              <ProjectSection {...pageProps} />
             </Route>
             <Route path="/">
-              <Projects breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) }} globalMessage={(alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage)} />
+              <Projects {...pageProps} />
             </Route>
-          </Switch>
+          </Switch>;
         </div>
       </Router>
     </>
@@ -101,20 +109,20 @@ export default function App()
  * Contains links to the project section of the application.
  * @param {*} props Properties sent into the section.
  */
-function ProjectSection({ setBreadCrumbs, breadCrumbs, globalMessage }: { setBreadCrumbs: (crumbs: BreadCrumbItem[]) => void, breadCrumbs: BreadCrumbItem[], globalMessage: (alertMessage: IGlobalMessage) => void })
+function ProjectSection(pageProps: IPage)
 {
   let match = useRouteMatch();
   return (
     <>
       <Switch>
         <Route path={`${match.path}/:projectId/:problemId/:betId`}>
-          <h1>Bet</h1>
+          <Bet {...pageProps} />
         </Route>
         <Route path={`${match.path}/:projectId/:problemId`}>
-          <Problem breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) }} globalMessage={globalMessage} />
+          <Problem {...pageProps} />
         </Route>
         <Route path={`${match.path}/:projectId`}>
-          <Project breadCrumbs={breadCrumbs} setBreadCrumbs={(crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) }} globalMessage={globalMessage} />
+          <Project {...pageProps} />
         </Route>
         <Route path={match.path}>
           <h3>Project Id not supplied</h3>

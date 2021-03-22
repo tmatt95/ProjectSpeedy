@@ -16,32 +16,31 @@ import
 import { Bet } from './Pages/Bet';
 import { IPage } from './Interfaces/IPage';
 
-
-/**
- * Show / hide / update the global message at the top of the page.
- * @param param0 
- * @returns 
- */
-function GlobalMessage({ globalMessage, message }: { globalMessage: (arg0: IGlobalMessage) => void, message: IGlobalMessage })
-{
-  if (message !== null)
-  {
-    let classes = `alert alert-dismissible fade show ${message.class}`;
-    return <>
-      <div className={classes} role="alert">
-        {message.message}
-        <button type="button" className="btn-close" onClick={() => globalMessage({ message: "", class: "d-none" })} aria-label="Close"></button>
-      </div>
-    </>;
-  }
-  else
-  {
-    return <></>
-  }
-}
-
 export default function App()
 {
+  /**
+   * Show / hide / update the global message at the top of the page.
+   * @param param0 
+   * @returns 
+   */
+  function GlobalMessage({ globalMessage, message }: { globalMessage: (arg0: IGlobalMessage) => void, message: IGlobalMessage })
+  {
+    if (message !== null)
+    {
+      let classes = `alert alert-dismissible fade show ${message.class}`;
+      return <>
+        <div className={classes} role="alert">
+          {message.message}
+          <button type="button" className="btn-close" onClick={() => globalMessage({ message: "", class: "d-none" })} aria-label="Close"></button>
+        </div>
+      </>;
+    }
+    else
+    {
+      return <></>
+    }
+  }
+
   // Used to store page messages.
   const [globalMessage, setGlobalMessage]: [IGlobalMessage, Dispatch<IGlobalMessage>] = useState({ message: "", class: "d-none" });
 

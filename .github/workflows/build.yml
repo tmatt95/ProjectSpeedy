@@ -46,7 +46,7 @@ jobs:
           npm install react-scripts
           npm test
           cd ../
-          ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:sonar.test.inclusions="ClientApp/src/__tests__" /d:sonar.exclusions="ClientApp/src/__tests__"
+          ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:sonar.test.inclusions="ClientApp/src/__tests__"
           dotnet clean
           dotnet build
           ~/sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

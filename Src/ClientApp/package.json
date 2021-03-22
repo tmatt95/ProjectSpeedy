@@ -50,7 +50,7 @@
     "jest-sonar-reporter": "^2.0.0"
   },
   "jestSonar": {
-    "reportPath": "./../reports",
+    "reportPath": "./reports",
     "reportFile": "test-reporter.xml",
     "indent": 4,
     "env": {

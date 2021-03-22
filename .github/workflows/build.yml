@@ -42,7 +42,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-          cd Src
+          cd Src/ClientApp/
+          npm test
+          cd ../
           ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet clean
           dotnet build

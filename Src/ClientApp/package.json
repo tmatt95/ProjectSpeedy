@@ -52,6 +52,7 @@
   "jestSonar": {
     "reportPath": "./reports",
     "reportFile": "test-reporter.xml",
+    "collectCoverage": true,
     "indent": 4,
     "env": {
       "test": {

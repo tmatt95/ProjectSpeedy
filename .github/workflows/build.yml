@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           cd Src/ClientApp/
-          npm install -g react-scripts
+          npm install react-scripts
           npm test
           cd ../
           ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:F958DCEA-D781-4B6C-97B5-FCC343487EFB.sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:F958DCEA-D781-4B6C-97B5-FCC343487EFB.sonar.tests="ClientApp/src/__tests__/App.js"

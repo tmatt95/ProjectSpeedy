@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -17,6 +18,12 @@ namespace ProjectSpeedy.Services
         /// This will make the API calls without using a third party library.
         /// </summary>
         private readonly IHttpClientFactory _clientFactory;
+
+        /// <summary>
+        /// Contains cached documents which have been requested on the same request.
+        /// <Document Id, Document http content>
+        /// </summary>
+        private Dictionary<string, HttpContent> _cachedDocuments = new Dictionary<string, HttpContent>();
 
         /// <summary>
         /// Needed to read the CouchDB settings for the application from appsettings.
@@ -69,10 +76,10 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<HttpContent> GetView(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "")
         {
-            // Send the request to add the new document
+            // Send the request to add the new document.
             string requestAddress = "";
 
-            // Sets the start and end key if specified
+            // Sets the start and end key if specified.
             if (string.IsNullOrWhiteSpace(startKey) || string.IsNullOrWhiteSpace(endKey))
             {
                 requestAddress = this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/_partition/" + partition + "/_design/" + designDocumentName + "/_view/" + viewName;
@@ -87,15 +94,13 @@ namespace ProjectSpeedy.Services
                     viewName + "?startkey=%22" + startKey + "%22&endkey=%22" + endKey + "%22";
             }
 
-            // Makes the request
+            // Makes the request.
             var request = new HttpRequestMessage(HttpMethod.Get, requestAddress);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
             var client = _clientFactory.CreateClient();
 
-            // Convert response to output
+            // Convert response to output.
             var response = await client.SendAsync(request);
-
-            // TODO we need some couchdb view classes and then we can convert the views into output which links to swagger files / makes more sense.
 
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
@@ -119,6 +124,11 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<HttpContent> GetDocument(string documentId)
         {
+            // If we have a cached version then return that.
+            if(this._cachedDocuments.ContainsKey(documentId)){
+                return this._cachedDocuments[documentId];
+            }
+
             // Send the request to add the new document
             var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + documentId);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
@@ -127,10 +137,11 @@ namespace ProjectSpeedy.Services
             // Convert response to output
             var response = await client.SendAsync(request);
 
-            // TODO If 404 then throw not found
-
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
+
+            // Add document to cache
+            this._cachedDocuments.Add(documentId, response.Content);
 
             // Returns the Id of the newly created record.
             return response.Content;

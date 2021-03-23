@@ -16,6 +16,16 @@ namespace ProjectSpeedy.Services
         private readonly IServiceBase _serviceBase;
 
         /// <summary>
+        /// Prefix of id's in couchdb.
+        /// </summary>
+        public const string PREFIX = "project:";
+
+        /// <summary>
+        /// Partitions allow CouchDB to scale better.
+        /// </summary>
+        public const string PARTITION = "project";
+
+        /// <summary>
         /// All project related services.
         /// </summary>
         /// <param name="serviceBase">Contains helper functions needed for all services to work.</param>
@@ -37,7 +47,7 @@ namespace ProjectSpeedy.Services
             };
 
             // Creates the project and checks if the id is returned.
-            var newId = await this._serviceBase.DocumetCreate(newProject, "project");
+            var newId = await this._serviceBase.DocumetCreate(newProject, Project.PARTITION);
             return !string.IsNullOrWhiteSpace(newId);
         }
 
@@ -63,7 +73,7 @@ namespace ProjectSpeedy.Services
                 {
                     Id = record.value.id,
                     Name = record.value.name,
-                    Address = "/project/" + record.value.id.Replace("project:", "")
+                    Address = "/project/" + record.value.id.Replace(Project.PREFIX, "")
                 });
             }
 
@@ -93,7 +103,7 @@ namespace ProjectSpeedy.Services
                 {
                     Id = record.value.id,
                     Name = record.value.name,
-                    Address = "/project/" + projectId + "/" + record.value.id.Replace("problem:", "")
+                    Address = "/project/" + projectId + "/" + record.value.id.Replace(Problem.PREFIX, "")
                 });
             }
             return project;

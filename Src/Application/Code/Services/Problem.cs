@@ -14,6 +14,16 @@ namespace ProjectSpeedy.Services
         private readonly IServiceBase _serviceBase;
 
         /// <summary>
+        /// Prefix of id's in couchdb.
+        /// </summary>
+        public const string PREFIX = "problem:";
+
+        /// <summary>
+        /// Partitions allow CouchDB to scale better.
+        /// </summary>
+        public const string PARTITION = "problem";
+
+        /// <summary>
         /// All problem related services.
         /// </summary>
         /// <param name="serviceBase">Contains helper functions needed for all services to work.</param>
@@ -38,7 +48,7 @@ namespace ProjectSpeedy.Services
             };
 
             // Creates the project and checks if the id is returned.
-            var newId = await this._serviceBase.DocumetCreate(newProblem, "problem");
+            var newId = await this._serviceBase.DocumetCreate(newProblem, Problem.PARTITION);
             return !string.IsNullOrWhiteSpace(newId);
         }
 

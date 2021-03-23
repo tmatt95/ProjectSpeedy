@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+    <file path="C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\ClientApp\src\__tests__\App.js">
+        <testCase name="The overall application component should render without errror" duration="190"/>
+    </file>
+</testExecutions>

@@ -42,20 +42,20 @@ jobs:
           cd Src/Application/ClientApp/
           npm install react-scripts
           npm test
-          cd ../
       - name: Run dotnet unit tests
         shell: bash
         run: |
-          cd Tests
+          pwd
+          cd Src/Application/Tests/
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput=../lcov
           npm test
-          cd ../
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if anyy  
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
+          cd Src/Application/
           ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:F958DCEA-D781-4B6C-97B5-FCC343487EFB.sonar.tests="ClientApp/src/__tests__/App.js"
           dotnet clean
           dotnet build

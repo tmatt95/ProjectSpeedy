@@ -4,14 +4,14 @@
     "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj": {
+    "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\ProjectSpeedy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj",
-        "projectName": "Tests",
-        "projectPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj",
+        "projectUniqueName": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\ProjectSpeedy.csproj",
+        "projectName": "ProjectSpeedy",
+        "projectPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\ProjectSpeedy.csproj",
         "packagesPath": "C:\\Users\\matthew\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\obj\\",
+        "outputPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,9 +41,81 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.SpaServices.Extensions": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj",
+        "projectName": "Tests",
+        "projectPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\Tests.csproj",
+        "packagesPath": "C:\\Users\\matthew\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\matthew\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\ProjectSpeedy.csproj": {
+                "projectPath": "C:\\Users\\matthew\\Documents\\GitHub\\ProjectSpeedy\\Src\\Application\\Code\\ProjectSpeedy.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.5.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
             },
             "NUnit": {
               "target": "Package",

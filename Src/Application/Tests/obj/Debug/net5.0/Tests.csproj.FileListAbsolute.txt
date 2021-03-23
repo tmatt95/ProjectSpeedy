@@ -97,3 +97,14 @@ C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\obj\Debug\
 C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\obj\Debug\net5.0\ref\Tests.dll
 C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\obj\Debug\net5.0\Tests.pdb
 C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\obj\Debug\net5.0\Tests.genruntimeconfig.cache
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\CoverletSourceRootsMapping
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\ProjectSpeedy.Views.dll
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\ProjectSpeedy.Views.pdb
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\appsettings.development.json
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\appsettings.json
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\ProjectSpeedy.exe
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\Castle.Core.dll
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\Moq.dll
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\ProjectSpeedy.dll
+C:\Users\matthew\Documents\GitHub\ProjectSpeedy\Src\Application\Tests\bin\Debug\net5.0\ProjectSpeedy.pdb

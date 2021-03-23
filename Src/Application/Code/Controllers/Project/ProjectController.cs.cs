@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -40,6 +41,13 @@ namespace ProjectSpeedy.Controllers
             try
             {
                 return this.Ok(await this._projectServices.Get(projectId));
+            }
+            catch (HttpRequestException e)
+            {
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                    return NotFound();
+                }
+                return this.Problem();
             }
             catch (Exception e)
             {
@@ -86,6 +94,13 @@ namespace ProjectSpeedy.Controllers
 
                 return this.Problem();
             }
+            catch (HttpRequestException e)
+            {
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                    return NotFound();
+                }
+                return this.Problem();
+            }
             catch (Exception e)
             {
                 this._logger.LogError(e, e.Message);
@@ -107,6 +122,13 @@ namespace ProjectSpeedy.Controllers
             {
                 return this.Accepted();
             }
+            catch (HttpRequestException e)
+            {
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                    return NotFound();
+                }
+                return this.Problem();
+            }
             catch (Exception e)
             {
                 this._logger.LogError(e, e.Message);
@@ -125,6 +147,13 @@ namespace ProjectSpeedy.Controllers
             try
             {
                 return this.Accepted();
+            }
+            catch (HttpRequestException e)
+            {
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                    return NotFound();
+                }
+                return this.Problem();
             }
             catch (Exception e)
             {

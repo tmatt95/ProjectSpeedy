@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,14 +17,26 @@ namespace ProjectSpeedy.Controllers
         private readonly ILogger<BetController> _logger;
 
         /// <summary>
+        /// Used to interact with project data.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProject _projectService;
+
+        /// <summary>
+        /// Used to interact with problem data.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProblem _problemService;
+
+        /// <summary>
         /// Used to interact with bet data.
         /// </summary>
         private readonly ProjectSpeedy.Services.IBet _betService;
 
-        public BetController(ILogger<BetController> logger, ProjectSpeedy.Services.IBet betService)
+        public BetController(ILogger<BetController> logger, ProjectSpeedy.Services.IBet betService, ProjectSpeedy.Services.IProblem problemService, ProjectSpeedy.Services.IProject projectService)
         {
             this._logger = logger;
             this._betService = betService;
+            this._problemService = problemService;
+            this._projectService = projectService;
         }
 
         /// <summary>
@@ -38,10 +51,30 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
-                return this.Ok(await this._betService.GetAsync(projectId, problemId, betId));
+                // Gets the bet and checks the project and problem ids are valid for it.
+                // If the bet cannot be found it will throw a 404 exception.
+                var bet = await this._betService.GetAsync(projectId, problemId, betId);
+                if(bet.ProjectId != projectId || bet.ProblemId != problemId){
+                    return this.NotFound();
+                }
+
+                // If the id's are valid we can return a result.
+                return this.Ok(bet);
+            }
+            catch (HttpRequestException e)
+            {
+                // Will be triggered if the bet cannot be found (wrong id).
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                    return NotFound();
+                }
+
+                // Any other exception code is a problem.
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
             }
             catch (Exception e)
             {
+                // Unhandled exception.
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
@@ -60,6 +93,13 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
+                // Gets the problem and checks the project id is valid for it.
+                // If the bet cannot be found it will throw a 404 exception.
+                var problem = await this._problemService.GetAsync(projectId, problemId);
+                if(problem.ProjectId != projectId){
+                    return this.NotFound();
+                }
+
                 // Checks we have a valid request.
                 if (!ModelState.IsValid)
                 {
@@ -89,10 +129,17 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing updated bet information.</param>
         /// <returns>If the update was a success.</returns>
         [HttpPost("/api/project/{projectId}/problem/{problemId}/bet/{betId}")]
-        public ActionResult Post(string projectId, string problemId, string betId, Models.Bet.BetUpdate form)
+        public async System.Threading.Tasks.Task<ActionResult> PostAsync(string projectId, string problemId, string betId, Models.Bet.BetUpdate form)
         {
             try
             {
+                // Gets the bet and checks the project and problem ids are valid for it.
+                // If the bet cannot be found it will throw a 404 exception.
+                var bet = await this._betService.GetAsync(projectId, problemId, betId);
+                if(bet.ProjectId != projectId || bet.ProblemId != problemId){
+                    return this.NotFound();
+                }
+
                 return this.Accepted();
             }
             catch (Exception e)

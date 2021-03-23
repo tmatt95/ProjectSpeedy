@@ -16,13 +16,15 @@ namespace ProjectSpeedy.Services
 
         /// <summary>
         /// Gets an individual document.
+        /// TODO Add caching to stop this call calling the API on every request.
         /// </summary>
         /// <param name="documentId">The id of the document</param>
         /// <returns>Http content containing the document.</returns>
         Task<HttpContent> GetDocument(string documentId);
 
         /// <summary>
-        /// Call a view and return the JSON to convert into a 
+        /// Call a view and return the JSON to convert into an object.
+        /// TODO Add caching to stop this call calling the API on every request.
         /// </summary>
         /// <param name="partition">The partition to create the document in</param>
         /// <param name="designDocumentName">Name of the design document the view is attached to.</param>

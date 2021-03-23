@@ -17,11 +17,6 @@ namespace ProjectSpeedy.Controllers
         private readonly ILogger<BetController> _logger;
 
         /// <summary>
-        /// Used to interact with project data.
-        /// </summary>
-        private readonly ProjectSpeedy.Services.IProject _projectService;
-
-        /// <summary>
         /// Used to interact with problem data.
         /// </summary>
         private readonly ProjectSpeedy.Services.IProblem _problemService;
@@ -31,12 +26,11 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ProjectSpeedy.Services.IBet _betService;
 
-        public BetController(ILogger<BetController> logger, ProjectSpeedy.Services.IBet betService, ProjectSpeedy.Services.IProblem problemService, ProjectSpeedy.Services.IProject projectService)
+        public BetController(ILogger<BetController> logger, ProjectSpeedy.Services.IBet betService, ProjectSpeedy.Services.IProblem problemService)
         {
             this._logger = logger;
             this._betService = betService;
             this._problemService = problemService;
-            this._projectService = projectService;
         }
 
         /// <summary>

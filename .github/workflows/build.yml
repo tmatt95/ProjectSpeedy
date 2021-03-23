@@ -42,7 +42,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-          cd Src/ClientApp/
+          cd Src/Application/ClientApp/
           npm install react-scripts
           npm test
           cd ../

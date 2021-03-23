@@ -54,7 +54,7 @@ jobs:
         shell: bash
         run: |
           cd Src/Application/
-          ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:sonar.cs.opencover.reportsPaths="lcov.opencover.xml" /d:F958DCEA-D781-4B6C-97B5-FCC343487EFB.sonar.tests="Code/ClientApp/src/__tests__/App.js"
+          ~/sonar/scanner/dotnet-sonarscanner begin /k:"tmatt95_ProjectSpeedy" /o:"tmatt95-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.testExecutionReportPaths="ClientApp/reports-test/test-reporter.xml" /d:sonar.cs.opencover.reportsPaths="lcov.opencover.xml" /d:F958DCEA-D781-4B6C-97B5-FCC343487EFB.sonar.tests="ClientApp/src/__tests__/App.js"
           dotnet clean
           dotnet build
           ~/sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

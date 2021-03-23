@@ -45,10 +45,8 @@ jobs:
       - name: Run dotnet unit tests
         shell: bash
         run: |
-          pwd
           cd Src/Application/Tests/
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput=../lcov
-          npm test
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if anyy  

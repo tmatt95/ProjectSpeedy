@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using ProjectSpeedy.Services;
@@ -11,11 +12,20 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public async System.Threading.Tasks.Task TestCreateValidAsync()
         {
             var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
-            var test = new ProjectSpeedy.Services.Bet(mockTest.Object);
-            Assert.Pass();
+
+            var betService = new ProjectSpeedy.Services.Bet(mockTest.Object);
+            var form = new ProjectSpeedy.Models.Bet.BetNew()
+            {
+                Name = "Test Bet"
+            };
+
+            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Bet.Bet>(), "bet"))
+                .Returns(Task.FromResult("TestNewId"));
+
+            Assert.AreEqual(await betService.CreateAsync("ProjectId","ProblemId",form), true);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Tests.Services
             {
                 Name = "Test Problem"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Project.Project>(), "Problem"))
+            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Project.Problem>(), "Problem"))
                 .Returns(Task.FromResult(""));
 
             // Act

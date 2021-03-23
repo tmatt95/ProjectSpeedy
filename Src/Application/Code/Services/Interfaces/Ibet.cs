@@ -31,7 +31,7 @@ namespace ProjectSpeedy.Services
         /// <param name="problemId">Problem identifier</param>
         /// <param name="form">Form containing updated bet information.</param>
         /// <returns>If the update was a success.</returns>
-        bool Update(string projectId, string problemId, string betId, ProjectSpeedy.Models.Bet.BetNew form);
+        bool Update(string projectId, string problemId, string betId, ProjectSpeedy.Models.Bet.BetUpdate form);
 
         /// <summary>
         /// This action will delete the bet.

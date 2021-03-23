@@ -70,7 +70,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, string problemId, string betId, Models.Bet.BetNew form)
+        public bool Update(string projectId, string problemId, string betId, Models.Bet.BetUpdate form)
         {
             throw new System.NotImplementedException();
         }

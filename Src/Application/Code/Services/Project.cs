@@ -37,8 +37,6 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<bool> CreateAsync(Models.Project.ProjectNew form)
         {
-            // TODO We need to ensure that there is not another project with the same name.
-
             // The new project object
             var newProject = new ProjectSpeedy.Models.Project.Project()
             {

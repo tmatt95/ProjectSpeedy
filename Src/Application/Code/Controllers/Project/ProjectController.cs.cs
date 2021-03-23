@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -62,7 +63,19 @@ namespace ProjectSpeedy.Controllers
                 // Checks we have a valid request.
                 if (!ModelState.IsValid)
                 {
-                    return this.BadRequest();
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "You are trying to submit an invalid form."
+                    });
+                }
+
+                // Gets all projects and checks that there is not one with the same name
+                var projects = await this._projectServices.GetAll();
+                if(projects.rows.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower())){
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "There is already a project with the same name."
+                    });
                 }
 
                 // Try and add the project.

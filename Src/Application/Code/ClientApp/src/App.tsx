@@ -97,7 +97,7 @@ export default function App()
             <Route path="/">
               <Projects {...pageProps} />
             </Route>
-          </Switch>;
+          </Switch>
         </div>
       </Router>
     </>

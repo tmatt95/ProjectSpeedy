@@ -34,7 +34,7 @@ namespace Tests.Services
             var problemService = new ProjectSpeedy.Services.Problem(mockTest.Object);
             var form = new ProjectSpeedy.Models.Problem.ProblemNew()
             {
-                Name = "Test Problem"
+                Name = "Test Problem New"
             };
             mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Problem.Problem>(), "Problem"))
                 .Returns(Task.FromResult(""));

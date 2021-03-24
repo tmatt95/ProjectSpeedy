@@ -74,7 +74,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public async Task<HttpContent> GetView(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "")
+        public async Task<HttpContent> ViewGet(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "")
         {
             // Send the request to add the new document.
             string requestAddress = "";
@@ -122,7 +122,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public async Task<HttpContent> GetDocument(string documentId)
+        public async Task<HttpContent> DocumentGet(string documentId)
         {
             // If we have a cached version then return that.
             if(this._cachedDocuments.ContainsKey(documentId)){
@@ -147,7 +147,7 @@ namespace ProjectSpeedy.Services
             return response.Content;
         }
 
-        public async Task<bool> UpdateDocument(string documentId, string partition, object document)
+        public async Task<bool> DocumentUpdate(string documentId, string partition, object document)
         {
             using (var stream = new MemoryStream())
             {

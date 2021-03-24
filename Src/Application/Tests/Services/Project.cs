@@ -71,7 +71,7 @@ namespace Tests.Services
 
                 HttpResponseMessage response = new HttpResponseMessage();
                 response.Content = new StringContent(content);
-                mockTest.Setup(d => d.GetView("project", "projects", "projects", "", ""))
+                mockTest.Setup(d => d.ViewGet("project", "projects", "projects", "", ""))
                     .Returns(Task.FromResult(response.Content));
 
                 // Act
@@ -116,7 +116,7 @@ namespace Tests.Services
 
                 HttpResponseMessage response = new HttpResponseMessage();
                 response.Content = new StringContent(content);
-                mockTest.Setup(d => d.GetView("project", "projects", "projects", "", ""))
+                mockTest.Setup(d => d.ViewGet("project", "projects", "projects", "", ""))
                     .Returns(Task.FromResult(response.Content));
 
                 // Act

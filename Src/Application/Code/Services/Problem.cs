@@ -65,11 +65,11 @@ namespace ProjectSpeedy.Services
             var couchProblemId = "problem:" + problemId;
 
             // Gets the base problem.
-            var viewData = await this._serviceBase.GetDocument(couchProblemId);
+            var viewData = await this._serviceBase.DocumentGet(couchProblemId);
             using var responseStream = await viewData.ReadAsStreamAsync();
             var problem = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Problem.Problem>(responseStream);
 
-            var problemData = await this._serviceBase.GetView("bet", "bets", "bets", couchProblemId, couchProblemId);
+            var problemData = await this._serviceBase.ViewGet("bet", "bets", "bets", couchProblemId, couchProblemId);
             using var responseStreamProblems = await problemData.ReadAsStreamAsync();
 
             var rawBets = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.CouchDb.View.ViewResult>(responseStreamProblems);

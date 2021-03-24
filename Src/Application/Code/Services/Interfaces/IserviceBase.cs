@@ -20,7 +20,7 @@ namespace ProjectSpeedy.Services
         /// </summary>
         /// <param name="documentId">The id of the document</param>
         /// <returns>Http content containing the document.</returns>
-        Task<HttpContent> GetDocument(string documentId);
+        Task<HttpContent> DocumentGet(string documentId);
 
         /// <summary>
         /// Updates an individual document.
@@ -29,7 +29,7 @@ namespace ProjectSpeedy.Services
         /// <param name="partition">The partition to update the document in</param>
         /// <param name="document">Document object to create</param>
         /// <returns>Http content containing the document.</returns>
-        Task<bool> UpdateDocument(string documentId, string partition, object document);
+        Task<bool> DocumentUpdate(string documentId, string partition, object document);
 
         /// <summary>
         /// Call a view and return the JSON to convert into an object.
@@ -41,7 +41,7 @@ namespace ProjectSpeedy.Services
         /// <param name="startKey">Start key for view search</param>
         /// <param name="endKey">End key for view search</param>
         /// <returns>Http content containing the view.</returns>
-        Task<HttpContent> GetView(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "");
+        Task<HttpContent> ViewGet(string partition, string designDocumentName, string viewName, string startKey = "", string endKey = "");
 
         /// <summary>
         /// Create a new document

@@ -63,7 +63,7 @@ namespace ProjectSpeedy.Services
             var couchProjectId = Bet.PREFIX + betId;
 
             // Gets the base bet.
-            var viewData = await this._serviceBase.GetDocument(couchProjectId);
+            var viewData = await this._serviceBase.DocumentGet(couchProjectId);
             using var responseStream = await viewData.ReadAsStreamAsync();
             var bet = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Bet.Bet>(responseStream);
             return bet;

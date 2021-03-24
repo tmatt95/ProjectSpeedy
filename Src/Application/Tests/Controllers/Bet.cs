@@ -34,7 +34,7 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task GetNotfound()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument("bet:BetId"))
+            this._serviceBase.Setup(d => d.DocumentGet("bet:BetId"))
                 .Throws(new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound));
 
             // Act
@@ -51,7 +51,7 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task GetException()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument("bet:BetId"))
+            this._serviceBase.Setup(d => d.DocumentGet("bet:BetId"))
                 .Throws(new System.Exception("Exception"));
 
             // Act

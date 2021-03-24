@@ -57,7 +57,7 @@ namespace Tests.Controllers
                     string content = await reader.ReadToEndAsync();
                     HttpResponseMessage response = new HttpResponseMessage();
                     response.Content = new StringContent(content);
-                    this._serviceBase.Setup(d => d.GetDocument("problem:ProblemId"))
+                    this._serviceBase.Setup(d => d.DocumentGet("problem:ProblemId"))
                         .Returns(Task.FromResult(response.Content));
 
                     // List of bets
@@ -80,7 +80,7 @@ namespace Tests.Controllers
                     string contentBets = await readerBets.ReadToEndAsync();
                     HttpResponseMessage responseBets = new HttpResponseMessage();
                     responseBets.Content = new StringContent(contentBets);
-                    this._serviceBase.Setup(d => d.GetView("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
+                    this._serviceBase.Setup(d => d.ViewGet("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
                         .Returns(Task.FromResult(responseBets.Content));
 
                     // Act
@@ -103,7 +103,7 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task GetNotfound()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
+            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
                 .Throws(new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound));
 
             // Act
@@ -124,7 +124,7 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task GetExceptionHttpOther()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
+            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
                 .Throws(new HttpRequestException("Exception",new System.Exception("Exeption"), System.Net.HttpStatusCode.BadRequest));
 
             // Act
@@ -145,7 +145,7 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task GetException()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
+            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
                 .Throws(new System.Exception("Exception"));
 
             // Act
@@ -180,7 +180,7 @@ namespace Tests.Controllers
                     string content = await reader.ReadToEndAsync();
                     HttpResponseMessage response = new HttpResponseMessage();
                     response.Content = new StringContent(content);
-                    this._serviceBase.Setup(d => d.GetDocument("problem:ProblemId"))
+                    this._serviceBase.Setup(d => d.DocumentGet("problem:ProblemId"))
                         .Returns(Task.FromResult(response.Content));
 
                     // List of bets
@@ -203,7 +203,7 @@ namespace Tests.Controllers
                     string contentBets = await readerBets.ReadToEndAsync();
                     HttpResponseMessage responseBets = new HttpResponseMessage();
                     responseBets.Content = new StringContent(contentBets);
-                    this._serviceBase.Setup(d => d.GetView("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
+                    this._serviceBase.Setup(d => d.ViewGet("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
                         .Returns(Task.FromResult(responseBets.Content));
 
                     // Act

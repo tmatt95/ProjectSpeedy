@@ -59,7 +59,7 @@ namespace ProjectSpeedy.Services
         public async Task<ProjectsView> GetAll()
         {
             // Gets the data for from the couchdb view.
-            var viewData = await this._serviceBase.GetView("project", "projects", "projects");
+            var viewData = await this._serviceBase.ViewGet("project", "projects", "projects");
             using var responseStream = await viewData.ReadAsStreamAsync();
 
             // Converts the couchdb view model to an output class.
@@ -86,12 +86,12 @@ namespace ProjectSpeedy.Services
             var couchProjectId = "project:" + projectId;
 
             // Gets the base project.
-            var viewData = await this._serviceBase.GetDocument(couchProjectId);
+            var viewData = await this._serviceBase.DocumentGet(couchProjectId);
             using var responseStream = await viewData.ReadAsStreamAsync();
             var project = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Project.Project>(responseStream);
 
             // Populates the list of linked problems.
-            var problemData = await this._serviceBase.GetView("problem", "problems", "problems", couchProjectId, couchProjectId);
+            var problemData = await this._serviceBase.ViewGet("problem", "problems", "problems", couchProjectId, couchProjectId);
             using var responseStreamProblems = await problemData.ReadAsStreamAsync();
 
             var rawProblems = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.CouchDb.View.ViewResult>(responseStreamProblems);
@@ -119,7 +119,7 @@ namespace ProjectSpeedy.Services
             data.Problems = new System.Collections.Generic.List<Models.General.ListItem>();
 
             // Does update
-            return await this._serviceBase.UpdateDocument(projectId, Project.PARTITION, data);
+            return await this._serviceBase.DocumentUpdate(projectId, Project.PARTITION, data);
         }
     }
 }

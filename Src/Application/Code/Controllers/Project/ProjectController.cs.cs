@@ -96,14 +96,6 @@ namespace ProjectSpeedy.Controllers
 
                 return this.Problem();
             }
-            catch (HttpRequestException e)
-            {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
-                {
-                    return NotFound();
-                }
-                return this.Problem();
-            }
             catch (Exception e)
             {
                 this._logger.LogError(e, e.Message);
@@ -119,11 +111,11 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the project has been updated successfully.</returns>
         [HttpPost("/api/project/{projectId}")]
-        public ActionResult Post(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form)
+        public async System.Threading.Tasks.Task<ActionResult> PostAsync(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form)
         {
             try
             {
-                return this.Accepted();
+                return this.Accepted(await this._projectServices.Update(projectId, form));
             }
             catch (HttpRequestException e)
             {

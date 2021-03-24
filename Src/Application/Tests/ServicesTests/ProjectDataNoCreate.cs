@@ -8,12 +8,12 @@ namespace ProjectSpeedy.Tests.ServicesTests
     /// <summary>
     /// A project with dummy data
     /// </summary>
-    public class ProjectDataExceptionNotFound : IProject
+    public class ProjectDataNoCreate : IProject
     {
         /// <inheritdoc />
         public Task<bool> CreateAsync(Models.Project.ProjectNew form)
         {
-            throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound);
+            return Task.FromResult(false);
         }
 
         /// <inheritdoc />

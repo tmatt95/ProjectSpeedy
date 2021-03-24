@@ -125,11 +125,29 @@ namespace Tests.Controllers
             Assert.AreEqual(400, result.StatusCode);
         }
 
-         [Test]
+        [Test]
         public async System.Threading.Tasks.Task PutException()
         {
             // Arrange
             this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Project.ProjectNew(){
+                Name = "Project Name"
+            });
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutCreateDoesNotCreate()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectDataNoCreate();
             this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
 
             // Act

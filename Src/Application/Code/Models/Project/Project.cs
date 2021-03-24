@@ -10,6 +10,16 @@ namespace ProjectSpeedy.Models.Project
     public class Project
     {
         /// <summary>
+        /// Gets or sets the rev id of the document.
+        /// </summary>
+        public string _rev { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the document.
+        /// </summary>
+        public string _id { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the project.
         /// </summary>
         public string Name { get; set; }

@@ -108,9 +108,18 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, Models.Project.ProjectUpdate form)
+        public async Task<bool> Update(string projectId, Models.Project.ProjectUpdate form)
         {
-            throw new System.NotImplementedException();
+            // Current form data
+            var data = await this.Get(projectId);
+
+            // Merges in new changes
+            data.Description = form.Description;
+            data.Name = form.Name;
+            data.Problems = new System.Collections.Generic.List<Models.General.ListItem>();
+
+            // Does update
+            return await this._serviceBase.UpdateDocument(projectId, Project.PARTITION, data);
         }
     }
 }

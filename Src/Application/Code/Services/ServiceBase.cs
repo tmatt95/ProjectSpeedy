@@ -146,5 +146,33 @@ namespace ProjectSpeedy.Services
             // Returns the Id of the newly created record.
             return response.Content;
         }
+
+        public async Task<bool> UpdateDocument(string documentId, string partition, object document)
+        {
+            using (var stream = new MemoryStream())
+            {
+                // Convert document to json 
+                //Taken from https://stackoverflow.com/questions/58469794/c-net-core3-0-system-text-json-jsonserializer-serializeasync
+                await JsonSerializer.SerializeAsync(stream, document);
+                stream.Position = 0;
+                using var reader = new StreamReader(stream);
+                string content = await reader.ReadToEndAsync();
+
+                // Send the request to add the new document
+                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + partition + ":" + documentId +"?conflicts=true");
+                request.Content = new StringContent(content);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
+                var client = _clientFactory.CreateClient();
+
+                // Convert response to output
+                var response = await client.SendAsync(request);
+
+                // Ensures is has created ok.
+                response.EnsureSuccessStatusCode();
+
+                // Returns the Id of the newly created record.
+                return true;
+            }
+        }
     }
 }

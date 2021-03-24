@@ -23,6 +23,15 @@ namespace ProjectSpeedy.Services
         Task<HttpContent> GetDocument(string documentId);
 
         /// <summary>
+        /// Updates an individual document.
+        /// </summary>
+        /// <param name="documentId">The id of the document</param>
+        /// <param name="partition">The partition to update the document in</param>
+        /// <param name="document">Document object to create</param>
+        /// <returns>Http content containing the document.</returns>
+        Task<bool> UpdateDocument(string documentId, string partition, object document);
+
+        /// <summary>
         /// Call a view and return the JSON to convert into an object.
         /// TODO Add caching to stop this call calling the API on every request.
         /// </summary>

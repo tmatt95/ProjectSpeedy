@@ -36,7 +36,7 @@ namespace ProjectSpeedy.Services
         /// <param name="projectId">Project identifier</param>
         /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the project has been updated successfully.</returns>
-        bool Update(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form);
+        Task<bool> Update(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form);
 
         /// <summary>
         /// This action will delete the project and linked problems / bets.

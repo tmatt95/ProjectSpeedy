@@ -37,7 +37,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
         /// <inheritdoc />
         public Task<bool> Update(string projectId, Models.Project.ProjectUpdate form)
         {
-            throw new System.NotImplementedException();
+             throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound);
         }
     }
 }

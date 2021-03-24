@@ -46,7 +46,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
         /// <inheritdoc />
         public Task<bool> Update(string projectId, Models.Project.ProjectUpdate form)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(true);
         }
     }
 }

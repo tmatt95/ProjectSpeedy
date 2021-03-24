@@ -41,7 +41,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="betId">Bet identifier</param>
         /// <returns>Information on the bet.</returns>
         [HttpGet("/api/project/{projectId}/problem/{problemId}/bet/{betId}")]
-        public async System.Threading.Tasks.Task<ActionResult> GetAsync(string projectId, string problemId, string betId)
+        public async System.Threading.Tasks.Task<ActionResult<Models.Bet.Bet>> GetAsync(string projectId, string problemId, string betId)
         {
             try
             {

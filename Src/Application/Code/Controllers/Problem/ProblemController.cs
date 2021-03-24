@@ -38,10 +38,19 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
-                return this.Ok(await this._problemServices.GetAsync(projectId, problemId));
+                // Gets the problem and checks the project ids are valid for it.
+                // If the problem cannot be found it will throw a 404 exception.
+                var problem = await this._problemServices.GetAsync(projectId, problemId);
+                if(problem.ProjectId != projectId){
+                    return this.NotFound();
+                }
+
+                // We have a valid problem.
+                return this.Ok(problem);
             }
             catch (HttpRequestException e)
             {
+                // Can we find the problem
                 if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     return NotFound();

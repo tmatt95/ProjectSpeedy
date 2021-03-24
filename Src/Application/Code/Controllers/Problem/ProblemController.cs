@@ -33,7 +33,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="problemId">problem identifier</param>
         /// <returns>Information on a problem.</returns>
         [HttpGet("/api/project/{projectId}/problem/{problemId}")]
-        public async System.Threading.Tasks.Task<ActionResult> GetAsync(string projectId, string problemId)
+        public async System.Threading.Tasks.Task<ActionResult<Models.Problem.Problem>> GetAsync(string projectId, string problemId)
         {
             try
             {

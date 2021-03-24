@@ -31,11 +31,8 @@ namespace Tests.Controllers
             this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService.Object);
         }
 
-        /// <summary>
-        /// Gets a document successfully.
-        /// </summary>
         [Test]
-        public async void Get()
+        public async System.Threading.Tasks.Task Get()
         {
             using (var stream = new MemoryStream())
             {
@@ -91,11 +88,8 @@ namespace Tests.Controllers
             }
         }
 
-        /// <summary>
-        /// Tries to load a document which does not exist.
-        /// </summary>
         [Test]
-        public async void GetNotfound()
+        public async System.Threading.Tasks.Task GetNotfound()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -111,11 +105,8 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 404);
         }
 
-        /// <summary>
-        /// Tries to get a problem but gets a non not found exception when trying to load it.
-        /// </summary>
         [Test]
-        public async void GetExceptionHttpOther()
+        public async System.Threading.Tasks.Task GetExceptionHttpOther()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -131,11 +122,8 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
-        /// <summary>
-        /// Tries to get a problem but gets an exception when trying to load it.
-        /// </summary>
         [Test]
-        public async void GetException()
+        public async System.Threading.Tasks.Task GetException()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -151,11 +139,8 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
-        /// <summary>
-        /// Tries to load a problem with a project Id which is not linked to the problem.
-        /// </summary>
         [Test]
-        public async void GetInvalidIds()
+        public async System.Threading.Tasks.Task GetInvalidIds()
         {
             using (var stream = new MemoryStream())
             {
@@ -209,11 +194,8 @@ namespace Tests.Controllers
             }
         }
 
-        /// <summary>
-        /// Creating a new problem successfully.
-        /// </summary>
         [Test]
-        public async void Put()
+        public async System.Threading.Tasks.Task Put()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
@@ -230,11 +212,8 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 202);
         }
 
-        /// <summary>
-        /// We attempt to create a new problem without sending form data.
-        /// </summary>
         [Test]
-        public async void PutNullForm()
+        public async System.Threading.Tasks.Task PutNullForm()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
@@ -249,20 +228,15 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 400);
         }
 
-        /// <summary>
-        /// We attempt to create a valid problem but no ID is sent back.
-        /// </summary>
         [Test]
-        public async void PutNoCreate()
+        public async System.Threading.Tasks.Task PutNoCreate()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
                 .Returns(Task.FromResult(""));
 
             // Act
-            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
-                Name = "New Problem"
-            }, "ProjectId");
+            var test = await this._controller.PutAsync(null, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt

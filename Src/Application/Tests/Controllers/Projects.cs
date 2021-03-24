@@ -16,8 +16,6 @@ namespace Tests.Controllers
     {
         private Mock<ILogger<ProjectsController>> _logger;
 
-        private Mock<ProjectSpeedy.Services.IServiceBase> _serviceBase;
-
         private ProjectSpeedy.Services.IProject _projectService;
 
         private ProjectSpeedy.Controllers.ProjectsController _controller;
@@ -25,7 +23,6 @@ namespace Tests.Controllers
         [SetUp]
         public void init()
         {
-            this._serviceBase = new Mock<ProjectSpeedy.Services.IServiceBase>();
             this._logger = new Mock<ILogger<ProjectsController>>();
         }
 

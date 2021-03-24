@@ -70,7 +70,7 @@ namespace ProjectSpeedy.Controllers
             try
             {
                 // Checks we have a valid request.
-                if (!ModelState.IsValid)
+                if (form == null || !ModelState.IsValid)
                 {
                     return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
                     {

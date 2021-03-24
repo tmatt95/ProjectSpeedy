@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using ProjectSpeedy.Models.Projects;
 using ProjectSpeedy.Services;
@@ -7,12 +8,12 @@ namespace ProjectSpeedy.Tests.ServicesTests
     /// <summary>
     /// A project with dummy data
     /// </summary>
-    public class ProjectDataException : IProject
+    public class ProjectDataExceptionNotFoundOther : IProject
     {
         /// <inheritdoc />
         public Task<bool> CreateAsync(Models.Project.ProjectNew form)
         {
-            throw new System.Exception("Exception");
+            throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.Forbidden);
         }
 
         /// <inheritdoc />
@@ -24,13 +25,13 @@ namespace ProjectSpeedy.Tests.ServicesTests
         /// <inheritdoc />
         public Task<ProjectsView> GetAll()
         {
-            throw new System.Exception("Exception");
+            throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.Forbidden);
         }
 
         /// <inheritdoc />
         public Task<ProjectSpeedy.Models.Project.Project> Get(string projectId)
         {
-            throw new System.Exception("Exception");
+            throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.Forbidden);
         }
 
         /// <inheritdoc />

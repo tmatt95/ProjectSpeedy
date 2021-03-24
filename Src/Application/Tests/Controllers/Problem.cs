@@ -106,6 +106,23 @@ namespace Tests.Controllers
         }
 
         [Test]
+        public async System.Threading.Tasks.Task GetExceptionHttpOther()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
+                .Throws(new HttpRequestException("Exception",new System.Exception("Exeption"), System.Net.HttpStatusCode.BadRequest));
+
+            // Act
+            var test = await this._controller.GetAsync("ProblemId","ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as ObjectResult;
+            Assert.IsNull(test.Value);
+            Assert.AreEqual(result.StatusCode, 500);
+        }
+
+        [Test]
         public async System.Threading.Tasks.Task GetException()
         {
             // Throws an error when calling the view
@@ -175,6 +192,40 @@ namespace Tests.Controllers
                     Assert.AreEqual(result.StatusCode, 404);
                 }
             }
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task Put()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
+                .Returns(Task.FromResult("NewId"));
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+                Name = "New Problem"
+            }, "ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as AcceptedResult;
+            Assert.AreEqual(result.StatusCode, 202);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutNullForm()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
+                .Returns(Task.FromResult("NewId"));
+
+            // Act
+            var test = await this._controller.PutAsync(null, "ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as BadRequestResult;
+            Assert.AreEqual(result.StatusCode, 400);
         }
     }
 }

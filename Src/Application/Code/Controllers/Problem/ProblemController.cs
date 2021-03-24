@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -68,15 +69,16 @@ namespace ProjectSpeedy.Controllers
         /// This will let you add a problem to a project. You will then be able to place bets against
         /// the problem and try and solve it.
         /// </summary>
+        /// <param name="form">Contains information on the new problem</param>
         /// <param name="projectId">Project identifier</param>
         /// <returns>If the problem was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem")]
-        public async System.Threading.Tasks.Task<ActionResult> PutAsync(string projectId, ProjectSpeedy.Models.Problem.ProblemNew form)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(ProjectSpeedy.Models.Problem.ProblemNew form, string projectId)
         {
             try
             {
                 // Checks we have a valid request.
-                if (!ModelState.IsValid)
+                if (form == null || !ModelState.IsValid)
                 {
                     return this.BadRequest();
                 }

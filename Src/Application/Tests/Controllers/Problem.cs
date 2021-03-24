@@ -194,8 +194,11 @@ namespace Tests.Controllers
             }
         }
 
+        /// <summary>
+        /// Creating a new problem successfully.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task Put()
+        public async void Put()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
@@ -212,8 +215,11 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 202);
         }
 
+        /// <summary>
+        /// We attempt to create a new problem without sending form data.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task PutNullForm()
+        public async void PutNullForm()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
@@ -221,6 +227,27 @@ namespace Tests.Controllers
 
             // Act
             var test = await this._controller.PutAsync(null, "ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as BadRequestResult;
+            Assert.AreEqual(result.StatusCode, 400);
+        }
+
+        /// <summary>
+        /// We attempt to create a valid problem but no ID is sent back.
+        /// </summary>
+        [Test]
+        public async void PutNoCreate()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
+                .Returns(Task.FromResult(""));
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+                Name = "New Problem"
+            }, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt

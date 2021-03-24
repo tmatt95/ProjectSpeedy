@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -59,6 +63,61 @@ namespace Tests.Controllers
             var result = test.Result as ObjectResult;
             Assert.IsNull(test.Value);
             Assert.AreEqual(result.StatusCode, 500);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetInvalidIds()
+        {
+            using (var stream = new MemoryStream())
+            {
+                using (var streamBets = new MemoryStream())
+                {
+                    // Arrange
+                    // Problem Object
+                    await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.Problem.Problem()
+                    {
+                        ProjectId = "DiferentProjectId"
+                    });
+                    stream.Position = 0;
+                    using var reader = new StreamReader(stream);
+                    string content = await reader.ReadToEndAsync();
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response.Content = new StringContent(content);
+                    this._serviceBase.Setup(d => d.GetDocument("problem:ProblemId"))
+                        .Returns(Task.FromResult(response.Content));
+
+                    // List of bets
+                    await JsonSerializer.SerializeAsync(streamBets, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
+                    {
+                        total_rows = 1,
+                        offset = 0,
+                        rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
+                            new ProjectSpeedy.Models.CouchDb.View.ListItem(){
+                                id= "ProjectId",
+                                value= new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
+                                    id= "bet:e5273e69704d8c4ee3f8b50c6500d053",
+                                    name = "Bet Name"
+                                }
+                            }
+                        }
+                    });
+                    streamBets.Position = 0;
+                    using var readerBets = new StreamReader(streamBets);
+                    string contentBets = await readerBets.ReadToEndAsync();
+                    HttpResponseMessage responseBets = new HttpResponseMessage();
+                    responseBets.Content = new StringContent(contentBets);
+                    this._serviceBase.Setup(d => d.GetView("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
+                        .Returns(Task.FromResult(responseBets.Content));
+
+                    // Act
+                    var test = await this._controller.GetAsync("ProjectId", "ProblemId");
+
+                    // Assert
+                    var result = test.Result as NotFoundResult;
+                    Assert.IsNull(test.Value);
+                    Assert.AreEqual(result.StatusCode, 404);
+                }
+            }
         }
     }
 }

@@ -46,5 +46,22 @@ namespace Tests.Controllers
             Assert.IsNull(test.Value);
             Assert.AreEqual(result.StatusCode, 404);
         }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetException()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.GetDocument("bet:BetId"))
+                .Throws(new System.Exception("Exception"));
+
+            // Act
+            var test = await this._controller.GetAsync("ProblemId","ProjectId","BetId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as ObjectResult;
+            Assert.IsNull(test.Value);
+            Assert.AreEqual(result.StatusCode, 500);
+        }
     }
 }

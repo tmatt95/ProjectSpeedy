@@ -31,8 +31,11 @@ namespace Tests.Controllers
             this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService.Object);
         }
 
+        /// <summary>
+        /// Gets a document successfully.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task Get()
+        public async void Get()
         {
             using (var stream = new MemoryStream())
             {
@@ -88,8 +91,11 @@ namespace Tests.Controllers
             }
         }
 
+        /// <summary>
+        /// Tries to load a document which does not exist.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task GetNotfound()
+        public async void GetNotfound()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -105,8 +111,11 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 404);
         }
 
+        /// <summary>
+        /// Tries to get a problem but gets a non not found exception when trying to load it.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task GetExceptionHttpOther()
+        public async void GetExceptionHttpOther()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -122,8 +131,11 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
+        /// <summary>
+        /// Tries to get a problem but gets an exception when trying to load it.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task GetException()
+        public async void GetException()
         {
             // Throws an error when calling the view
             this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
@@ -139,8 +151,11 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
+        /// <summary>
+        /// Tries to load a problem with a project Id which is not linked to the problem.
+        /// </summary>
         [Test]
-        public async System.Threading.Tasks.Task GetInvalidIds()
+        public async void GetInvalidIds()
         {
             using (var stream = new MemoryStream())
             {

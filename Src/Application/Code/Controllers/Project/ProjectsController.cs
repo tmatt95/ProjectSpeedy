@@ -33,7 +33,7 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         /// <returns>List of projects in the application.</returns>
         [HttpGet("/api/projects")]
-        public async System.Threading.Tasks.Task<ActionResult> GetAsync()
+        public async System.Threading.Tasks.Task<ActionResult<ProjectSpeedy.Models.Projects.ProjectsView>> GetAsync()
         {
             try
             {

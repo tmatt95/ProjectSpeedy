@@ -54,21 +54,21 @@ namespace Tests.Services
         [Test]
         public async System.Threading.Tasks.Task GetAllNoDataAsync()
         {
-            // Arrange
             using (var stream = new MemoryStream())
             {
                 // General set up
                 var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
                 var projectService = new ProjectSpeedy.Services.Project(mockTest.Object);
-                
+
                 // Creates the fake response
-                await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.CouchDb.View.ViewResult(){
+                await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
+                {
                     rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>()
                 });
                 stream.Position = 0;
                 using var reader = new StreamReader(stream);
                 string content = await reader.ReadToEndAsync();
-                
+
                 HttpResponseMessage response = new HttpResponseMessage();
                 response.Content = new StringContent(content);
                 mockTest.Setup(d => d.GetView("project", "projects", "projects", "", ""))
@@ -94,9 +94,10 @@ namespace Tests.Services
                 // General set up
                 var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
                 var projectService = new ProjectSpeedy.Services.Project(mockTest.Object);
-                
+
                 // Creates the fake response
-                await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.CouchDb.View.ViewResult(){
+                await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
+                {
                     total_rows = 1,
                     offset = 0,
                     rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
@@ -112,7 +113,7 @@ namespace Tests.Services
                 stream.Position = 0;
                 using var reader = new StreamReader(stream);
                 string content = await reader.ReadToEndAsync();
-                
+
                 HttpResponseMessage response = new HttpResponseMessage();
                 response.Content = new StringContent(content);
                 mockTest.Setup(d => d.GetView("project", "projects", "projects", "", ""))

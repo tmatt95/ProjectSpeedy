@@ -44,7 +44,8 @@ namespace ProjectSpeedy.Controllers
             }
             catch (HttpRequestException e)
             {
-                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
                     return NotFound();
                 }
                 return this.Problem();
@@ -79,7 +80,8 @@ namespace ProjectSpeedy.Controllers
 
                 // Gets all projects and checks that there is not one with the same name
                 var projects = await this._projectServices.GetAll();
-                if(projects.rows.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower())){
+                if (projects.rows.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
+                {
                     return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
                     {
                         Message = "There is already a project with the same name."
@@ -96,7 +98,8 @@ namespace ProjectSpeedy.Controllers
             }
             catch (HttpRequestException e)
             {
-                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
                     return NotFound();
                 }
                 return this.Problem();
@@ -124,7 +127,8 @@ namespace ProjectSpeedy.Controllers
             }
             catch (HttpRequestException e)
             {
-                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
                     return NotFound();
                 }
                 return this.Problem();
@@ -150,7 +154,8 @@ namespace ProjectSpeedy.Controllers
             }
             catch (HttpRequestException e)
             {
-                if(e.StatusCode == System.Net.HttpStatusCode.NotFound){
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
                     return NotFound();
                 }
                 return this.Problem();

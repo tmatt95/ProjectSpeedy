@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -38,6 +39,14 @@ namespace ProjectSpeedy.Controllers
             try
             {
                 return this.Ok(await this._problemServices.GetAsync(projectId, problemId));
+            }
+            catch (HttpRequestException e)
+            {
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                return this.Problem();
             }
             catch (Exception e)
             {

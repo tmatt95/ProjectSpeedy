@@ -28,14 +28,14 @@ namespace Tests.Controllers
         }
 
         [Test]
-        public async System.Threading.Tasks.Task GetProblemNotfound()
+        public async System.Threading.Tasks.Task GetNotfound()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.GetDocument("problem:ProblemId"))
+            this._serviceBase.Setup(d => d.GetDocument(It.IsAny<string>()))
                 .Throws(new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound));
 
             // Act
-            var test = await this._controller.GetAsync("ProjectId","ProblemId");
+            var test = await this._controller.GetAsync("ProblemId","ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt

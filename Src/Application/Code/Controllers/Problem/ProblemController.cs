@@ -22,10 +22,16 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ProjectSpeedy.Services.IProblem _problemServices;
 
-        public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem problemServices)
+        /// <summary>
+        /// Contains services needed to interact with projects.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProject _projectService;
+
+        public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem problemServices, ProjectSpeedy.Services.IProject projectServices)
         {
             this._logger = logger;
             this._problemServices = problemServices;
+            this._projectService = projectServices;
         }
 
         /// <summary>
@@ -77,6 +83,9 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
+                // Tries to load the project to check that it exists
+                await this._projectService.Get(projectId);
+
                 // Checks we have a valid request.
                 if (form == null || !ModelState.IsValid)
                 {
@@ -89,6 +98,15 @@ namespace ProjectSpeedy.Controllers
                     return this.Accepted();
                 }
 
+                return this.Problem();
+            }
+            catch (HttpRequestException e)
+            {
+                // Can we find the problem
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
                 return this.Problem();
             }
             catch (Exception e)

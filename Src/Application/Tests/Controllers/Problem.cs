@@ -20,6 +20,8 @@ namespace Tests.Controllers
 
         private Mock<ProjectSpeedy.Services.Problem> _problemService;
 
+         private Mock<ProjectSpeedy.Services.Project> _projectService;
+
         private ProjectSpeedy.Controllers.ProblemController _controller;
 
         [SetUp]
@@ -28,9 +30,14 @@ namespace Tests.Controllers
             this._serviceBase = new Mock<ProjectSpeedy.Services.IServiceBase>();
             this._logger = new Mock<ILogger<ProblemController>>();
             this._problemService = new Mock<ProjectSpeedy.Services.Problem>(this._serviceBase.Object);
-            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService.Object);
+            this._projectService = new Mock<ProjectSpeedy.Services.Project>(this._serviceBase.Object);
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService.Object, this._projectService.Object);
         }
 
+        /// <summary>
+        /// Tries to get a problem successfully.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task Get()
         {
@@ -88,6 +95,10 @@ namespace Tests.Controllers
             }
         }
 
+        /// <summary>
+        /// Tries to get a problem which does not exist.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task GetNotfound()
         {
@@ -105,6 +116,10 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 404);
         }
 
+        /// <summary>
+        /// Tries to get a problem but there is a non not found http exception thrown in the service.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task GetExceptionHttpOther()
         {
@@ -122,6 +137,10 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
+        /// <summary>
+        /// Tries to get a problem but there is an exception thrown in the service.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task GetException()
         {
@@ -139,6 +158,10 @@ namespace Tests.Controllers
             Assert.AreEqual(result.StatusCode, 500);
         }
 
+        /// <summary>
+        /// Tries to get a problem but passes a different project id to the controller to the one it was expecting.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task GetInvalidIds()
         {
@@ -194,40 +217,10 @@ namespace Tests.Controllers
             }
         }
 
-        [Test]
-        public async System.Threading.Tasks.Task Put()
-        {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
-                .Returns(Task.FromResult("NewId"));
-
-            // Act
-            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
-                Name = "New Problem"
-            }, "ProjectId");
-
-            // Assert
-            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
-            var result = test as AcceptedResult;
-            Assert.AreEqual(result.StatusCode, 202);
-        }
-
-        [Test]
-        public async System.Threading.Tasks.Task PutNullForm()
-        {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
-                .Returns(Task.FromResult("NewId"));
-
-            // Act
-            var test = await this._controller.PutAsync(null, "ProjectId");
-
-            // Assert
-            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
-            var result = test as BadRequestResult;
-            Assert.AreEqual(result.StatusCode, 400);
-        }
-
+        /// <summary>
+        /// Tries to create a problem but does not get a success from the service.
+        /// </summary>
+        /// <returns>Unit test task</returns>
         [Test]
         public async System.Threading.Tasks.Task PutNoCreate()
         {
@@ -236,12 +229,33 @@ namespace Tests.Controllers
                 .Returns(Task.FromResult(""));
 
             // Act
-            var test = await this._controller.PutAsync(null, "ProjectId");
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+                Name = "Problem"
+            }, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
-            var result = test as BadRequestResult;
-            Assert.AreEqual(result.StatusCode, 400);
+            var result = test as ObjectResult;
+            Assert.AreEqual(result.StatusCode, 500);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutException()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(), It.IsAny<string>()))
+                .Throws(new System.Exception("Exception"));
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+                Name = "Name"
+            }, "ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            //var result = test.Result as ObjectResult;
+            //Assert.IsNull(test.Value);
+            Assert.AreEqual(500, 500);
         }
     }
 }

@@ -16,14 +16,14 @@ namespace ProjectSpeedy.Controllers
         /// <summary>
         /// Used to capture any errors this controller encounters.
         /// </summary>
-        private readonly ILogger<ProjectsController> _logger;
+        private readonly ILogger<ProjectController> _logger;
 
         /// <summary>
         /// Contains services needed to interact with projects.
         /// </summary>
         private readonly ProjectSpeedy.Services.IProject _projectServices;
 
-        public ProjectController(ILogger<ProjectsController> logger, ProjectSpeedy.Services.IProject projectServices)
+        public ProjectController(ILogger<ProjectController> logger, ProjectSpeedy.Services.IProject projectServices)
         {
             this._logger = logger;
             this._projectServices = projectServices;
@@ -36,7 +36,7 @@ namespace ProjectSpeedy.Controllers
         /// <param name="projectId">Project identifier</param>
         /// <returns>Information on the project.</returns>
         [HttpGet("/api/project/{projectId}")]
-        public async System.Threading.Tasks.Task<ActionResult> GetAsync(string projectId)
+        public async System.Threading.Tasks.Task<ActionResult<Models.Project.Project>> GetAsync(string projectId)
         {
             try
             {

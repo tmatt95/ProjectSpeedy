@@ -32,7 +32,7 @@ namespace Tests.Controllers
         }
 
         [Test]
-        public async System.Threading.Tasks.Task TestCreateValidAsync()
+        public async System.Threading.Tasks.Task GetAllAsync()
         {
             using (var stream = new MemoryStream())
             {
@@ -69,6 +69,22 @@ namespace Tests.Controllers
                 Assert.IsNotNull(result.Value);
                 Assert.AreEqual(((ProjectSpeedy.Models.Projects.ProjectsView) result.Value).rows.Count, 1);
             }
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetAllProblemAsync()
+        {
+            // Throws an error when calling the view
+            this._serviceBase.Setup(d => d.GetView("project", "projects", "projects", "", ""))
+                .Throws(new HttpRequestException("test",new System.Exception("test"), System.Net.HttpStatusCode.NotFound));
+
+            // Act
+            var test = await this._controller.GetAsync();
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as ObjectResult;
+            Assert.AreEqual(result.StatusCode, 500);
         }
     }
 }

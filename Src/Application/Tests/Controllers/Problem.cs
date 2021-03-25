@@ -1,8 +1,12 @@
 using System.IO;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using NUnit.Framework;
+
 using ProjectSpeedy.Controllers;
 
 namespace Tests.Controllers
@@ -46,7 +50,7 @@ namespace Tests.Controllers
                     // Assert
                     var result = test.Result as OkObjectResult;
                     Assert.IsNull(test.Value);
-                    Assert.AreEqual(result.StatusCode, 200);
+                    Assert.AreEqual(200, result.StatusCode);
                     Assert.AreEqual(((ProjectSpeedy.Models.Problem.Problem)result.Value).Name, "Problem Name");
                 }
             }
@@ -71,7 +75,7 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as NotFoundResult;
             Assert.IsNull(test.Value);
-            Assert.AreEqual(result.StatusCode, 404);
+            Assert.AreEqual(404, result.StatusCode);
         }
 
         /// <summary>
@@ -93,7 +97,7 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as ObjectResult;
             Assert.IsNull(test.Value);
-            Assert.AreEqual(result.StatusCode, 500);
+            Assert.AreEqual(500, result.StatusCode);
         }
 
         /// <summary>
@@ -115,7 +119,7 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as ObjectResult;
             Assert.IsNull(test.Value);
-            Assert.AreEqual(result.StatusCode, 500);
+            Assert.AreEqual(500, result.StatusCode);
         }
 
         /// <summary>
@@ -140,9 +144,32 @@ namespace Tests.Controllers
                     // Assert
                     var result = test.Result as NotFoundResult;
                     Assert.IsNull(test.Value);
-                    Assert.AreEqual(result.StatusCode, 404);
+                    Assert.AreEqual(404, result.StatusCode);
                 }
             }
+        }
+
+        /// <summary>
+        /// Tries to create a problem successfully.
+        /// </summary>
+        /// <returns>Unit test task</returns>
+        [Test]
+        public async System.Threading.Tasks.Task Put()
+        {
+            // Throws an error when calling the view
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
+                Name = "New Problem"
+            }, "ProjectId");
+
+            // Assert
+            var result = test as ObjectResult;
+            Assert.AreEqual(202, result.StatusCode);
         }
 
         /// <summary>
@@ -164,9 +191,8 @@ namespace Tests.Controllers
             }, "ProjectId");
 
             // Assert
-            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test as ObjectResult;
-            Assert.AreEqual(result.StatusCode, 500);
+            Assert.AreEqual(500, result.StatusCode);
         }
 
         [Test]
@@ -184,10 +210,62 @@ namespace Tests.Controllers
             }, "ProjectId");
 
             // Assert
-            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
-            //var result = test.Result as ObjectResult;
-            //Assert.IsNull(test.Value);
-            Assert.AreEqual(500, 500);
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutExceptionHttp()
+        {
+
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFound();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
+                Name = "Name"
+            }, "ProjectId");
+
+            // Assert
+            var result = test as NotFoundResult;
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutProblemSameName()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
+                Name = "Problem Name"
+            }, "ProjectId");
+
+            // Assert
+            var result = test as ObjectResult;
+            Assert.AreEqual(400, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PutProblemNoForm()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PutAsync(null, "ProjectId");
+
+            // Assert
+            var result = test as BadRequestResult;
+            Assert.AreEqual(400, result.StatusCode);
         }
     }
 }

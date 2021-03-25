@@ -39,7 +39,12 @@ namespace ProjectSpeedy.Tests.ServicesTests
         {
             return await Task.FromResult(new Models.Project.Project()
             {
-                Name = "Project Name"
+                Name = "Project Name",
+                Problems = new System.Collections.Generic.List<Models.General.ListItem>(){
+                    new Models.General.ListItem(){
+                         Name = "Problem Name"
+                    }
+                }
             });
         }
 

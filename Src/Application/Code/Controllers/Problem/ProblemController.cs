@@ -93,6 +93,12 @@ namespace ProjectSpeedy.Controllers
                 // Tries to load the project to check that it exists
                 var project = await this._projectService.Get(projectId);
 
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
                 // Ensures we dont have a problem with the same name already
                 if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
                 {
@@ -100,12 +106,6 @@ namespace ProjectSpeedy.Controllers
                     {
                         Message = "There is already a problem with the same name."
                     });
-                }
-
-                // Checks we have a valid request.
-                if (form == null || !ModelState.IsValid)
-                {
-                    return this.BadRequest();
                 }
 
                 // Try and add the project.

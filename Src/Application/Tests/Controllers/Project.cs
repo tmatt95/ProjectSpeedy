@@ -125,6 +125,24 @@ namespace Tests.Controllers
         }
 
         [Test]
+        public async System.Threading.Tasks.Task PutExceptionWebOther()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectDataExceptionNotFoundOther();
+            this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Project.ProjectNew(){
+                Name = "Project Name"
+            });
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
         public async System.Threading.Tasks.Task PutException()
         {
             // Arrange
@@ -219,6 +237,24 @@ namespace Tests.Controllers
         {
             // Arrange
             this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Project.ProjectUpdate(){
+                Name = "Project Name"
+            }, "ProjectId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostExceptionWebOther()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectDataExceptionNotFoundOther();
             this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
 
             // Act

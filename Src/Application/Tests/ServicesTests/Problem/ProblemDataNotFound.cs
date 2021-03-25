@@ -29,7 +29,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, Models.Problem.ProblemUpdate form)
+        public System.Threading.Tasks.Task<bool> UpdateAsync(string projectId, string problemId, Models.Problem.ProblemUpdate form)
         {
             throw new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound);
         }

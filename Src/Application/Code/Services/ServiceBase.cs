@@ -125,9 +125,10 @@ namespace ProjectSpeedy.Services
         public async Task<HttpContent> DocumentGet(string documentId)
         {
             // If we have a cached version then return that.
-            if(this._cachedDocuments.ContainsKey(documentId)){
-                return this._cachedDocuments[documentId];
-            }
+            // TODO Cache documents in services to avoid using error
+            //if(this._cachedDocuments.ContainsKey(documentId)){
+             //   return this._cachedDocuments[documentId];
+            //}
 
             // Send the request to add the new document
             var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + documentId);
@@ -141,7 +142,7 @@ namespace ProjectSpeedy.Services
             response.EnsureSuccessStatusCode();
 
             // Add document to cache
-            this._cachedDocuments.Add(documentId, response.Content);
+            //this._cachedDocuments.Add(documentId, response.Content);
 
             // Returns the Id of the newly created record.
             return response.Content;

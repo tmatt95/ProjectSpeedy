@@ -28,8 +28,9 @@ namespace ProjectSpeedy.Services
         /// </summary>
         /// <param name="projectId">Project identifier</param>
         /// <param name="problemId">Problem identifier</param>
+        /// <param name="form">Form containing updated data</param>
         /// <returns>If the problem was updated successfully.</returns>
-        bool Update(string projectId, ProjectSpeedy.Models.Problem.ProblemUpdate form);
+        System.Threading.Tasks.Task<bool> UpdateAsync(string projectId, string problemId, ProjectSpeedy.Models.Problem.ProblemUpdate form);
 
         /// <summary>
         /// This action will delete the problem and all linked bets.

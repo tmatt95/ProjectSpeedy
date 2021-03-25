@@ -9,6 +9,16 @@ namespace ProjectSpeedy.Models.Problem
     public class Problem
     {
         /// <summary>
+        /// Gets or sets the rev id of the document.
+        /// </summary>
+        public string _rev { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the document.
+        /// </summary>
+        public string _id { get; set; }
+
+        /// <summary>
         /// Gets or sets the id of the project the problem is linked to.
         /// </summary>
         public string ProjectId { get; set; }

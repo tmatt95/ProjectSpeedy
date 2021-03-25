@@ -83,12 +83,22 @@ namespace ProjectSpeedy.Services
                 });
             }
             return problem;
+
         }
 
         /// <inheritdoc />
-        public bool Update(string projectId, Models.Problem.ProblemUpdate form)
+        public async System.Threading.Tasks.Task<bool> UpdateAsync(string projectId, string problemId, Models.Problem.ProblemUpdate form)
         {
-            throw new System.NotImplementedException();
+            // Current form data
+            var data = await this.GetAsync(projectId, problemId);
+
+            // Merges in new changes
+            data.Description = form.Description;
+            data.Name = form.Name;
+            data.Bets = new System.Collections.Generic.List<Models.General.ListItem>();
+
+            // Does update
+            return await this._serviceBase.DocumentUpdate(problemId, Problem.PARTITION, data);
         }
     }
 }

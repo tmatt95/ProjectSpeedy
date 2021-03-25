@@ -55,7 +55,7 @@ namespace ProjectSpeedy.Controllers
                 // Gets the problem and checks the project ids are valid for it.
                 // If the problem cannot be found it will throw a 404 exception.
                 var problem = await this._problemServices.GetAsync(projectId, problemId);
-                if(problem.ProjectId != projectId){
+                if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId){
                     return this.NotFound();
                 }
 
@@ -90,14 +90,14 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
-                // Tries to load the project to check that it exists
-                var project = await this._projectService.Get(projectId);
-
                 // Checks we have a valid request.
                 if (form == null || !ModelState.IsValid)
                 {
                     return this.BadRequest();
                 }
+
+                // Tries to load the project to check that it exists
+                var project = await this._projectService.Get(projectId);
 
                 // Ensures we dont have a problem with the same name already
                 if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
@@ -114,19 +114,24 @@ namespace ProjectSpeedy.Controllers
                     return this.Accepted();
                 }
 
+                // If we get here something has gone wrong.
                 return this.Problem();
             }
             catch (HttpRequestException e)
             {
-                // Can we find the problem
+                // Can we find the problem or project.
                 if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     return NotFound();
                 }
+
+                // There has been a problem loading or saving data
+                this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
             catch (Exception e)
             {
+                // There has been a system error.
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
@@ -145,17 +150,23 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
                 // Tries to load the project to check that it exists
                 var problem = await this._problemServices.GetAsync(projectId,problemId);
 
                 // Ensures the project id is correct.
-                if(problem.ProjectId != projectId){
+                if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId){
                     return this.NotFound();
                 }
 
                 // Ensures we dont have a problem with the same name already
                 var project = await this._projectService.Get(projectId);
-                if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
+                if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower() && p.Id != ProjectSpeedy.Services.Problem.PREFIX + problemId))
                 {
                     return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
                     {
@@ -163,8 +174,8 @@ namespace ProjectSpeedy.Controllers
                     });
                 }
 
-
-                return this.Accepted();
+                // Tries to carry out the save.
+                return this.Accepted(await this._problemServices.UpdateAsync(projectId, problemId, form));
             }
             catch (HttpRequestException e)
             {
@@ -173,10 +184,14 @@ namespace ProjectSpeedy.Controllers
                 {
                     return NotFound();
                 }
+
+                // There has been a problem loading or saving data.
+                this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
             catch (Exception e)
             {
+                // There has been a system error.
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }

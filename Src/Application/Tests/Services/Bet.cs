@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -44,6 +46,30 @@ namespace Tests.Services
 
             // Assert
             Assert.AreEqual(test, false);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task TestGetValid()
+        {
+            // Arrange
+            // Bet Response data.
+            HttpResponseMessage responseBet = new HttpResponseMessage();
+            responseBet.Content = new StringContent(JsonSerializer.Serialize(new ProjectSpeedy.Models.Bet.Bet(){
+                Name="Bet Name"
+            }));
+
+            // Sets up mocks for response.
+            var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
+            var betService = new ProjectSpeedy.Services.Bet(mockTest.Object);
+            mockTest.Setup(d => d.DocumentGet(It.IsAny<string>()))
+            .Returns(Task.FromResult(responseBet.Content));
+
+            // Act
+            var test = await betService.GetAsync("ProjectId", "ProblemId", "BetId");
+
+            // Assert
+            Assert.NotNull(test);
+            Assert.AreEqual("Bet Name", test.Name);
         }
     }
 }

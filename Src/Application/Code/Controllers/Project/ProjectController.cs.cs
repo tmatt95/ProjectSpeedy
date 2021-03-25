@@ -115,6 +115,23 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Ensures we dont have a project with the same name already
+                var projects = await this._projectServices.GetAll();
+                if (projects.rows.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower() && p.Id != ProjectSpeedy.Services.Project.PREFIX + projectId))
+                {
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "There is already a problem with the same name."
+                    });
+                }
+
+                // Tries to update the project
                 return this.Accepted(await this._projectServices.Update(projectId, form));
             }
             catch (HttpRequestException e)

@@ -28,7 +28,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
                 rows = new System.Collections.Generic.List<Models.General.ListItem>(){
                     new Models.General.ListItem(){
                         Name = "Project Name",
-                        Id = "Project Id"
+                        Id = "project:ProjectId"
                     }
                 }
             });

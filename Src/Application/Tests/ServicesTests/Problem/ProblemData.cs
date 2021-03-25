@@ -26,7 +26,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
         {
             return await Task.FromResult(new Models.Problem.Problem(){
                 Name = "Problem Name",
-                ProjectId = "ProjectId",
+                ProjectId = "project:ProjectId",
                 Description = "Problem Description",
                 Bets = new System.Collections.Generic.List<Models.General.ListItem>(){
                     new Models.General.ListItem(){

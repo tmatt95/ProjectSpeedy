@@ -234,6 +234,25 @@ namespace Tests.Controllers
         }
 
         [Test]
+        public async System.Threading.Tasks.Task PutExceptionHttpOther()
+        {
+
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFoundOther();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
+                Name = "Name"
+            }, "ProjectId");
+
+            // Assert
+            var result = test as NotFoundResult;
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        [Test]
         public async System.Threading.Tasks.Task PutProblemSameName()
         {
             // Arrange
@@ -293,6 +312,26 @@ namespace Tests.Controllers
             // Arrange
             this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
             this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name="Name",
+                Description="Desc"
+            }, "ProjectId", "ProblemId");
+
+            // Assert
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemHttpExceptionOther()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFoundOther();
             this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act

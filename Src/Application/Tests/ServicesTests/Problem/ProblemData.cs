@@ -30,8 +30,8 @@ namespace ProjectSpeedy.Tests.ServicesTests
                 Description = "Problem Description",
                 Bets = new System.Collections.Generic.List<Models.General.ListItem>(){
                     new Models.General.ListItem(){
-                        Name = "Bet Name",
-                        Id = "BetId",
+                        Name = "Problem Name",
+                        Id = "ProblemId",
                         Status = "New"
                     }
                 }
@@ -41,7 +41,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
         /// <inheritdoc />
         public System.Threading.Tasks.Task<bool> UpdateAsync(string projectId, string problemId, Models.Problem.ProblemUpdate form)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(true);
         }
     }
 }

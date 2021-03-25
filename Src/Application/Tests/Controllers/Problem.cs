@@ -267,5 +267,113 @@ namespace Tests.Controllers
             var result = test as BadRequestResult;
             Assert.AreEqual(400, result.StatusCode);
         }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblem()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name= "Problem Name",
+                Description="Added Description"
+            }, "ProjectId", "ProblemId");
+
+            // Assert
+            var result = test as AcceptedResult;
+            Assert.AreEqual(202, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemException()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name="Name",
+                Description="Desc"
+            }, "ProjectId", "ProblemId");
+
+            // Assert
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemNoForm()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(null, "ProjectId", "ProblemId");
+
+            // Assert
+            var result = test as BadRequestResult;
+            Assert.AreEqual(400, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemNoProblemFound()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFound();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name= "Updated Problem Name"
+            }, "ProjectId", "ProblemId");
+
+            // Assert
+            var result = test as NotFoundResult;
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemBadProjectId()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name= "Updated Problem Name",
+            }, "ProjectIdDifferent", "ProblemId");
+
+            // Assert
+            var result = test as NotFoundResult;
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task PostProblemDuplicateName()
+        {
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
+
+            // Act
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Problem.ProblemUpdate(){
+                Name= "Problem Name",
+            }, "ProjectId", "ProblemIdDif");
+
+            // Assert
+            var result = test as ObjectResult;
+            Assert.AreEqual(400, result.StatusCode);
+        }
     }
 }

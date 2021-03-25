@@ -42,7 +42,8 @@ namespace ProjectSpeedy.Tests.ServicesTests
                 Name = "Project Name",
                 Problems = new System.Collections.Generic.List<Models.General.ListItem>(){
                     new Models.General.ListItem(){
-                         Name = "Problem Name"
+                         Name = "Problem Name",
+                         Id="problem:ProblemId",
                     }
                 }
             });

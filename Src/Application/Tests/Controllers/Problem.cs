@@ -248,8 +248,8 @@ namespace Tests.Controllers
             }, "ProjectId");
 
             // Assert
-            var result = test as NotFoundResult;
-            Assert.AreEqual(404, result.StatusCode);
+            var result = test as ObjectResult;
+            Assert.AreEqual(500, result.StatusCode);
         }
 
         [Test]

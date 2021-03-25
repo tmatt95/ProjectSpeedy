@@ -107,11 +107,11 @@ namespace ProjectSpeedy.Controllers
         /// The create project action has been designed to be simple and contain the minimum number of fields. 
         /// The user will need to have the ability to update the project to add missing information.
         /// </summary>
+        /// <param name="form">Form containing information on the updated project.</param>
         /// <param name="projectId">Project identifier</param>
-        /// <param name="form">Form containing information on the new project.</param>
         /// <returns>If the project has been updated successfully.</returns>
         [HttpPost("/api/project/{projectId}")]
-        public async System.Threading.Tasks.Task<ActionResult> PostAsync(string projectId, ProjectSpeedy.Models.Project.ProjectUpdate form)
+        public async System.Threading.Tasks.Task<ActionResult> PostAsync(ProjectSpeedy.Models.Project.ProjectUpdate form, string projectId)
         {
             try
             {

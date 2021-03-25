@@ -169,9 +169,9 @@ namespace Tests.Controllers
             this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
 
             // Act
-            var test = await this._controller.PostAsync("ProjectId", new ProjectSpeedy.Models.Project.ProjectUpdate(){
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Project.ProjectUpdate(){
                 Name = "Project Name"
-            });
+            }, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
@@ -187,9 +187,9 @@ namespace Tests.Controllers
             this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
 
             // Act
-            var test = await this._controller.PostAsync("ProjectId", new ProjectSpeedy.Models.Project.ProjectUpdate(){
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Project.ProjectUpdate(){
                 Name = "Project Name"
-            });
+            }, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
@@ -205,9 +205,9 @@ namespace Tests.Controllers
             this._controller = new ProjectSpeedy.Controllers.ProjectController(this._logger.Object, this._projectService); 
 
             // Act
-            var test = await this._controller.PostAsync("ProjectId", new ProjectSpeedy.Models.Project.ProjectUpdate(){
+            var test = await this._controller.PostAsync(new ProjectSpeedy.Models.Project.ProjectUpdate(){
                 Name = "Project Name"
-            });
+            }, "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt

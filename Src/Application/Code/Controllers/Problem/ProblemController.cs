@@ -1,6 +1,7 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Http;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,12 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ProjectSpeedy.Services.IProject _projectService;
 
+        /// <summary>
+        /// All problem related actions.
+        /// </summary>
+        /// <param name="logger">Used to log any errors which occur in this controller.</param>
+        /// <param name="problemServices">Allows us to interact with problems.</param>
+        /// <param name="projectServices">Allows us to interact with projects.</param>
         public ProblemController(ILogger<ProblemController> logger, ProjectSpeedy.Services.IProblem problemServices, ProjectSpeedy.Services.IProject projectServices)
         {
             this._logger = logger;
@@ -84,7 +91,16 @@ namespace ProjectSpeedy.Controllers
             try
             {
                 // Tries to load the project to check that it exists
-                await this._projectService.Get(projectId);
+                var project = await this._projectService.Get(projectId);
+
+                // Ensures we dont have a problem with the same name already
+                if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
+                {
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "There is already a problem with the same name."
+                    });
+                }
 
                 // Checks we have a valid request.
                 if (form == null || !ModelState.IsValid)
@@ -125,11 +141,39 @@ namespace ProjectSpeedy.Controllers
         /// <param name="problemId">Problem identifier</param>
         /// <returns>If the problem was updated successfully.</returns>
         [HttpPost("/api/project/{projectId}/problem/{problemId}")]
-        public ActionResult Post(string projectId, string problemId)
+        public async System.Threading.Tasks.Task<ActionResult> PostAsync(ProjectSpeedy.Models.Problem.ProblemUpdate form, string projectId, string problemId)
         {
             try
             {
+                // Tries to load the project to check that it exists
+                var problem = await this._problemServices.GetAsync(projectId,problemId);
+
+                // Ensures the project id is correct.
+                if(problem.ProjectId != projectId){
+                    return this.NotFound();
+                }
+
+                // Ensures we dont have a problem with the same name already
+                var project = await this._projectService.Get(projectId);
+                if (project.Problems.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
+                {
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "There is already a problem with the same name."
+                    });
+                }
+
+
                 return this.Accepted();
+            }
+            catch (HttpRequestException e)
+            {
+                // Cant find the problem
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                return this.Problem();
             }
             catch (Exception e)
             {

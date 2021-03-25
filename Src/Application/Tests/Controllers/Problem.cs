@@ -1,8 +1,4 @@
-using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,22 +12,16 @@ namespace Tests.Controllers
     {
         private Mock<ILogger<ProblemController>> _logger;
 
-        private Mock<ProjectSpeedy.Services.IServiceBase> _serviceBase;
+        private ProjectSpeedy.Services.IProblem _problemService;
 
-        private Mock<ProjectSpeedy.Services.Problem> _problemService;
-
-         private Mock<ProjectSpeedy.Services.Project> _projectService;
+        private ProjectSpeedy.Services.IProject _projectService;
 
         private ProjectSpeedy.Controllers.ProblemController _controller;
 
         [SetUp]
         public void init()
         {
-            this._serviceBase = new Mock<ProjectSpeedy.Services.IServiceBase>();
             this._logger = new Mock<ILogger<ProblemController>>();
-            this._problemService = new Mock<ProjectSpeedy.Services.Problem>(this._serviceBase.Object);
-            this._projectService = new Mock<ProjectSpeedy.Services.Project>(this._serviceBase.Object);
-            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService.Object, this._projectService.Object);
         }
 
         /// <summary>
@@ -46,42 +36,9 @@ namespace Tests.Controllers
                 using (var streamBets = new MemoryStream())
                 {
                     // Arrange
-                    // Problem Object
-                    await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.Problem.Problem()
-                    {
-                        ProjectId = "ProjectId",
-                        Name = "Problem"
-                    });
-                    stream.Position = 0;
-                    using var reader = new StreamReader(stream);
-                    string content = await reader.ReadToEndAsync();
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    response.Content = new StringContent(content);
-                    this._serviceBase.Setup(d => d.DocumentGet("problem:ProblemId"))
-                        .Returns(Task.FromResult(response.Content));
-
-                    // List of bets
-                    await JsonSerializer.SerializeAsync(streamBets, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
-                    {
-                        total_rows = 1,
-                        offset = 0,
-                        rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
-                            new ProjectSpeedy.Models.CouchDb.View.ListItem(){
-                                id= "project:ProjectId",
-                                value= new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
-                                    id= "bet:e5273e69704d8c4ee3f8b50c6500d053",
-                                    name = "Bet Name"
-                                }
-                            }
-                        }
-                    });
-                    streamBets.Position = 0;
-                    using var readerBets = new StreamReader(streamBets);
-                    string contentBets = await readerBets.ReadToEndAsync();
-                    HttpResponseMessage responseBets = new HttpResponseMessage();
-                    responseBets.Content = new StringContent(contentBets);
-                    this._serviceBase.Setup(d => d.ViewGet("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
-                        .Returns(Task.FromResult(responseBets.Content));
+                    this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+                    this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+                    this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
                     // Act
                     var test = await this._controller.GetAsync("ProjectId", "ProblemId");
@@ -90,7 +47,7 @@ namespace Tests.Controllers
                     var result = test.Result as OkObjectResult;
                     Assert.IsNull(test.Value);
                     Assert.AreEqual(result.StatusCode, 200);
-                    Assert.AreEqual(((ProjectSpeedy.Models.Problem.Problem) result.Value).Name, "Problem");
+                    Assert.AreEqual(((ProjectSpeedy.Models.Problem.Problem)result.Value).Name, "Problem Name");
                 }
             }
         }
@@ -102,12 +59,13 @@ namespace Tests.Controllers
         [Test]
         public async System.Threading.Tasks.Task GetNotfound()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
-                .Throws(new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound));
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFound();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act
-            var test = await this._controller.GetAsync("ProblemId","ProjectId");
+            var test = await this._controller.GetAsync("ProblemId", "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
@@ -123,12 +81,13 @@ namespace Tests.Controllers
         [Test]
         public async System.Threading.Tasks.Task GetExceptionHttpOther()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
-                .Throws(new HttpRequestException("Exception",new System.Exception("Exeption"), System.Net.HttpStatusCode.BadRequest));
+            // Arrange
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFoundOther();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act
-            var test = await this._controller.GetAsync("ProblemId","ProjectId");
+            var test = await this._controller.GetAsync("ProblemId", "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
@@ -144,12 +103,13 @@ namespace Tests.Controllers
         [Test]
         public async System.Threading.Tasks.Task GetException()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumentGet(It.IsAny<string>()))
-                .Throws(new System.Exception("Exception"));
+            // Assert
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act
-            var test = await this._controller.GetAsync("ProblemId","ProjectId");
+            var test = await this._controller.GetAsync("ProjectId", "ProjectId");
 
             // Assert
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
@@ -170,44 +130,12 @@ namespace Tests.Controllers
                 using (var streamBets = new MemoryStream())
                 {
                     // Arrange
-                    // Problem Object
-                    await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.Problem.Problem()
-                    {
-                        ProjectId = "DiferentProjectId"
-                    });
-                    stream.Position = 0;
-                    using var reader = new StreamReader(stream);
-                    string content = await reader.ReadToEndAsync();
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    response.Content = new StringContent(content);
-                    this._serviceBase.Setup(d => d.DocumentGet("problem:ProblemId"))
-                        .Returns(Task.FromResult(response.Content));
-
-                    // List of bets
-                    await JsonSerializer.SerializeAsync(streamBets, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
-                    {
-                        total_rows = 1,
-                        offset = 0,
-                        rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
-                            new ProjectSpeedy.Models.CouchDb.View.ListItem(){
-                                id= "ProjectId",
-                                value= new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
-                                    id= "bet:e5273e69704d8c4ee3f8b50c6500d053",
-                                    name = "Bet Name"
-                                }
-                            }
-                        }
-                    });
-                    streamBets.Position = 0;
-                    using var readerBets = new StreamReader(streamBets);
-                    string contentBets = await readerBets.ReadToEndAsync();
-                    HttpResponseMessage responseBets = new HttpResponseMessage();
-                    responseBets.Content = new StringContent(contentBets);
-                    this._serviceBase.Setup(d => d.ViewGet("bet", "bets", "bets", "problem:ProblemId", "problem:ProblemId"))
-                        .Returns(Task.FromResult(responseBets.Content));
+                    this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+                    this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+                    this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
                     // Act
-                    var test = await this._controller.GetAsync("ProjectId", "ProblemId");
+                    var test = await this._controller.GetAsync("ProjectIdOther", "ProblemId");
 
                     // Assert
                     var result = test.Result as NotFoundResult;
@@ -225,11 +153,13 @@ namespace Tests.Controllers
         public async System.Threading.Tasks.Task PutNoCreate()
         {
             // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(),"problem"))
-                .Returns(Task.FromResult(""));
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNoCreate();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act
-            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
                 Name = "Problem"
             }, "ProjectId");
 
@@ -242,12 +172,14 @@ namespace Tests.Controllers
         [Test]
         public async System.Threading.Tasks.Task PutException()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumetCreate(It.IsAny<object>(), It.IsAny<string>()))
-                .Throws(new System.Exception("Exception"));
+
+            this._projectService = new ProjectSpeedy.Tests.ServicesTests.ProjectData();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemDataException();
+            this._controller = new ProjectSpeedy.Controllers.ProblemController(this._logger.Object, this._problemService, this._projectService);
 
             // Act
-            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew(){
+            var test = await this._controller.PutAsync(new ProjectSpeedy.Models.Problem.ProblemNew()
+            {
                 Name = "Name"
             }, "ProjectId");
 

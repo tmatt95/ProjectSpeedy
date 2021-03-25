@@ -1,4 +1,3 @@
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -12,30 +11,60 @@ namespace Tests.Controllers
     {
         private Mock<ILogger<BetController>> _logger;
 
-        private Mock<ProjectSpeedy.Services.IServiceBase> _serviceBase;
+        private ProjectSpeedy.Services.IProblem _problemService;
 
-        private Mock<ProjectSpeedy.Services.Problem> _problemService;
-
-        private Mock<ProjectSpeedy.Services.Bet> _betService;
+        private ProjectSpeedy.Services.IBet _betService;
 
         private ProjectSpeedy.Controllers.BetController _controller;
 
         [SetUp]
         public void init()
         {
-            this._serviceBase = new Mock<ProjectSpeedy.Services.IServiceBase>();
             this._logger = new Mock<ILogger<BetController>>();
-            this._problemService = new Mock<ProjectSpeedy.Services.Problem>(this._serviceBase.Object);
-            this._betService = new Mock<ProjectSpeedy.Services.Bet>(this._serviceBase.Object);
-            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService.Object, this._problemService.Object);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetOk()
+        {
+            // Arrange
+            this._betService = new ProjectSpeedy.Tests.ServicesTests.Bet();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService, this._problemService);
+
+            // Act
+            var test = await this._controller.GetAsync("ProjectId","ProblemId","BetId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as OkObjectResult;
+            Assert.IsNull(test.Value);
+            Assert.AreEqual(200, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetWrongId()
+        {
+            // Arrange
+            this._betService = new ProjectSpeedy.Tests.ServicesTests.Bet();
+            this._problemService = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService, this._problemService);
+
+            // Act
+            var test = await this._controller.GetAsync("ProjectIdWrong","ProblemId","BetId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as NotFoundResult;
+            Assert.IsNull(test.Value);
+            Assert.AreEqual(404, result.StatusCode);
         }
 
         [Test]
         public async System.Threading.Tasks.Task GetNotfound()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumentGet("bet:BetId"))
-                .Throws(new HttpRequestException("Document not found",new System.Exception("Document not found"), System.Net.HttpStatusCode.NotFound));
+            // Arrange
+            this._betService = new ProjectSpeedy.Tests.ServicesTests.BetDataNotFound();
+            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService, this._problemService);
 
             // Act
             var test = await this._controller.GetAsync("ProblemId","ProjectId","BetId");
@@ -44,15 +73,15 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as NotFoundResult;
             Assert.IsNull(test.Value);
-            Assert.AreEqual(result.StatusCode, 404);
+            Assert.AreEqual(404, result.StatusCode);
         }
 
         [Test]
-        public async System.Threading.Tasks.Task GetException()
+        public async System.Threading.Tasks.Task GetHttpException()
         {
-            // Throws an error when calling the view
-            this._serviceBase.Setup(d => d.DocumentGet("bet:BetId"))
-                .Throws(new System.Exception("Exception"));
+            // Arrange
+            this._betService = new ProjectSpeedy.Tests.ServicesTests.BetDataNotFoundOther();
+            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService, this._problemService);
 
             // Act
             var test = await this._controller.GetAsync("ProblemId","ProjectId","BetId");
@@ -61,7 +90,24 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as ObjectResult;
             Assert.IsNull(test.Value);
-            Assert.AreEqual(result.StatusCode, 500);
+            Assert.AreEqual(500, result.StatusCode);
+        }
+
+        [Test]
+        public async System.Threading.Tasks.Task GetException()
+        {
+            // Arrange
+            this._betService = new ProjectSpeedy.Tests.ServicesTests.BetDataException();
+            this._controller = new ProjectSpeedy.Controllers.BetController(this._logger.Object, this._betService, this._problemService);
+
+            // Act
+            var test = await this._controller.GetAsync("ProblemId","ProjectId","BetId");
+
+            // Assert
+            // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
+            var result = test.Result as ObjectResult;
+            Assert.IsNull(test.Value);
+            Assert.AreEqual(500, result.StatusCode);
         }
     }
 }

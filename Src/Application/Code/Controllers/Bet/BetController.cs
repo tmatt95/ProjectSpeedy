@@ -87,17 +87,17 @@ namespace ProjectSpeedy.Controllers
         {
             try
             {
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
                 // Gets the problem and checks the project id is valid for it.
-                // If the bet cannot be found it will throw a 404 exception.
+                // If the problem cannot be found it will throw a 404 exception.
                 var problem = await this._problemService.GetAsync(projectId, problemId);
                 if(problem.ProjectId != projectId){
                     return this.NotFound();
-                }
-
-                // Checks we have a valid request.
-                if (!ModelState.IsValid)
-                {
-                    return this.BadRequest();
                 }
 
                 // Try and add the bet.
@@ -106,10 +106,24 @@ namespace ProjectSpeedy.Controllers
                     return this.Accepted();
                 }
 
+                // If we get here something has gone wrong.
+                return this.Problem();
+            }
+            catch (HttpRequestException e)
+            {
+                // Can we find the problem.
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+
+                // There has been a problem loading or saving data.
+                this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
             catch (Exception e)
             {
+                
                 this._logger.LogError(e, e.Message);
                 return this.Problem();
             }

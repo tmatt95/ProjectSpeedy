@@ -84,50 +84,87 @@ namespace Tests.Services
             }
         }
 
-        // Get all has projects
+        // Get all projects
         [Test]
-        public async System.Threading.Tasks.Task GetAllHasProjects()
+        public async System.Threading.Tasks.Task GetAllProjects()
         {
             // Arrange
-            using (var stream = new MemoryStream())
-            {
-                // General set up
-                var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
-                var projectService = new ProjectSpeedy.Services.Project(mockTest.Object);
+            var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
+            var projectService = new ProjectSpeedy.Services.Project(mockTest.Object);
 
-                // Creates the fake response
-                await JsonSerializer.SerializeAsync(stream, new ProjectSpeedy.Models.CouchDb.View.ViewResult()
-                {
-                    total_rows = 1,
-                    offset = 0,
-                    rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
-                        new ProjectSpeedy.Models.CouchDb.View.ListItem(){
-                            id= "ProjectId",
-                            value= new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
-                                id= "project:e5273e69704d8c4ee3f8b50c6500d053",
-                                name = "Project Name"
-                            }
+            // Creates the fake response
+            string content = JsonSerializer.Serialize(new ProjectSpeedy.Models.CouchDb.View.ViewResult()
+            {
+                total_rows = 1,
+                offset = 0,
+                rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
+                    new ProjectSpeedy.Models.CouchDb.View.ListItem(){
+                        id= "ProjectId",
+                        value= new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
+                            id= "project:e5273e69704d8c4ee3f8b50c6500d053",
+                            name = "Project Name"
                         }
                     }
-                });
-                stream.Position = 0;
-                using var reader = new StreamReader(stream);
-                string content = await reader.ReadToEndAsync();
+                }
+            });
 
-                HttpResponseMessage response = new HttpResponseMessage();
-                response.Content = new StringContent(content);
-                mockTest.Setup(d => d.ViewGet("project", "projects", "projects", "", ""))
-                    .Returns(Task.FromResult(response.Content));
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Content = new StringContent(content);
+            mockTest.Setup(d => d.ViewGet("project", "projects", "projects", "", ""))
+                .Returns(Task.FromResult(response.Content));
 
-                // Act
-                var test = await projectService.GetAll();
+            // Act
+            var test = await projectService.GetAll();
 
-                // Assert
-                Assert.IsInstanceOf<ProjectSpeedy.Models.Projects.ProjectsView>(test);
-                Assert.IsNotNull(test.rows);
-                Assert.AreEqual(test.rows.Count, 1);
-            }
+            // Assert
+            Assert.IsInstanceOf<ProjectSpeedy.Models.Projects.ProjectsView>(test);
+            Assert.IsNotNull(test.rows);
+            Assert.AreEqual(test.rows.Count, 1);
         }
 
+        // Get project
+        [Test]
+        public async System.Threading.Tasks.Task GetProject()
+        {
+            // Arrange
+            var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
+            var projectService = new ProjectSpeedy.Services.Project(mockTest.Object);
+
+            // Creates the fake response
+            HttpResponseMessage responseView = new HttpResponseMessage();
+            string contentView = JsonSerializer.Serialize(new ProjectSpeedy.Models.CouchDb.View.ViewResult(){
+                rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>(){
+                    new ProjectSpeedy.Models.CouchDb.View.ListItem(){
+                        id="recordId",
+                        key="recordKey",
+                        value = new ProjectSpeedy.Models.CouchDb.View.ListItemValue(){
+                            name = "Problem Name",
+                            id="problem:ProblemId"
+                        }
+                    }
+                }
+            });
+            responseView.Content = new StringContent(contentView);
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            string content = JsonSerializer.Serialize(new ProjectSpeedy.Models.Project.Project(){
+                Name="Project Name",
+                Description="Project Description"
+            });
+            response.Content = new StringContent(content);
+            mockTest.Setup(d => d.DocumentGet(It.IsAny<string>()))
+                .Returns(Task.FromResult(response.Content));
+
+            mockTest.Setup(d => d.ViewGet(It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>()))
+                .Returns(Task.FromResult(responseView.Content));
+
+            // Act
+            var test = await projectService.Get("ProjectId");
+
+            // Assert
+            Assert.IsInstanceOf<ProjectSpeedy.Models.Project.Project>(test);
+            Assert.IsNotNull(test);
+            Assert.AreEqual("Project Name", test.Name);
+        }
     }
 }

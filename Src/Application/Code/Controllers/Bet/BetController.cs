@@ -96,7 +96,7 @@ namespace ProjectSpeedy.Controllers
                 // Gets the problem and checks the project id is valid for it.
                 // If the problem cannot be found it will throw a 404 exception.
                 var problem = await this._problemService.GetAsync(projectId, problemId);
-                if(problem.ProjectId != projectId){
+                if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId){
                     return this.NotFound();
                 }
 

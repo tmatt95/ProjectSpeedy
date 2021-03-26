@@ -16,7 +16,12 @@ afterEach(() => {
 
 describe(`The projects component`, () => {
   it('can render', () => {
-    act(() => { ReactDOM.render(<Projects />, container); });
+    let pageData = {
+      setBreadCrumbs: () => { return true;},
+      breadCrumbs: Array([]),
+      globalMessage: (alertMessage) => { return;}
+  }
+    act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
   })
 });
 

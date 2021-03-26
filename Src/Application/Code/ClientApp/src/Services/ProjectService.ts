@@ -21,7 +21,6 @@ export class ProjectService
      static async Get(projectId:string): Promise<IProject>
      {
          const response = await fetch(`/api/project/${projectId}`);
-         const json = await response.json();
-         return json;
+         return await response.json();
      }
 }

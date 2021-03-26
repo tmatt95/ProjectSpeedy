@@ -25,7 +25,7 @@ export function Projects(pageProps: IPage)
         if (runOnce === false)
         {
             document.title = 'Projects';
-            // pageProps.setBreadCrumbs([{ text: "Projects", address: "/", isLast: true }]);
+            pageProps.setBreadCrumbs([{ text: "Projects", address: "/", isLast: true }]);
             setRunOnce(true);
 
             // Loads the projects onto the page

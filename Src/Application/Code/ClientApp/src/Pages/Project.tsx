@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
+import { ProjectService } from '../Services/ProjectService';
 
 export function Project(pageProps: IPage)
 {
@@ -28,32 +29,26 @@ export function Project(pageProps: IPage)
             setRunOnce(true);
 
             // Loads the projects onto the page
-            fetch(`/api/project/${projectId}`)
-                .then(res => res.json())
-                .then(
-                    (result: IProject) =>
-                    {
-                        // Sets the model against the page.
-                        setProject(result);
-                        result.isLoaded = true;
+            ProjectService.Get(projectId).then(
+                (data) =>
+                {
+                    // Sets the model against the page.
+                    setProject(data);
+                    data.isLoaded = true;
 
-                        // Sets the project name.
-                        document.title = `Project ${project.name}`;
+                    // Sets the project name.
+                    document.title = `Project ${project.name}`;
 
-                        // Set the breadcrumbs.
-                        pageProps.setBreadCrumbs([]);
-                        pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
-                        pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "", text: result.name, isLast: true }]));
-                    },
-                    // Note: it's important to handle errors here
-                    // instead of a catch() block so that we don't swallow
-                    // exceptions from actual bugs in components.
-                    (error) =>
-                    {
-                        //setIsLoaded(true);
-                        //setError(error);
-                    }
-                );
+                    // Set the breadcrumbs.
+                    pageProps.setBreadCrumbs([]);
+                    pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
+                    pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "", text: data.name, isLast: true }]));
+                },
+                (error) =>
+                {
+                    alert(error);
+                }
+            );
         }
     }, [runOnce, pageProps, projectId, project.name]);
 

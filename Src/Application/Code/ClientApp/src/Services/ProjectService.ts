@@ -1,18 +1,27 @@
 import { CardItem } from "../Components/CardGrid";
+import { IProject } from "../Interfaces/IPage";
 
 export class ProjectService
 {
-    greeting: string;
-
-    constructor(message: string)
+    /**
+     * Gets a list of projects.
+     * @returns List of projects.
+     */
+    static async GetAll(): Promise<CardItem[]>
     {
-        this.greeting = message;
-    }
-
-    static async GetAll()
-    {
-        const response = await fetch("/api/projects");
+        const response = await fetch("/api/projects/");
         const json = await response.json();
         return json.rows;
     }
+
+    /**
+     * Gets a project.
+     * @returns Project info.
+     */
+     static async Get(projectId:string): Promise<IProject>
+     {
+         const response = await fetch(`/api/project/${projectId}`);
+         const json = await response.json();
+         return json;
+     }
 }

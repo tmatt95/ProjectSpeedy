@@ -1,8 +1,9 @@
-import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react';
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService'
+import { Formik } from 'formik';
 
 export function Projects(pageProps: IPage)
 {
@@ -63,7 +64,78 @@ export function Projects(pageProps: IPage)
                 <h1>Projects</h1>
             </div>
         </div>
-
+        <div>
+     <h1>Anywhere in your app!</h1>
+     <Formik
+       initialValues={{ email: '', password: '' }}
+       validate={values => {
+         const errors: {email:string} = {
+           email:""
+         };
+         let hasError: boolean = false;
+         if (!values.email) {
+           errors.email = 'Required';
+           hasError = true;
+         } else if (
+           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+         ) {
+           errors.email = 'Invalid email address';
+           hasError = true;
+         }
+         
+         if (hasError === true)
+         {
+          return errors;
+         }
+         else
+         {
+           return {};
+         }
+       }}
+       onSubmit={(values, { setSubmitting }) => {
+         setTimeout(() =>
+         {
+           alert('a');
+           alert(JSON.stringify(values, null, 2));
+           setSubmitting(false);
+         }, 400);
+       }}
+     >
+       {({
+         values,
+         errors,
+         touched,
+         handleChange,
+         handleBlur,
+         handleSubmit,
+         isSubmitting,
+         /* and other goodies */
+       }) => (
+         <form onSubmit={handleSubmit}>
+           <input
+             type="email"
+             name="email"
+             onChange={handleChange}
+             onBlur={handleBlur}
+             value={values.email}
+           />
+           {errors.email && touched.email && errors.email}
+           <input
+             type="password"
+             name="password"
+             onChange={handleChange}
+             onBlur={handleBlur}
+             value={values.password}
+           />
+           {errors.password && touched.password && errors.password}
+           <button type="submit" disabled={isSubmitting}>
+             Submit
+           </button>
+         </form>
+       )}
+     </Formik>
+   </div>
+        
         <CardGrid data={projects} />
 
         <form onSubmit={(event) => CreateNewProject(event)}>

@@ -16,11 +16,6 @@ import
 import { Bet } from './Pages/Bet';
 import { IPage } from './Interfaces/IPage';
 
-export function Test(num1:number, num2: number) : number
-{
-  return num1 + num2;
-}
-
 export default function App()
 {
   /**

@@ -25,8 +25,7 @@ describe(`The breadcrumb component`, () => {
       let breadCrumbData = new Array();
       breadCrumbData.push({
         address: "Address",
-        text: "Name",
-        isLast: true
+        text: "Name"
       });
       let data = {
         breadCrumbs: breadCrumbData
@@ -46,13 +45,11 @@ describe(`The breadcrumb component`, () => {
       let breadCrumbData = new Array();
       breadCrumbData.push({
         address: "Address",
-        text: "Name1",
-        isLast: false
+        text: "Name1"
       });
       breadCrumbData.push({
         address: "Address",
-        text: "Name2",
-        isLast: true
+        text: "Name2"
       });
       let data = {
         breadCrumbs: breadCrumbData

@@ -25,7 +25,7 @@ export function Problem(pageProps: IPage)
                 { address: `/`, text: "Problem", isLast: false }]));
             setRunOnce(true);
         }
-    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs, projectId, problemId]);
+    }, [runOnce, pageProps, projectId, problemId]);
 
 
     /**

@@ -55,7 +55,7 @@ export function Project(pageProps: IPage)
                     }
                 );
         }
-    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs, projectId, project.name]);
+    }, [runOnce, pageProps, projectId, project.name]);
 
     /**
      * The name of a new problem.

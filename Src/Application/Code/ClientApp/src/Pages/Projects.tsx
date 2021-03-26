@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react'
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
+import {ProjectService} from '../Services/ProjectService'
 
 export function Projects(pageProps: IPage)
 {
@@ -28,22 +29,9 @@ export function Projects(pageProps: IPage)
             setRunOnce(true);
 
             // Loads the projects onto the page
-            fetch("/api/projects")
-                .then(res => res.json())
-                .then(
-                    (result) =>
-                    {
-                        setProjects(result.rows);
-                    },
-                    // Note: it's important to handle errors here
-                    // instead of a catch() block so that we don't swallow
-                    // exceptions from actual bugs in components.
-                    (error) =>
-                    {
-                    }
-                );
+            ProjectService.GetAll().then((data) => { setProjects(data); });
         }
-    }, [runOnce, pageProps.setBreadCrumbs, pageProps.breadCrumbs]);
+    }, [runOnce, pageProps]);
 
     /**
      * Create New Project

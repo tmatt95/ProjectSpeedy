@@ -1,6 +1,11 @@
+import { screen } from '@testing-library/react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { CardGrid, CardItem } from '../../Components/CardGrid';
+import
+{
+  BrowserRouter as Router,
+} from "react-router-dom";
 
 let container;
 
@@ -15,13 +20,23 @@ afterEach(() => {
 });
 
 describe(`The projects component`, () => {
-  it('can render', () => {
+  it('can render a grid with one item in', () => {
     act(() => {
       let cardData = new Array();
+      cardData.push({
+        address: "address",
+        name: "Card Name"
+      })
       let data = {
         data: cardData
       };
-      ReactDOM.render(<CardGrid {...data} />, container);
+      ReactDOM.render(
+        <Router>
+          <CardGrid {...data} />
+        </Router>,
+        container);
     });
+    const linkElement = screen.getByText(/Card Name/i);
+    expect(linkElement).toBeInTheDocument();
   })
 });

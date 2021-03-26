@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --silent --env=jsdom --coverage --testResultsProcessor jest-sonar-reporter",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,18 +46,6 @@
   "devDependencies": {
     "@types/bootstrap": "^5.0.9",
     "@types/react": "^17.0.3",
-    "@types/react-router-dom": "^5.1.7",
-    "jest-sonar-reporter": "^2.0.0"
-  },
-  "jestSonar": {
-    "reportPath": "./reports",
-    "reportFile": "test-reporter.xml",
-    "collectCoverage": true,
-    "indent": 4,
-    "env": {
-      "test": {
-        "reportPath": "reports-test"
-      }
-    }
+    "@types/react-router-dom": "^5.1.7"
   }
 }

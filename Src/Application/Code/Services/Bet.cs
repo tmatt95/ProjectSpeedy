@@ -35,7 +35,6 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async System.Threading.Tasks.Task<bool> CreateAsync(string projectId, string problemId, Models.Bet.BetNew form)
         {
-            // TODO Check that project / problem id are correct in controller.
             // The new project object
             var newBet = new ProjectSpeedy.Models.Bet.Bet()
             {

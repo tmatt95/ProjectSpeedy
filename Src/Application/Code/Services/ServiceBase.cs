@@ -20,12 +20,6 @@ namespace ProjectSpeedy.Services
         private readonly IHttpClientFactory _clientFactory;
 
         /// <summary>
-        /// Contains cached documents which have been requested on the same request.
-        /// <Document Id, Document http content>
-        /// </summary>
-        private Dictionary<string, HttpContent> _cachedDocuments = new Dictionary<string, HttpContent>();
-
-        /// <summary>
         /// Needed to read the CouchDB settings for the application from appsettings.
         /// </summary>
         private readonly IConfiguration _configuration;

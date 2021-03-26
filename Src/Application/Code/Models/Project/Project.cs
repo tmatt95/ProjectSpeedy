@@ -5,7 +5,6 @@ namespace ProjectSpeedy.Models.Project
 {
     /// <summary>
     /// Information on a single project.
-    /// TODO Maybe rename to Project
     /// </summary>
     public class Project
     {

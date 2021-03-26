@@ -37,8 +37,6 @@ namespace ProjectSpeedy.Services
         {
             // TODO We need to ensure that the project exists with the supplied Id.
 
-            // TODO We need to ensure that there is not another problem with the same name.
-
             // The new project object
             var newProblem = new ProjectSpeedy.Models.Problem.Problem()
             {

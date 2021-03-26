@@ -23,7 +23,7 @@ export default function App()
    * @param param0 
    * @returns 
    */
-  function GlobalMessage({ globalMessage, message }: { globalMessage: (arg0: IGlobalMessage) => void, message: IGlobalMessage })
+  function GlobalMessage({message}: { message: IGlobalMessage })
   {
     if (message !== null)
     {
@@ -31,7 +31,7 @@ export default function App()
       return <>
         <div className={classes} role="alert">
           {message.message}
-          <button type="button" className="btn-close" onClick={() => globalMessage({ message: "", class: "d-none" })} aria-label="Close"></button>
+          <button type="button" className="btn-close" onClick={() => setGlobalMessage({ message: "", class: "d-none" })} aria-label="Close"></button>
         </div>
       </>;
     }
@@ -84,7 +84,7 @@ export default function App()
         <div className="container">
           <div className="row">
             <div className="col">
-              <GlobalMessage globalMessage={(alertMessage) => setGlobalMessage(alertMessage)} message={globalMessage} />
+              <GlobalMessage message={globalMessage} />
             </div>
           </div>
         </div>

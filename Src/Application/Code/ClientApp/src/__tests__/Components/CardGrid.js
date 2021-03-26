@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { CardGrid, CardItem } from '../../Components/CardGrid';
+import { CardGrid } from '../../Components/CardGrid';
 import
 {
   BrowserRouter as Router,
@@ -19,14 +19,14 @@ afterEach(() => {
   container = null;
 });
 
-describe(`The projects component`, () => {
+describe(`The card grid component`, () => {
   it('can render a grid with one item in', () => {
     act(() => {
       let cardData = new Array();
       cardData.push({
         address: "address",
         name: "Card Name"
-      })
+      });
       let data = {
         data: cardData
       };
@@ -38,5 +38,5 @@ describe(`The projects component`, () => {
     });
     const linkElement = screen.getByText(/Card Name/i);
     expect(linkElement).toBeInTheDocument();
-  })
+  });
 });

@@ -1,11 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import App from './../App';
+import { Test } from './../App';
 
-describe(`The overall application component`, () => {
-  it('should render page without errror', () => {
-    render(<App />);
-    const linkElement = screen.getByText(/Project Speedy/i);
-    expect(linkElement).toBeInTheDocument();
+describe(`Testing unit coverage in sonar`, () => {
+  it('can add up', () => {
+    expect(Test(1,2)).toBe(3);
   });
 })
-

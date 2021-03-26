@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react'
 import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
-import {ProjectService} from '../Services/ProjectService'
+import { ProjectService } from '../Services/ProjectService'
 
 export function Projects(pageProps: IPage)
 {

@@ -38,7 +38,7 @@ namespace ProjectSpeedy.Services
         public async Task<bool> CreateAsync(Models.Project.ProjectNew form)
         {
             // The new project object
-            var newProject = new ProjectSpeedy.Models.Project.Project()
+            var newProject = new ProjectSpeedy.Models.Project.ProjectNew()
             {
                 Name = form.Name,
                 Created = DateTime.UtcNow

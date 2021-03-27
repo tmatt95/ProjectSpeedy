@@ -1,5 +1,4 @@
-import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from 'react';
-import * as bootstrap from 'bootstrap';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService'
@@ -11,11 +10,6 @@ export function Projects(pageProps: IPage)
    * Existing projects.
    */
   const [projects, setProjects]: [CardItem[], Dispatch<SetStateAction<CardItem[]>>] = useState(new Array<CardItem>());
-
-  /**
-   * Name of the new project.
-   */
-  const [newProjectName, setNewProjectName] = useState("");
 
   /**
    * Used to run code only once on page load.
@@ -31,7 +25,11 @@ export function Projects(pageProps: IPage)
 
       // Loads the projects onto the page
       ProjectService.GetAll().then(
-        (data) => { setProjects(data); },
+        (data) =>
+        {
+          // Update the grid.
+          setProjects(data);
+        },
         (error) =>
         {
           alert(error);
@@ -39,24 +37,6 @@ export function Projects(pageProps: IPage)
       );
     }
   }, [runOnce, pageProps]);
-
-  /**
-   * Create New Project
-   * @param {*} event The submit form event
-   */
-  const CreateNewProject = (event: FormEvent<HTMLFormElement>) =>
-  {
-    event.preventDefault();
-    let myModalEl: HTMLElement | null = document.getElementById('newModal');
-
-    if (myModalEl != null)
-    {
-      let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-      modal.hide();
-      setNewProjectName("");
-      pageProps.globalMessage({ message: "Project added successfully", class: "alert-success" });
-    }
-  }
 
   return (<>
     <div className="row">
@@ -67,9 +47,7 @@ export function Projects(pageProps: IPage)
     <div>
       <h1>Anywhere in your app!</h1>
     </div>
-
     <CardGrid data={projects} />
-
-    <ProjectNewForm/>
+    <ProjectNewForm setProjects={(projects: CardItem[]) =>setProjects(projects)}/>
   </>);
 }

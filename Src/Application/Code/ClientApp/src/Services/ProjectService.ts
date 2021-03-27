@@ -22,5 +22,25 @@ export class ProjectService
      {
          const response = await fetch(`/api/project/${projectId}`);
          return await response.json();
+    }
+    
+    /**
+     * Adds a new project.
+     * @returns Adds a new project
+     */
+     static async Put(data:string): Promise<Response>
+     {
+         const response = await fetch(
+             "/api/project/",
+             {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                 body: data,
+              }
+         );
+         return response;
      }
 }

@@ -1,15 +1,18 @@
 import { Formik } from 'formik';
+import * as bootstrap from 'bootstrap';
+import { ProjectService } from '../../Services/ProjectService';
+import { CardItem } from '../CardGrid';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
   if (showError)
   {
-    return "is-invalid " + otherClasses 
+    return "is-invalid " + otherClasses
   }
   return otherClasses;
 }
 
-export default function ProjectsNewForm()
+export default function ProjectsNewForm({ setProjects }: { setProjects: (projects: CardItem[]) => void })
 {
   return (<>
     <Formik
@@ -34,13 +37,38 @@ export default function ProjectsNewForm()
           return {};
         }
       }}
-      onSubmit={(values, { setSubmitting }) =>
+      onSubmit={(values,  {setSubmitting, setErrors, setStatus, resetForm}) =>
       {
         setTimeout(() =>
         {
-          alert('submit');
-          alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
+          ProjectService.Put(JSON.stringify(values)).then(() =>
+          {
+            ProjectService.GetAll().then(
+              (data) =>
+              {
+                setProjects(data);
+
+                resetForm({})
+
+                // Close the dialog.
+                let myModalEl: HTMLElement | null = document.getElementById('newModal');
+                if (myModalEl != null)
+                {
+                  let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
+
+                  if (modal != null)
+                  {
+                    modal.hide();
+                  }
+                }
+              },
+              (error) =>
+              {
+                alert(error);
+              }
+            );
+          });
         }, 400);
       }}
     >

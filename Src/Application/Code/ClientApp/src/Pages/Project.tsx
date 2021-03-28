@@ -1,9 +1,9 @@
-import { useState, useEffect, Dispatch, FormEvent } from 'react';
+import { useState, useEffect, Dispatch } from 'react';
 import { useParams } from "react-router-dom";
-import * as bootstrap from 'bootstrap';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService';
+import ProblemNewForm from '../Components/Problem/ProblemNewForm';
 
 export function Project(pageProps: IPage)
 {
@@ -52,28 +52,6 @@ export function Project(pageProps: IPage)
         }
     }, [runOnce, pageProps, projectId, project.name]);
 
-    /**
-     * The name of a new problem.
-     */
-    const [newProblemName, setNewProblemName] = useState("");
-
-    /**
-     * Create a new bet
-     * @param {*} event The submit form event
-     */
-    const CreateNewProblem = (event: FormEvent<HTMLFormElement>) =>
-    {
-        event.preventDefault();
-        let myModalEl: HTMLElement | null = document.getElementById('newModal');
-
-        if (myModalEl != null)
-        {
-            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl)
-            modal.hide();
-            pageProps.globalMessage({ message: "Problem Added", class: "alert-success" });
-        }
-    }
-
     // Output the page view.
     return <>
         <div className="row">
@@ -84,30 +62,6 @@ export function Project(pageProps: IPage)
         </div>
 
         <CardGrid data={project.problems} />
-
-        <form onSubmit={(event) => CreateNewProblem(event)}>
-            <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="newProjectModalLabel">New Problem</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Use the form to quickly add a problem. These can be fleshed out after being created.</p>
-                            <div className="mb-3">
-                                <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-                                <input type="text" className="form-control" value={newProblemName} onChange={(event) => setNewProblemName(event.target.value)} id="exampleInputEmail1" aria-describedby="nameHelp" />
-                                <div id="nameHelp" className="form-text">The name of your problem.</div>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" className="btn btn-primary">Add Problem</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        <ProblemNewForm projectId={projectId} setProject={(Iarg0: IProject) =>{}}/>
     </>;
 }

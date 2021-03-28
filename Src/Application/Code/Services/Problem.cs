@@ -38,7 +38,7 @@ namespace ProjectSpeedy.Services
             // TODO We need to ensure that the project exists with the supplied Id.
 
             // The new project object
-            var newProblem = new ProjectSpeedy.Models.Problem.Problem()
+            var newProblem = new ProjectSpeedy.Models.Problem.ProblemNew()
             {
                 Name = form.Name,
                 Created = DateTime.UtcNow,

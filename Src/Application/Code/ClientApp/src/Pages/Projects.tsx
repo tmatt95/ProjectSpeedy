@@ -4,7 +4,7 @@ import { IPage } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService'
 import ProjectNewForm from '../Components/Projects/ProjectNewForm'
 
-export function Projects(pageProps: IPage)
+export function Projects(pageProps: IPage) 
 {
   /**
    * Existing projects.
@@ -27,7 +27,6 @@ export function Projects(pageProps: IPage)
       ProjectService.GetAll().then(
         (data) =>
         {
-          // Update the grid.
           setProjects(data);
         },
         (error) =>

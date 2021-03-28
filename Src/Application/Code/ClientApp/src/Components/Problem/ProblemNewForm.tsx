@@ -1,7 +1,8 @@
 import { Formik } from 'formik';
-import * as bootstrap from 'bootstrap';
+import { IProject } from '../../Interfaces/IPage';
+import { ProblemService } from '../../Services/ProblemService';
 import { ProjectService } from '../../Services/ProjectService';
-import { CardItem } from '../CardGrid';
+import * as bootstrap from 'bootstrap';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -12,7 +13,7 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProblemNewForm({ setProblems }: { setProblems: (problems: CardItem[]) => void })
+export default function ProblemNewForm({ projectId, setProject }: { projectId: string, setProject: (Iarg0:IProject) => void })
 {
   return (<>
     <Formik
@@ -37,17 +38,18 @@ export default function ProblemNewForm({ setProblems }: { setProblems: (problems
           return {};
         }
       }}
-      onSubmit={(values,  {setSubmitting, setErrors, setStatus, resetForm}) =>
+      onSubmit={(values, { setSubmitting, setErrors, setStatus, resetForm }) =>
       {
         setTimeout(() =>
         {
           setSubmitting(false);
-          ProjectService.Put(JSON.stringify(values)).then(() =>
+          ProblemService.Put(projectId, JSON.stringify(values)).then(() =>
           {
-            ProjectService.GetAll().then(
+            ProjectService.Get(projectId).then(
               (data) =>
               {
-                setProblems(data);
+                // Sets the model against the page.
+                setProject(data);
                 resetForm({});
 
                 // Close the dialog.
@@ -80,16 +82,16 @@ export default function ProblemNewForm({ setProblems }: { setProblems: (problems
         isSubmitting,
         /* and other goodies */
       }) => (
-        <form onSubmit={handleSubmit} id="new-project-form">
-          <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
+        <form onSubmit={handleSubmit} id="new-problem-form">
+          <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProblemModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="newProjectModalLabel">New Project</h5>
+                  <h5 className="modal-title" id="newProblemModalLabel">New Problem</h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                  <p>Use the form to quickly add projects. These can be fleshed out after being created.</p>
+                  <p>Use the form to quickly add problems. These can be fleshed out after being created.</p>
                   <input
                     type="text"
                     name="name"
@@ -105,7 +107,7 @@ export default function ProblemNewForm({ setProblems }: { setProblems: (problems
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="project-new-create">
-                    Add Project
+                    Add Problem
                   </button>
                 </div>
               </div>

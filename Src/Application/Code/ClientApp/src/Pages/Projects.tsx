@@ -44,6 +44,6 @@ export function Projects(pageProps: IPage)
       </div>
     </div>
     <CardGrid data={projects} />
-    <ProjectNewForm setProjects={(projects: CardItem[]) =>setProjects(projects)}/>
+    <ProjectNewForm setProjects={(data: CardItem[]) =>setProjects(data)}/>
   </>);
 }

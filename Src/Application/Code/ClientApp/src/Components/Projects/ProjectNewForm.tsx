@@ -12,7 +12,7 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProjectsNewForm({ setProjects }: { setProjects: (projects: CardItem[]) => void })
+export default function ProjectsNewForm({ setProjects }: { setProjects: (data: CardItem[]) => void })
 {
   return (<>
     <Formik

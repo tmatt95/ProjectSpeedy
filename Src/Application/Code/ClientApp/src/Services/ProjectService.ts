@@ -21,7 +21,7 @@ export class ProjectService
      static async Get(projectId:string): Promise<IProject>
      {
          const response = await fetch(`/api/project/${projectId}`);
-         return await response.json();
+         return response.json();
     }
     
     /**
@@ -30,7 +30,7 @@ export class ProjectService
      */
      static async Put(data:string): Promise<Response>
      {
-         const response = await fetch(
+        return await fetch(
              "/api/project/",
              {
                 method: 'PUT',
@@ -41,6 +41,5 @@ export class ProjectService
                  body: data,
               }
          );
-         return response;
      }
 }

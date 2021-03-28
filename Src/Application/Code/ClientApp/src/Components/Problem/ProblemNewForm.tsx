@@ -13,7 +13,7 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProblemNewForm({ projectId, setProject }: { projectId: string, setProject: (Iarg0:IProject) => void })
+export default function ProblemNewForm({ projectId, setProject }: { projectId: string, setProject: (data:IProject) => void })
 {
   return (<>
     <Formik

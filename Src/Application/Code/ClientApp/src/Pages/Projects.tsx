@@ -44,9 +44,6 @@ export function Projects(pageProps: IPage)
         <h1>Projects</h1>
       </div>
     </div>
-    <div>
-      <h1>Anywhere in your app!</h1>
-    </div>
     <CardGrid data={projects} />
     <ProjectNewForm setProjects={(projects: CardItem[]) =>setProjects(projects)}/>
   </>);

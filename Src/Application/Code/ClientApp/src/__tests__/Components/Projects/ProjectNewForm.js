@@ -42,11 +42,14 @@ describe(`The project new form component`, () => {
   });
 
   it('can submit a valid form', async () => {
+    jest.useFakeTimers()
 
     // display form.
     act(() => {
       ReactDOM.render(<ProjectNewForm />, container);
     });
+
+    expect(setTimeout).toHaveBeenCalledTimes(0);
 
     // Fill in form fields
     let name = document.getElementsByName('name')[0];
@@ -59,16 +62,20 @@ describe(`The project new form component`, () => {
       name.dispatchEvent(ev2);
     });
 
+    expect(setTimeout).toHaveBeenCalledTimes(0);
+
     // Try and submit form.
     let button = document.getElementById('project-new-create');
     expect(button.innerHTML).toBe("Add Project");
     await act(async () => {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      jest.runAllTimers();
     });
 
     // Check that there is an error for the name.
     let nameError = document.getElementById('validationNameFeedback');
     expect(nameError.innerHTML).toBe("");
+    expect(setTimeout).toHaveBeenCalledTimes(3);
   });
 });
 

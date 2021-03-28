@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ProjectSpeedy.Models.Projects;
@@ -74,6 +75,9 @@ namespace ProjectSpeedy.Services
                     Address = "/project/" + record.value.id.Replace(Project.PREFIX, "")
                 });
             }
+
+            // Orders the projects by name asc
+            projects.rows = projects.rows.OrderBy(r => r.Name).ToList();
 
             // Returns the list of projects.
             return projects;

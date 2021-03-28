@@ -12,7 +12,7 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProjectsNewForm({ setProjects }: { setProjects: (projects: CardItem[]) => void })
+export default function ProblemNewForm({ setProblems }: { setProblems: (problems: CardItem[]) => void })
 {
   return (<>
     <Formik
@@ -47,10 +47,7 @@ export default function ProjectsNewForm({ setProjects }: { setProjects: (project
             ProjectService.GetAll().then(
               (data) =>
               {
-                // Display projects on page.
-                setProjects(data);
-
-                // Reset form.
+                setProblems(data);
                 resetForm({});
 
                 // Close the dialog.
@@ -58,7 +55,6 @@ export default function ProjectsNewForm({ setProjects }: { setProjects: (project
                 if (myModalEl != null)
                 {
                   let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-
                   if (modal != null)
                   {
                     modal.hide();

@@ -106,7 +106,7 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="project-new-create">
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="problem-new-create">
                     Add Problem
                   </button>
                 </div>

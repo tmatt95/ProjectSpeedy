@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import ProjectNewForm from '../../../Components/Projects/ProjectNewForm.tsx';
+import ProblemNewForm from '../../../Components/Problem/ProblemNewForm.tsx';
 
 let container;
 
@@ -17,7 +17,7 @@ afterEach(() => {
 describe(`The project new form component`, () => {
   it('can render', () => {
     act(() => {
-      ReactDOM.render(<ProjectNewForm />, container);
+      ReactDOM.render(<ProblemNewForm />, container);
     });
   })
 
@@ -25,12 +25,12 @@ describe(`The project new form component`, () => {
 
     // display form.
     act(() => {
-      ReactDOM.render(<ProjectNewForm />, container);
+      ReactDOM.render(<ProblemNewForm />, container);
     });
 
     // Try and submit form.
-    let button = document.getElementById('project-new-create');
-    expect(button.innerHTML).toBe("Add Project");
+    let button = document.getElementById('problem-new-create');
+    expect(button.innerHTML).toBe("Add Problem");
     await act(async () => {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
@@ -45,7 +45,7 @@ describe(`The project new form component`, () => {
 
     // display form.
     act(() => {
-      ReactDOM.render(<ProjectNewForm />, container);
+      ReactDOM.render(<ProblemNewForm />, container);
     });
 
     expect(setTimeout).toHaveBeenCalledTimes(0);
@@ -54,7 +54,7 @@ describe(`The project new form component`, () => {
     let name = document.getElementsByName('name')[0];
     await act(async () => {
       var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-      nativeInputValueSetter.call(name, 'Project Name');
+      nativeInputValueSetter.call(name, 'Problem Name');
       
       var ev2 = new Event('input', { bubbles: true});
       name.dispatchEvent(ev2);
@@ -63,8 +63,8 @@ describe(`The project new form component`, () => {
     expect(setTimeout).toHaveBeenCalledTimes(0);
 
     // Try and submit form.
-    let button = document.getElementById('project-new-create');
-    expect(button.innerHTML).toBe("Add Project");
+    let button = document.getElementById('problem-new-create');
+    expect(button.innerHTML).toBe("Add Problem");
     await act(async () => {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
       jest.runAllTimers();

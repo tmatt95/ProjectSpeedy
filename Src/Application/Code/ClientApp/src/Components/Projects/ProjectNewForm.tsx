@@ -82,7 +82,7 @@ export default function ProjectsNewForm({ setProjects }: { setProjects: (project
         isSubmitting,
         /* and other goodies */
       }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="new-project-form">
           <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
@@ -100,13 +100,13 @@ export default function ProjectsNewForm({ setProjects }: { setProjects: (project
                     value={values.name}
                     className={getFormInputClass(errors !== undefined && errors.name !== undefined && errors.name.length > 0, "form-control")}
                   />
-                  <div id="validationServerUsernameFeedback" className="invalid-feedback">
+                  <div id="validationNameFeedback" className="invalid-feedback">
                     {errors.name && touched.name && errors.name}
                   </div>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="project-new-create">
                     Add Project
                   </button>
                 </div>

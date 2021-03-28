@@ -40,7 +40,7 @@ export function CardGrid({ data }: {data: CardItem[]}) {
     return <>
         <div className="row">
             <div className="col-md-6 col-lg-4 pt-2">
-                <button data-bs-toggle="modal" className="btn btn-link p-0 w-100 " data-bs-target="#newModal">
+                <button data-bs-toggle="modal" className="btn btn-link p-0 w-100 " data-bs-target="#newModal" id="add-new">
                     <div className="card">
                         <div className="card-body text-center">
                             <div><i className="bi bi-journal-plus grid-card-icon"></i></div>

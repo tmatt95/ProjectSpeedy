@@ -19,7 +19,7 @@ namespace Tests.Services
             {
                 Name = "Test Problem"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Problem.Problem>(), "problem"))
+            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Problem.ProblemNew>(), "problem"))
                 .Returns(Task.FromResult("TestNewId"));
 
             // Act

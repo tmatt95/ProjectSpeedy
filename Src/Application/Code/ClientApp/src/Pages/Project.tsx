@@ -62,6 +62,6 @@ export function Project(pageProps: IPage)
         </div>
 
         <CardGrid data={project.problems} />
-        <ProblemNewForm projectId={projectId} setProject={(Iarg0: IProject) =>{}}/>
+        <ProblemNewForm projectId={projectId} setProject={(project: IProject) => { setProject(project);}}/>
     </>;
 }

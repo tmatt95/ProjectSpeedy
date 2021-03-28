@@ -30,7 +30,7 @@ export class ProjectService
      */
      static async Put(data:string): Promise<Response>
      {
-        return await fetch(
+        return fetch(
              "/api/project/",
              {
                 method: 'PUT',

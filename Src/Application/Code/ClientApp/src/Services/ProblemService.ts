@@ -22,7 +22,7 @@ export class ProblemService
      */
      static async Put(projectId: string, data:string): Promise<Response>
      {
-         return await fetch(
+         return fetch(
              `/api/project/${projectId}/problem`,
              {
                 method: 'PUT',

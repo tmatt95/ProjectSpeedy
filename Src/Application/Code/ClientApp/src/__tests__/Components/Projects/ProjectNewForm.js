@@ -51,12 +51,19 @@ describe(`The project new form component`, () => {
     // Fill in form fields
     let name = document.getElementsByName('name')[0];
     name.value = "New Project Name";
+    await act(async () => {
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+      nativeInputValueSetter.call(name, 'Project Name');
+      
+      var ev2 = new Event('input', { bubbles: true});
+      name.dispatchEvent(ev2);
+    });
 
     // Try and submit form.
     let button = document.getElementById('project-new-create');
     expect(button.innerHTML).toBe("Add Project");
     await act(async () => {
-      button.dispatchEvent(new KeyboardEvent("click", { bubbles: true }));
+      button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
     // Check that there is an error for the name.

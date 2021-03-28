@@ -22,23 +22,46 @@ describe(`The project new form component`, () => {
     });
   })
 
-  it('can validate the form', async() => {
+  it('can validate the form', async () => {
 
     // display form.
-    act(() => { 
+    act(() => {
       ReactDOM.render(<ProjectNewForm />, container);
     });
 
     // Try and submit form.
     let button = document.getElementById('project-new-create');
     expect(button.innerHTML).toBe("Add Project");
-    await act(async() => {
+    await act(async () => {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
     // Check that there is an error for the name.
     let nameError = document.getElementById('validationNameFeedback');
     expect(nameError.innerHTML).toBe("Required");
-  })
+  });
+
+  it('can submit a valid form', async () => {
+
+    // display form.
+    act(() => {
+      ReactDOM.render(<ProjectNewForm />, container);
+    });
+
+    // Fill in form fields
+    let name = document.getElementsByName('name')[0];
+    name.value = "New Project Name";
+
+    // Try and submit form.
+    let button = document.getElementById('project-new-create');
+    expect(button.innerHTML).toBe("Add Project");
+    await act(async () => {
+      button.dispatchEvent(new KeyboardEvent("click", { bubbles: true }));
+    });
+
+    // Check that there is an error for the name.
+    let nameError = document.getElementById('validationNameFeedback');
+    expect(nameError.innerHTML).toBe("");
+  });
 });
 

@@ -58,6 +58,18 @@ export function Project(pageProps: IPage)
    */
   const [dialogOpened, setDialogOpened] = useState(false);
 
+    /**
+     * Resets the form validators etc.
+     */
+     function ResetForm()
+     {
+         let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
+         if (form !== null)
+         {
+             form.reset();
+         }
+     }
+    
   /**
    * Loads the modal onto the screen.
    */
@@ -72,7 +84,7 @@ export function Project(pageProps: IPage)
               // Resets when dialog open
               myModalEl.addEventListener('show.bs.modal', function (event)
               {
-                  // ResetForm();
+                 ResetForm();
               });
               setDialogOpened(true);
           }

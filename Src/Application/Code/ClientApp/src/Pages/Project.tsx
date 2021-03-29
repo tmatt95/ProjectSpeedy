@@ -5,6 +5,7 @@ import { IPage, IProject } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService';
 import ProblemNewForm from '../Components/Problem/ProblemNewForm';
 import * as bootstrap from 'bootstrap';
+import { PageFunctions } from './PageFunctions';
 
 export function Project(pageProps: IPage)
 {
@@ -59,46 +60,6 @@ export function Project(pageProps: IPage)
    */
   const [dialogOpened, setDialogOpened] = useState(false);
 
-    /**
-     * Resets the form validators etc.
-     */
-     function ResetForm()
-     {
-         let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
-         if (form !== null)
-         {
-             form.reset();
-         }
-     }
-    
-  /**
-   * Loads the modal onto the screen.
-   */
-  function DisplayModal(e: MouseEvent)
-  {
-      e.preventDefault();
-      let myModalEl: HTMLElement | null = document.getElementById('newModal');
-      if (myModalEl !== null)
-      {
-          if (dialogOpened === false)
-          {
-              // Resets when dialog open
-              myModalEl.addEventListener('show.bs.modal', function (event)
-              {
-                 ResetForm();
-              });
-              setDialogOpened(true);
-          }
-
-          // Opens the modal.
-          let modal = new bootstrap.Modal(myModalEl, { keyboard: false });
-          if (modal != null)
-          {
-              modal.show();
-          }
-      }
-  }
-
     // Output the page view.
     return <>
         <div className="row">
@@ -108,7 +69,7 @@ export function Project(pageProps: IPage)
             </div>
         </div>
 
-        <CardGrid data={project.problems} AddNewClick={(e) => {DisplayModal(e)}} />
+        <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
         <ProblemNewForm projectId={projectId} setProject={(data: IProject) => { setProject(data);}}/>
     </>;
 }

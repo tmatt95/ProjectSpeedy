@@ -1,5 +1,4 @@
-import { MouseEvent, useState } from 'react';
-import * as bootstrap from 'bootstrap';
+import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
 
 /**
@@ -38,54 +37,12 @@ function Card({ address, name }: CardItem)
  * Will render a grid of cards.
  * @param {*} param0 
  */
-export function CardGrid({ data }: { data: CardItem[] })
+export function CardGrid({ data, AddNewClick }: { data: CardItem[], AddNewClick: (e: MouseEvent) => void })
 {
-    const [dialogOpened, setDialogOpened] = useState(false);
-
-    /**
-     * Resets the form validators etc.
-     */
-    function ResetForm()
-    {
-        let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
-        if (form !== null)
-        {
-            form.reset();
-        }
-    }
-
-    /**
-     * Loads the modal onto the screen.
-     */
-    function DisplayModal(e: MouseEvent)
-    {
-        e.preventDefault();
-        let myModalEl: HTMLElement | null = document.getElementById('newModal');
-        if (myModalEl !== null)
-        {
-            if (dialogOpened == false)
-            {
-                // Resets when dialog open
-                myModalEl.addEventListener('show.bs.modal', function (event)
-                {
-                    ResetForm();
-                });
-                setDialogOpened(true);
-            }
-
-            // Opens the modal.
-            let modal = new bootstrap.Modal(myModalEl, { keyboard: false });
-            if (modal != null)
-            {
-                modal.show();
-            }
-        }
-    }
-
     return <>
         <div className="row">
             <div className="col-md-6 col-lg-4 pt-2">
-                <button className="btn btn-link p-0 w-100" onClick={DisplayModal} id="add-new">
+                <button className="btn btn-link p-0 w-100" onClick={AddNewClick} id="add-new">
                     <div className="card">
                         <div className="card-body text-center">
                             <div><i className="bi bi-journal-plus grid-card-icon"></i></div>

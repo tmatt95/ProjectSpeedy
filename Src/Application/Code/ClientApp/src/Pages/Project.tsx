@@ -1,9 +1,10 @@
-import { useState, useEffect, Dispatch } from 'react';
+import { useState, useEffect, Dispatch, MouseEvent } from 'react';
 import { useParams } from "react-router-dom";
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService';
 import ProblemNewForm from '../Components/Problem/ProblemNewForm';
+import * as bootstrap from 'bootstrap';
 
 export function Project(pageProps: IPage)
 {
@@ -52,6 +53,39 @@ export function Project(pageProps: IPage)
         }
     }, [runOnce, pageProps, projectId, project.name]);
 
+    /**
+   * Whether the dialog has even been opened.
+   */
+  const [dialogOpened, setDialogOpened] = useState(false);
+
+  /**
+   * Loads the modal onto the screen.
+   */
+  function DisplayModal(e: MouseEvent)
+  {
+      e.preventDefault();
+      let myModalEl: HTMLElement | null = document.getElementById('newModal');
+      if (myModalEl !== null)
+      {
+          if (dialogOpened === false)
+          {
+              // Resets when dialog open
+              myModalEl.addEventListener('show.bs.modal', function (event)
+              {
+                  // ResetForm();
+              });
+              setDialogOpened(true);
+          }
+
+          // Opens the modal.
+          let modal = new bootstrap.Modal(myModalEl, { keyboard: false });
+          if (modal != null)
+          {
+              modal.show();
+          }
+      }
+  }
+
     // Output the page view.
     return <>
         <div className="row">
@@ -61,7 +95,7 @@ export function Project(pageProps: IPage)
             </div>
         </div>
 
-        <CardGrid data={project.problems} />
+        <CardGrid data={project.problems} AddNewClick={(e) => {DisplayModal(e)}} />
         <ProblemNewForm projectId={projectId} setProject={(data: IProject) => { setProject(data);}}/>
     </>;
 }

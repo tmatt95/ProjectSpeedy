@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import * as bootstrap from 'bootstrap';
 import { Link } from "react-router-dom";
 
@@ -43,6 +43,18 @@ export function CardGrid({ data }: { data: CardItem[] })
     const [dialogOpened, setDialogOpened] = useState(false);
 
     /**
+     * Resets the form validators etc.
+     */
+    function ResetForm()
+    {
+        let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
+        if (form !== null)
+        {
+            form.reset();
+        }
+    }
+
+    /**
      * Loads the modal onto the screen.
      */
     function DisplayModal(e: MouseEvent)
@@ -53,14 +65,16 @@ export function CardGrid({ data }: { data: CardItem[] })
         {
             if (dialogOpened == false)
             {
-                myModalEl.addEventListener('hidden.bs.modal', function (event)
+                // Resets when dialog open
+                myModalEl.addEventListener('show.bs.modal', function (event)
                 {
-                    alert('a');
-                });   
+                    ResetForm();
+                });
                 setDialogOpened(true);
             }
-            
-            let modal = new bootstrap.Modal(myModalEl);
+
+            // Opens the modal.
+            let modal = new bootstrap.Modal(myModalEl, { keyboard: false });
             if (modal != null)
             {
                 modal.show();

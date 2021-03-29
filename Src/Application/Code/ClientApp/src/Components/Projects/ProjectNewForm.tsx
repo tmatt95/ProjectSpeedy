@@ -81,10 +81,11 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
         handleChange,
         handleBlur,
         handleSubmit,
+        handleReset,
         isSubmitting,
         /* and other goodies */
       }) => (
-        <form onSubmit={handleSubmit} id="new-project-form">
+        <form onReset={handleReset} onSubmit={handleSubmit} id="new-form">
           <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">

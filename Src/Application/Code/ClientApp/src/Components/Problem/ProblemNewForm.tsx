@@ -105,10 +105,11 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
         handleChange,
         handleBlur,
         handleSubmit,
+        handleReset,
         isSubmitting,
         /* and other goodies */
       }) => (
-        <form onSubmit={handleSubmit} id="new-problem-form">
+        <form onReset={handleReset} onSubmit={handleSubmit} id="new-form">
           <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProblemModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">

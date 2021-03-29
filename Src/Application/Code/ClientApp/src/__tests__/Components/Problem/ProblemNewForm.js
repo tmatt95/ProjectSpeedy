@@ -69,7 +69,7 @@ describe(`The project new form component`, () => {
     // Check that there is an error for the name.
     let nameError = document.getElementById('validationNameFeedback');
     expect(nameError.innerHTML).toBe("");
-    expect(setTimeout).toHaveBeenCalledTimes(3);
-  });
+    expect(setTimeout).toHaveBeenCalledTimes(2);
+  })
 });
 

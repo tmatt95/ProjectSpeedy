@@ -1,4 +1,4 @@
-import { IProject } from "../Interfaces/IPage";
+import { IProblem } from "../Interfaces/IPage";
 
 export class ProblemService
 {
@@ -8,7 +8,7 @@ export class ProblemService
      * @param problemId Id of the problem to load.
      * @returns information on the problem.
      */
-     static async Get(projectId:string, problemId: string): Promise<IProject>
+     static async Get(projectId:string, problemId: string): Promise<IProblem>
      {
          const response = await fetch(`/api/project/${projectId}/problem/${problemId}`);
          return response.json();

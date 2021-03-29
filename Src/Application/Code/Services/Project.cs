@@ -42,7 +42,8 @@ namespace ProjectSpeedy.Services
             var newProject = new ProjectSpeedy.Models.Project.ProjectNew()
             {
                 Name = form.Name,
-                Created = DateTime.UtcNow
+                Created = DateTime.UtcNow,
+                Description = form.Description
             };
 
             // Creates the project and checks if the id is returned.

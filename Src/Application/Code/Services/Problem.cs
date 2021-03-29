@@ -42,7 +42,9 @@ namespace ProjectSpeedy.Services
             {
                 Name = form.Name,
                 Created = DateTime.UtcNow,
-                ProjectId = "project:" + projectId
+                ProjectId = "project:" + projectId,
+                Description = form.Description,
+                SuccessCriteria = form.SuccessCriteria
             };
 
             // Creates the project and checks if the id is returned.

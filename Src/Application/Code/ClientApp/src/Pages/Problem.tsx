@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, MouseEvent } from 'react';
 import { useParams } from "react-router-dom";
-import { CardGrid } from '../Components/CardGrid'
-import { IPage } from '../Interfaces/IPage';
+import BetNewForm from '../Components/Bet/BetNewForm';
+import { CardGrid, CardItem } from '../Components/CardGrid'
+import { IPage, IProblem } from '../Interfaces/IPage';
+import { ProblemService } from '../Services/ProblemService';
+import * as bootstrap from 'bootstrap';
 
 export function Problem(pageProps: IPage)
 {
@@ -11,6 +14,12 @@ export function Problem(pageProps: IPage)
     let { problemId, projectId }: { problemId: string, projectId: string } = useParams();
 
     /**
+     * Page model definition.
+     */
+    var defaultProblem: IProblem = { name: "", bets: new Array<CardItem>(), isLoaded: false };
+    const [problem, setProblem]: [IProblem, Dispatch<IProblem>] = useState(defaultProblem);
+
+    /**
      * Used to run code only once on page load.
      */
     const [runOnce, setRunOnce] = useState(false);
@@ -18,31 +27,92 @@ export function Problem(pageProps: IPage)
     {
         if (runOnce === false)
         {
-            document.title = `Problem ${problemId}`;
-            pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([
-                { address: `/`, text: "Project", isLast: false },
-                { address: `/`, text: "Problem", isLast: false }]));
             setRunOnce(true);
-        }
-    }, [runOnce, pageProps, projectId, problemId]);
 
+            // Loads the projects onto the page
+            ProblemService.Get(projectId, problemId).then(
+                (data) =>
+                {
+                    // Sets the model against the page.
+                    setProblem(data);
+                    data.isLoaded = true;
+
+                    // Sets the project name.
+                    document.title = `Problem ${problem.name}`;
+
+                    // Set the breadcrumbs.
+                    pageProps.setBreadCrumbs([
+                        { address: "/", text: "Projects", isLast: false },
+                        { address: `/project/${projectId}`, text: "Project Name", isLast: false },
+                        { address: `/project/${projectId}/${problemId}`, text: "ProblemName", isLast: true }
+                    ]);
+                },
+                (error) =>
+                {
+                    alert(error);
+                }
+            );
+        }
+    }, [runOnce, pageProps, projectId, problemId, problem.name]);
 
     /**
-     * Dummy data containing exisiting bets.
-     */
-    const bets = [{ name: "Bet 0", address: "/project/1" },
-        { name: "Bet 1", address: "/project/2" },
-        { name: "Bet 2", address: "/project/3" },
-        { name: "Bet 3", address: "/project/4" },
-        { name: "Bet 4", address: "/project/5" },
-        { name: "Bet 5", address: "/project/6" }];
+   * Whether the dialog has even been opened.
+   */
+  const [dialogOpened, setDialogOpened] = useState(false);
+
+  /**
+   * Resets the form validators etc.
+   */
+   function ResetForm()
+   {
+       let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
+       if (form !== null)
+       {
+           form.reset();
+       }
+   }
+  
+/**
+ * Loads the modal onto the screen.
+ */
+function DisplayModal(e: MouseEvent)
+{
+    e.preventDefault();
+    let myModalEl: HTMLElement | null = document.getElementById('newModal');
+    if (myModalEl !== null)
+    {
+        if (dialogOpened === false)
+        {
+            // Resets when dialog open
+            myModalEl.addEventListener('show.bs.modal', function (event)
+            {
+               ResetForm();
+            });
+            setDialogOpened(true);
+        }
+
+        // Opens the modal.
+        let modal = new bootstrap.Modal(myModalEl, { keyboard: false });
+        if (modal != null)
+        {
+            modal.show();
+        }
+    }
+}
 
     return <>
         <div className="row">
             <div className="col">
-                <h1>Problem {problemId}</h1>
+                <h1>{problem.name}</h1>
+
+                <h2>Description</h2>
+
+                <h2>Success Criteria</h2>
+
+                <h2>Bets</h2>
+                <CardGrid data={problem.bets} AddNewClick={(e) => { DisplayModal(e) }} />
+                <BetNewForm projectId={projectId} problemId={problemId} setProblem={(data: IProblem) => { setProblem(data);}}/>
             </div>
         </div>
-        <CardGrid data={bets} AddNewClick={(e) => {}} />
     </>;
 }

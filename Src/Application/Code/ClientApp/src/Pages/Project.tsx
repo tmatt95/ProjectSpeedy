@@ -41,9 +41,10 @@ export function Project(pageProps: IPage)
                     document.title = `Project ${project.name}`;
 
                     // Set the breadcrumbs.
-                    pageProps.setBreadCrumbs([]);
-                    pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "/", text: "Projects", isLast: false }]));
-                    pageProps.setBreadCrumbs(pageProps.breadCrumbs.concat([{ address: "", text: data.name, isLast: true }]));
+                    pageProps.setBreadCrumbs([
+                        { address: "/", text: "Projects", isLast: false },
+                        { address: `/project/${projectId}`, text: "Project Name", isLast: true }
+                    ]);
                 },
                 (error) =>
                 {

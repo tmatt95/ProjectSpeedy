@@ -1,10 +1,9 @@
-import { useState, useEffect, Dispatch, MouseEvent } from 'react';
+import { useState, useEffect, Dispatch } from 'react';
 import { useParams } from "react-router-dom";
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService';
 import ProblemNewForm from '../Components/Problem/ProblemNewForm';
-import * as bootstrap from 'bootstrap';
 import { PageFunctions } from './PageFunctions';
 
 export function Project(pageProps: IPage)

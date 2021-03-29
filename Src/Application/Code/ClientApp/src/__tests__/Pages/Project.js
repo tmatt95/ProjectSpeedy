@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import {Projects} from '../../Pages/Projects';
+import { MemoryRouter } from 'react-router';
+import {Project} from '../../Pages/Project';
 
 let container;
 
@@ -21,17 +22,27 @@ describe(`The projects component`, () => {
       breadCrumbs: Array([]),
       globalMessage: (alertMessage) => { return; }
     }
-    act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
+    act(() => {
+      ReactDOM.render(
+        <MemoryRouter>
+          <Project {...pageData} />
+        </MemoryRouter>, container);
+    });
   });
 
-  it('can display the add new project form', async () => {
+  it('can display the add new problem form', async () => {
     // Render the projects page
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array([]),
       globalMessage: (alertMessage) => { return; }
     }
-    act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
+    act(() => {
+      ReactDOM.render(
+        <MemoryRouter>
+          <Project {...pageData} />
+        </MemoryRouter>, container);
+    });
 
     // The dialog window should not be visible.
     expect(document.getElementById('newModal')).not.toHaveClass("show");

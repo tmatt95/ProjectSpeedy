@@ -1,27 +1,29 @@
-import React from 'react';
+import { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
+import * as bootstrap from 'bootstrap';
 import { Link } from "react-router-dom";
 
 /**
  * Represents an individual breadcrumb item.
  */
- export interface CardItem
- {
-     /**
-      * Address the user is taken to when they click a breadcrumb.
-      */
-     address: string;
- 
-     /**
-      * Text to display in the breadcrumb.
-      */
-     name: string;
- }
+export interface CardItem
+{
+    /**
+     * Address the user is taken to when they click a breadcrumb.
+     */
+    address: string;
+
+    /**
+     * Text to display in the breadcrumb.
+     */
+    name: string;
+}
 
 /**
 * Will render a card used extensively across all the menues in the application.
 * @param CardItem props Object properties 
 */
-export function Card({ address, name }: CardItem) {
+function Card({ address, name }: CardItem)
+{
     return <Link to={address}>
         <div className="card">
             <div className="card-body text-center">
@@ -36,11 +38,40 @@ export function Card({ address, name }: CardItem) {
  * Will render a grid of cards.
  * @param {*} param0 
  */
-export function CardGrid({ data }: {data: CardItem[]}) {
+export function CardGrid({ data }: { data: CardItem[] })
+{
+    const [dialogOpened, setDialogOpened] = useState(false);
+
+    /**
+     * Loads the modal onto the screen.
+     */
+    function DisplayModal(e: MouseEvent)
+    {
+        e.preventDefault();
+        let myModalEl: HTMLElement | null = document.getElementById('newModal');
+        if (myModalEl !== null)
+        {
+            if (dialogOpened == false)
+            {
+                myModalEl.addEventListener('hidden.bs.modal', function (event)
+                {
+                    alert('a');
+                });   
+                setDialogOpened(true);
+            }
+            
+            let modal = new bootstrap.Modal(myModalEl);
+            if (modal != null)
+            {
+                modal.show();
+            }
+        }
+    }
+
     return <>
         <div className="row">
             <div className="col-md-6 col-lg-4 pt-2">
-                <button data-bs-toggle="modal" className="btn btn-link p-0 w-100 " data-bs-target="#newModal" id="add-new">
+                <button className="btn btn-link p-0 w-100" onClick={DisplayModal} id="add-new">
                     <div className="card">
                         <div className="card-body text-center">
                             <div><i className="bi bi-journal-plus grid-card-icon"></i></div>

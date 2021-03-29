@@ -13,22 +13,44 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProblemNewForm({ projectId, setProject }: { projectId: string, setProject: (data:IProject) => void })
+export default function ProblemNewForm({ projectId, setProject }: { projectId: string, setProject: (data: IProject) => void })
 {
   return (<>
     <Formik
-      initialValues={{ name: '' }}
+      initialValues={{ name: '', description: '', successCriteria: '' }}
       validate={values =>
       {
-        const errors: { name: string } = {
-          name: ""
+        const errors: { name: string, description: string, successCriteria: string } = {
+          name: "",
+          description: "",
+          successCriteria: ""
         };
+
+        // Are there any errors with the form?
         let hasError: boolean = false;
+
+        // New problem name
         if (!values.name)
         {
           errors.name = 'Required';
           hasError = true;
         }
+
+        // New problem description.
+        if (!values.description)
+        {
+          errors.description = 'Required';
+          hasError = true;
+        }
+
+        // New problem success criteria.
+        if (!values.successCriteria)
+        {
+          errors.successCriteria = 'Required';
+          hasError = true;
+        }
+
+        // If there are errors then display them.
         if (hasError === true)
         {
           return errors;
@@ -42,7 +64,6 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
       {
         setTimeout(() =>
         {
-          setSubmitting(false);
           ProblemService.Put(projectId, JSON.stringify(values)).then(() =>
           {
             ProjectService.Get(projectId).then(
@@ -50,6 +71,8 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
               {
                 // Sets the model against the page.
                 setProject(data);
+
+                // Resets the add new problem form.
                 resetForm({});
 
                 // Close the dialog.
@@ -68,6 +91,9 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
                 alert(error);
               }
             );
+
+            // We have finished submitting the form.
+            setSubmitting(false);
           });
         }, 400);
       }}
@@ -92,16 +118,50 @@ export default function ProblemNewForm({ projectId, setProject }: { projectId: s
                 </div>
                 <div className="modal-body">
                   <p>Use the form to quickly add problems. These can be fleshed out after being created.</p>
-                  <input
-                    type="text"
-                    name="name"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.name}
-                    className={getFormInputClass(errors !== undefined && errors.name !== undefined && errors.name.length > 0, "form-control")}
-                  />
-                  <div id="validationNameFeedback" className="invalid-feedback">
-                    {errors.name && touched.name && errors.name}
+                  <div className="mb-3">
+                    <label htmlFor="new-problem-name" className="form-label">Name</label>
+                    <input
+                      id="new-problem-name"
+                      type="text"
+                      name="name"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.name}
+                      className={getFormInputClass(errors !== undefined && errors.name !== undefined && errors.name.length > 0, "form-control")}
+                    />
+                    <div id="validationNameFeedback" className="invalid-feedback">
+                      {errors.name && touched.name && errors.name}
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="new-problem-description" className="form-label">Description</label>
+                    <textarea
+                      id="new-problem-description"
+                      name="description"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.description}
+                      className={getFormInputClass(errors !== undefined && errors.description !== undefined && errors.description.length > 0, "form-control")}
+                    ></textarea>
+                    <div id="validationDescriptionFeedback" className="invalid-feedback">
+                      {errors.description && touched.description && errors.description}
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="new-problem-success" className="form-label">What measures will be used to determine when the problem has been fixed?</label>
+                    <textarea
+                      id="new-problem-success"
+                      name="successCriteria"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.successCriteria}
+                      className={getFormInputClass(errors !== undefined && errors.successCriteria !== undefined && errors.successCriteria.length > 0, "form-control")}
+                    ></textarea>
+                    <div id="validationSuccessFeedback" className="invalid-feedback">
+                      {errors.successCriteria && touched.successCriteria && errors.successCriteria}
+                    </div>
                   </div>
                 </div>
                 <div className="modal-footer">

@@ -75,30 +75,51 @@ export function Project(pageProps: IPage)
                     title="Add Project"
                     description="Use the form to quickly add problems. These can be fleshed out after being created."
                     buttonText="Add Problem"
-                    saveAction={(values, setSubmitting, resetForm) =>
+                    saveAction={(values, setSubmitting, resetForm, setErrors) =>
                     {
-                        ProblemService.Put(projectId, JSON.stringify(values)).then(() =>
+                        ProblemService.Put(projectId, JSON.stringify(values)).then(async (saveResponse) =>
                         {
-                            ProjectService.Get(projectId).then(
-                                (data) =>
-                                {
-                                    // Sets the model against the page.
-                                    setProject(data);
-
-                                    // Resets the add new problem form.
-                                    resetForm({});
-
-                                    // Close the dialog.
-                                    PageFunctions.CloseDialog('newModal');
-                                },
-                                (error) =>
-                                {
-                                    alert(error);
-                                }
-                            );
 
                             // We have finished submitting the form.
                             setSubmitting(false);
+
+                            if (saveResponse.status !== 202)
+                            {
+                                const json: { message: string } = await saveResponse.json();
+                                setErrors({ name: json.message });
+
+                                ProjectService.Get(projectId).then(
+                                    (data) =>
+                                    {
+                                        // Sets the model against the page.
+                                        setProject(data);
+                                    },
+                                    (error) =>
+                                    {
+                                        alert(error);
+                                    }
+                                );
+                            }
+                            else
+                            {
+                                ProjectService.Get(projectId).then(
+                                    (data) =>
+                                    {
+                                        // Sets the model against the page.
+                                        setProject(data);
+
+                                        // Resets the add new problem form.
+                                        resetForm({});
+
+                                        // Close the dialog.
+                                        PageFunctions.CloseDialog('newModal');
+                                    },
+                                    (error) =>
+                                    {
+                                        alert(error);
+                                    }
+                                );
+                            }
                         });
                     }} />
             </div>

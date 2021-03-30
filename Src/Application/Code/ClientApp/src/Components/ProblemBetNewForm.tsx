@@ -1,4 +1,4 @@
-import { Formik, FormikState } from 'formik';
+import { Formik, FormikErrors, FormikState } from 'formik';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -17,10 +17,15 @@ export default function ProblemBetNewForm({ title, description, buttonText, save
     values: { name: string, description: string, successCriteria: string },
     setSubmitting: (isSubmitting: boolean) => void,
     resetForm: (nextState?: Partial<FormikState<{
-        name: string;
-        description: string;
-        successCriteria: string;
-    }>> | undefined) => void
+      name: string;
+      description: string;
+      successCriteria: string;
+    }>> | undefined) => void,
+    setErrors: (errors: FormikErrors<{
+      name: string;
+      description: string;
+      successCriteria: string;
+    }>) => void
   ) => void
 })
 {
@@ -72,7 +77,7 @@ export default function ProblemBetNewForm({ title, description, buttonText, save
       onSubmit={(values, { setSubmitting, setErrors, setStatus, resetForm }) =>
       {
         // Carries out the save action
-        saveAction(values, setSubmitting, resetForm);
+        saveAction(values, setSubmitting, resetForm, setErrors);
       }}
     >
       {({

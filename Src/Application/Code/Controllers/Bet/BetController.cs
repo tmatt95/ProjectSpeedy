@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -98,6 +99,15 @@ namespace ProjectSpeedy.Controllers
                 var problem = await this._problemService.GetAsync(projectId, problemId);
                 if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId){
                     return this.NotFound();
+                }
+
+                // Ensures we dont have a bets with the same name already
+                if (problem.Bets.Any(p => p.Name.Trim().ToLower() == form.Name.Trim().ToLower()))
+                {
+                    return BadRequest(new ProjectSpeedy.Models.General.BadRequest()
+                    {
+                        Message = "There is already a bet with the same name."
+                    });
                 }
 
                 // Try and add the bet.

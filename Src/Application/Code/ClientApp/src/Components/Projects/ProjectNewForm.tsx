@@ -46,8 +46,17 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
           {
             if (saveResponse.status !== 202)
             {
+              // Display error
               const json:{message:string} = await saveResponse.json();
               setErrors({ name: json.message });
+
+              // Refresh data behind dialog.
+              ProjectService.GetAll().then(
+              (data) =>
+              {
+                // Display projects on page.
+                setProjects(data);
+              });
             }
             else
             {

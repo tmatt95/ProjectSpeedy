@@ -42,25 +42,33 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
         setTimeout(() =>
         {
           setSubmitting(false);
-          ProjectService.Put(JSON.stringify(values)).then(() =>
+          ProjectService.Put(JSON.stringify(values)).then(async (saveResponse) =>
           {
-            ProjectService.GetAll().then(
-              (data) =>
-              {
-                // Display projects on page.
-                setProjects(data);
-
-                // Reset form.
-                resetForm({});
-
-                // Close the dialog.
-                PageFunctions.CloseDialog('newModal');
-              },
-              (error) =>
-              {
-                alert(error);
-              }
-            );
+            if (saveResponse.status !== 202)
+            {
+              const json:{message:string} = await saveResponse.json();
+              setErrors({ name: json.message });
+            }
+            else
+            {
+              ProjectService.GetAll().then(
+                (data) =>
+                {
+                  // Display projects on page.
+                  setProjects(data);
+  
+                  // Reset form.
+                  resetForm({});
+  
+                  // Close the dialog.
+                  PageFunctions.CloseDialog('newModal');
+                },
+                (error) =>
+                {
+                  alert(error);
+                }
+              );
+            }
           });
         }, 400);
       }}
@@ -81,12 +89,14 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="newProjectModalLabel">New Project</h5>
+                  <h2 className="modal-title" id="newProjectModalLabel">New Project</h2>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
                   <p>Use the form to quickly add projects. These can be fleshed out after being created.</p>
+                  <label htmlFor="new-project-name" className="form-label">Name</label>
                   <input
+                    id="new-project-name"
                     type="text"
                     name="name"
                     onChange={handleChange}

@@ -50,7 +50,7 @@ namespace ProjectSpeedy.Services
                 string content = await reader.ReadToEndAsync();
 
                 // Send the request to add the new document
-                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + partition + ":" + newId);
+                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:document_create"].Replace("{documentId}", partition + ":" + newId));
                 request.Content = new StringContent(content);
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
                 var client = _clientFactory.CreateClient();

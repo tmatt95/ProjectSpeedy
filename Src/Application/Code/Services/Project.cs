@@ -30,7 +30,7 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// Contains a cache of projects so we dont have to do the requests multiple times for them.
         /// </summary>
-        private Dictionary<string, Models.Project.Project> _cachedProjects = new Dictionary<string, Models.Project.Project>();
+        private readonly Dictionary<string, Models.Project.Project> _cachedProjects = new Dictionary<string, Models.Project.Project>();
 
         /// <summary>
         /// All project related services.

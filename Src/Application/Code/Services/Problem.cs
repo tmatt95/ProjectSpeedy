@@ -27,7 +27,7 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// Contains a cache of problems so we dont have to do the requests multiple times for them.
         /// </summary>
-        private Dictionary<string, Models.Problem.Problem> _cachedProblems = new Dictionary<string, Models.Problem.Problem>();
+        private readonly Dictionary<string, Models.Problem.Problem> _cachedProblems = new Dictionary<string, Models.Problem.Problem>();
 
         /// <summary>
         /// All problem related services.

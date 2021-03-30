@@ -16,7 +16,6 @@ namespace ProjectSpeedy.Services
 
         /// <summary>
         /// Gets an individual document.
-        /// TODO Add caching to stop this call calling the API on every request.
         /// </summary>
         /// <param name="documentId">The id of the document</param>
         /// <returns>Http content containing the document.</returns>

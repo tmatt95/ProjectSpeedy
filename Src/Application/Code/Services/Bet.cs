@@ -27,7 +27,7 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// Contains a cache of bets so we dont have to do the requests multiple times for them.
         /// </summary>
-        private Dictionary<string, Models.Bet.Bet> _cachedBets = new Dictionary<string, Models.Bet.Bet>();
+        private readonly Dictionary<string, Models.Bet.Bet> _cachedBets = new Dictionary<string, Models.Bet.Bet>();
 
         /// <summary>
         /// All bet related services.

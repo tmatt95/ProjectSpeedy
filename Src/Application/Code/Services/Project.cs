@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace ProjectSpeedy.Services
         /// Partitions allow CouchDB to scale better.
         /// </summary>
         public const string PARTITION = "project";
+
+        /// <summary>
+        /// Contains a cache of projects so we dont have to do the requests multiple times for them.
+        /// </summary>
+        private Dictionary<string, Models.Project.Project> _cachedProjects = new Dictionary<string, Models.Project.Project>();
 
         /// <summary>
         /// All project related services.
@@ -87,6 +93,11 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<ProjectSpeedy.Models.Project.Project> Get(string projectId)
         {
+            // Checks cache to see if problem is in it.
+            if(this._cachedProjects.ContainsKey(projectId)){
+                return this._cachedProjects[projectId];
+            }
+
             // Id of the project in couchDb.
             var couchProjectId = "project:" + projectId;
 
@@ -109,6 +120,9 @@ namespace ProjectSpeedy.Services
                     Address = "/project/" + projectId + "/" + record.value.id.Replace(Problem.PREFIX, "")
                 });
             }
+
+            // Saves the result to cache and returns it.
+            this._cachedProjects.Add(projectId, project);
             return project;
         }
 

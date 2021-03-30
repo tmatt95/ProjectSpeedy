@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace ProjectSpeedy.Services
@@ -22,6 +23,11 @@ namespace ProjectSpeedy.Services
         /// Partitions allow CouchDB to scale better.
         /// </summary>
         public const string PARTITION = "bet";
+
+        /// <summary>
+        /// Contains a cache of bets so we dont have to do the requests multiple times for them.
+        /// </summary>
+        private Dictionary<string, Models.Bet.Bet> _cachedBets = new Dictionary<string, Models.Bet.Bet>();
 
         /// <summary>
         /// All bet related services.
@@ -58,6 +64,11 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async System.Threading.Tasks.Task<Models.Bet.Bet> GetAsync(string projectId, string problemId, string betId)
         {
+            // Checks cache to see if problem is in it.
+            if(this._cachedBets.ContainsKey(betId)){
+                return this._cachedBets[projectId];
+            }
+
             // Id of the bet in couchDb.
             var couchProjectId = Bet.PREFIX + betId;
 
@@ -65,6 +76,9 @@ namespace ProjectSpeedy.Services
             var viewData = await this._serviceBase.DocumentGet(couchProjectId);
             using var responseStream = await viewData.ReadAsStreamAsync();
             var bet = await JsonSerializer.DeserializeAsync<ProjectSpeedy.Models.Bet.Bet>(responseStream);
+
+            // Caches and returns the bet
+            this._cachedBets.Add(projectId, bet);
             return bet;
         }
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -118,12 +117,6 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<HttpContent> DocumentGet(string documentId)
         {
-            // If we have a cached version then return that.
-            // TODO Cache documents in services to avoid using error
-            //if(this._cachedDocuments.ContainsKey(documentId)){
-             //   return this._cachedDocuments[documentId];
-            //}
-
             // Send the request to add the new document
             var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + documentId);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
@@ -135,13 +128,11 @@ namespace ProjectSpeedy.Services
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
 
-            // Add document to cache
-            //this._cachedDocuments.Add(documentId, response.Content);
-
             // Returns the Id of the newly created record.
             return response.Content;
         }
 
+        /// <inheritdoc />
         public async Task<bool> DocumentUpdate(string documentId, string partition, object document)
         {
             using (var stream = new MemoryStream())

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace ProjectSpeedy.Services
@@ -24,6 +25,11 @@ namespace ProjectSpeedy.Services
         public const string PARTITION = "problem";
 
         /// <summary>
+        /// Contains a cache of problems so we dont have to do the requests multiple times for them.
+        /// </summary>
+        private Dictionary<string, Models.Problem.Problem> _cachedProblems = new Dictionary<string, Models.Problem.Problem>();
+
+        /// <summary>
         /// All problem related services.
         /// </summary>
         /// <param name="serviceBase">Contains helper functions needed for all services to work.</param>
@@ -35,8 +41,6 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async System.Threading.Tasks.Task<bool> CreateAsync(string projectId, Models.Problem.ProblemNew form)
         {
-            // TODO We need to ensure that the project exists with the supplied Id.
-
             // The new project object
             var newProblem = new ProjectSpeedy.Models.Problem.ProblemNew()
             {
@@ -61,6 +65,11 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async System.Threading.Tasks.Task<Models.Problem.Problem> GetAsync(string projectId, string problemId)
         {
+            // Checks cache to see if problem is in it.
+            if(this._cachedProblems.ContainsKey(problemId)){
+                return this._cachedProblems[problemId];
+            }
+
             // Id of the problem in couchDb.
             var couchProblemId = "problem:" + problemId;
 
@@ -82,8 +91,10 @@ namespace ProjectSpeedy.Services
                     Status = record.value.status
                 });
             }
-            return problem;
 
+            // Adds problem to cache and returns it
+            this._cachedProblems.Add(problemId, problem);
+            return problem;
         }
 
         /// <inheritdoc />

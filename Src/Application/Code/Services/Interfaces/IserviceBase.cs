@@ -31,7 +31,6 @@ namespace ProjectSpeedy.Services
 
         /// <summary>
         /// Call a view and return the JSON to convert into an object.
-        /// TODO Add caching to stop this call calling the API on every request.
         /// </summary>
         /// <param name="partition">The partition to create the document in</param>
         /// <param name="designDocumentName">Name of the design document the view is attached to.</param>

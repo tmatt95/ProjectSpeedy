@@ -5,7 +5,6 @@ import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProblem } from '../Interfaces/IPage';
 import { ProblemService } from '../Services/ProblemService';
 import { PageFunctions } from './PageFunctions';
-import * as bootstrap from 'bootstrap';
 import { BetService } from '../Services/BetService';
 
 export function Problem(pageProps: IPage)
@@ -87,15 +86,7 @@ export function Problem(pageProps: IPage)
                                     resetForm({});
 
                                     // Close the dialog.
-                                    let myModalEl: HTMLElement | null = document.getElementById('newModal');
-                                    if (myModalEl != null)
-                                    {
-                                        let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-                                        if (modal != null)
-                                        {
-                                            modal.hide();
-                                        }
-                                    }
+                                    PageFunctions.CloseDialog('newModal');
                                 },
                                 (error) =>
                                 {

@@ -2,19 +2,19 @@ import * as bootstrap from 'bootstrap';
 import { MouseEvent } from 'react';
 export class PageFunctions
 {
-    
-  /**
-   * Resets the form validators etc.
-   */
-   static ResetForm()
-   {
-       let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
-       if (form !== null)
-       {
-           form.reset();
-       }
-   }
-  
+
+    /**
+     * Resets the form validators etc.
+     */
+    static ResetForm()
+    {
+        let form: HTMLFormElement | null = document.getElementById("new-form") as HTMLFormElement;
+        if (form !== null)
+        {
+            form.reset();
+        }
+    }
+
     /**
      * Loads the modal onto the screen.
      */
@@ -29,7 +29,7 @@ export class PageFunctions
                 // Resets when dialog open
                 myModalEl.addEventListener('show.bs.modal', function (event)
                 {
-                PageFunctions.ResetForm();
+                    PageFunctions.ResetForm();
                 });
                 setDialogOpened(true);
             }
@@ -39,6 +39,23 @@ export class PageFunctions
             if (modal != null)
             {
                 modal.show();
+            }
+        }
+    }
+
+    /**
+     * Close a dialog.
+     * @param id The html id of the element to close.
+     */
+    static CloseDialog(id: string)
+    {
+        let myModalEl: HTMLElement | null = document.getElementById(id);
+        if (myModalEl != null)
+        {
+            let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
+            if (modal != null)
+            {
+                modal.hide();
             }
         }
     }

@@ -6,7 +6,6 @@ import { ProjectService } from '../Services/ProjectService';
 import ProblemBetNewForm from '../Components/ProblemBetNewForm';
 import { PageFunctions } from './PageFunctions';
 import { ProblemService } from '../Services/ProblemService';
-import * as bootstrap from 'bootstrap';
 
 export function Project(pageProps: IPage)
 {
@@ -90,15 +89,7 @@ export function Project(pageProps: IPage)
                                     resetForm({});
 
                                     // Close the dialog.
-                                    let myModalEl: HTMLElement | null = document.getElementById('newModal');
-                                    if (myModalEl != null)
-                                    {
-                                        let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-                                        if (modal != null)
-                                        {
-                                            modal.hide();
-                                        }
-                                    }
+                                    PageFunctions.CloseDialog('newModal');
                                 },
                                 (error) =>
                                 {

@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
-import * as bootstrap from 'bootstrap';
 import { ProjectService } from '../../Services/ProjectService';
 import { CardItem } from '../CardGrid';
+import { PageFunctions } from '../../Pages/PageFunctions';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -54,16 +54,7 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
                 resetForm({});
 
                 // Close the dialog.
-                let myModalEl: HTMLElement | null = document.getElementById('newModal');
-                if (myModalEl != null)
-                {
-                  let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-
-                  if (modal != null)
-                  {
-                    modal.hide();
-                  }
-                }
+                PageFunctions.CloseDialog('newModal');
               },
               (error) =>
               {

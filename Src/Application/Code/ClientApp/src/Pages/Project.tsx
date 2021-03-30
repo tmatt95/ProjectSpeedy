@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService';
-import ProblemNewForm from '../Components/Problem/ProblemNewForm';
+import ProblemBetNewForm from '../Components/ProblemBetNewForm';
 import { PageFunctions } from './PageFunctions';
+import { ProblemService } from '../Services/ProblemService';
+import * as bootstrap from 'bootstrap';
 
 export function Project(pageProps: IPage)
 {
@@ -16,7 +18,7 @@ export function Project(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false, description:"" };
+    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false, description: "" };
     const [project, setProject]: [IProject, Dispatch<IProject>] = useState(defaultProject);
 
     /**
@@ -57,7 +59,7 @@ export function Project(pageProps: IPage)
     /**
    * Whether the dialog has even been opened.
    */
-  const [dialogOpened, setDialogOpened] = useState(false);
+    const [dialogOpened, setDialogOpened] = useState(false);
 
     // Output the page view.
     return <>
@@ -67,10 +69,47 @@ export function Project(pageProps: IPage)
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
                 <h2>Description</h2>
                 {project.description}
-            
+
                 <h2>Problems</h2>
                 <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
-                <ProblemNewForm projectId={projectId} setProject={(data: IProject) => { setProject(data);}}/>
+                <ProblemBetNewForm
+                    title="Add Project"
+                    description="Use the form to quickly add problems. These can be fleshed out after being created."
+                    buttonText="Add Problem"
+                    saveAction={(values, setSubmitting, resetForm) =>
+                    {
+                        ProblemService.Put(projectId, JSON.stringify(values)).then(() =>
+                        {
+                            ProjectService.Get(projectId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProject(data);
+
+                                    // Resets the add new problem form.
+                                    resetForm({});
+
+                                    // Close the dialog.
+                                    let myModalEl: HTMLElement | null = document.getElementById('newModal');
+                                    if (myModalEl != null)
+                                    {
+                                        let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
+                                        if (modal != null)
+                                        {
+                                            modal.hide();
+                                        }
+                                    }
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+
+                            // We have finished submitting the form.
+                            setSubmitting(false);
+                        });
+                    }} />
             </div>
         </div>
     </>;

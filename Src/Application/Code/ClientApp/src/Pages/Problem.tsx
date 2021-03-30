@@ -1,10 +1,12 @@
 import { useState, useEffect, Dispatch } from 'react';
 import { useParams } from "react-router-dom";
-import BetNewForm from '../Components/Bet/BetNewForm';
+import ProblemBetNewForm from '../Components/ProblemBetNewForm';
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProblem } from '../Interfaces/IPage';
 import { ProblemService } from '../Services/ProblemService';
 import { PageFunctions } from './PageFunctions';
+import * as bootstrap from 'bootstrap';
+import { BetService } from '../Services/BetService';
 
 export function Problem(pageProps: IPage)
 {
@@ -67,7 +69,44 @@ export function Problem(pageProps: IPage)
                 <h2>Success Criteria</h2>
                 <h2>Bets</h2>
                 <CardGrid data={problem.bets} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
-                <BetNewForm projectId={projectId} problemId={problemId} setProblem={(data: IProblem) => { setProblem(data); }} />
+                <ProblemBetNewForm
+                    title="Add Bet"
+                    description="Use the form to quickly add new bets that you hope will help solve the problem. These can be fleshed out after being created."
+                    buttonText="Add Bet"
+                    saveAction={(values, setSubmitting, resetForm) =>
+                    {
+                        BetService.Put(projectId, problemId, JSON.stringify(values)).then(() =>
+                        {
+                            ProblemService.Get(projectId, problemId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProblem(data);
+
+                                    // Resets the add new problem form.
+                                    resetForm({});
+
+                                    // Close the dialog.
+                                    let myModalEl: HTMLElement | null = document.getElementById('newModal');
+                                    if (myModalEl != null)
+                                    {
+                                        let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
+                                        if (modal != null)
+                                        {
+                                            modal.hide();
+                                        }
+                                    }
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+
+                            // We have finished submitting the form.
+                            setSubmitting(false);
+                        });
+                    }} />
             </div>
         </div>
     </>;

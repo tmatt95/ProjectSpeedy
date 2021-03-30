@@ -1,8 +1,4 @@
-import { Formik } from 'formik';
-import { IProblem } from '../../Interfaces/IPage';
-import { ProblemService } from '../../Services/ProblemService';
-import * as bootstrap from 'bootstrap';
-import { BetService } from '../../Services/BetService';
+import { Formik, FormikState } from 'formik';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -13,7 +9,20 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function BetNewForm({ projectId, problemId, setProblem }: { projectId: string, problemId: string, setProblem: (data: IProblem) => void })
+export default function ProblemBetNewForm({ title, description, buttonText, saveAction }: {
+  title: string,
+  description: string,
+  buttonText: string,
+  saveAction: (
+    values: { name: string, description: string, successCriteria: string },
+    setSubmitting: (isSubmitting: boolean) => void,
+    resetForm: (nextState?: Partial<FormikState<{
+        name: string;
+        description: string;
+        successCriteria: string;
+    }>> | undefined) => void
+  ) => void
+})
 {
   return (<>
     <Formik
@@ -62,40 +71,8 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
       }}
       onSubmit={(values, { setSubmitting, setErrors, setStatus, resetForm }) =>
       {
-        setTimeout(() =>
-        {
-          BetService.Put(projectId, problemId, JSON.stringify(values)).then(() =>
-          {
-            ProblemService.Get(projectId, problemId).then(
-              (data) =>
-              {
-                // Sets the model against the page.
-                setProblem(data);
-
-                // Resets the add new problem form.
-                resetForm({});
-
-                // Close the dialog.
-                let myModalEl: HTMLElement | null = document.getElementById('newModal');
-                if (myModalEl != null)
-                {
-                  let modal: bootstrap.Modal | null = bootstrap.Modal.getInstance(myModalEl);
-                  if (modal != null)
-                  {
-                    modal.hide();
-                  }
-                }
-              },
-              (error) =>
-              {
-                alert(error);
-              }
-            );
-
-            // We have finished submitting the form.
-            setSubmitting(false);
-          });
-        }, 400);
+        // Carries out the save action
+        saveAction(values, setSubmitting, resetForm);
       }}
     >
       {({
@@ -110,19 +87,19 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
         /* and other goodies */
       }) => (
         <form onReset={handleReset} onSubmit={handleSubmit} id="new-form">
-          <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newBetModalLabel" aria-hidden="true">
+          <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProblemBetModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="newBetModalLabel">New Bet</h5>
+                  <h5 className="modal-title" id="newProblemBetModalLabel">{title}</h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                  <p>Use the form to quickly add new bets that you hope will help solve the problem. These can be fleshed out after being created.</p>
+                  <p>{description}</p>
                   <div className="mb-3">
-                    <label htmlFor="new-bet-name" className="form-label">Name</label>
+                    <label htmlFor="new-problem-bet-name" className="form-label">Name</label>
                     <input
-                      id="new-bet-name"
+                      id="new-problem-bet-name"
                       type="text"
                       name="name"
                       onChange={handleChange}
@@ -136,9 +113,9 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="new-bet-description" className="form-label">Description</label>
+                    <label htmlFor="new-problem-bet-description" className="form-label">Description</label>
                     <textarea
-                      id="new-bet-description"
+                      id="new-problem-bet-description"
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -151,9 +128,9 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="new-bet-success" className="form-label">What measures will be used to determine if the bet was a success?</label>
+                    <label htmlFor="new-problem-bet-success" className="form-label">What measures will be used to determine when the problem has been fixed?</label>
                     <textarea
-                      id="new-bet-success"
+                      id="new-problem-bet-success"
                       name="successCriteria"
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -167,8 +144,8 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="problem-new-create">
-                    Add Bet
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="problem-bet-new-create">
+                    {buttonText}
                   </button>
                 </div>
               </div>

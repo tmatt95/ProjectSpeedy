@@ -89,7 +89,7 @@ namespace ProjectSpeedy.Services
                     Id = record.value.id,
                     Name = record.value.name,
                     Status = record.value.status,
-                    Address = "/project/" + projectId + "/problem/" + problemId + "/" + record.value.id.Replace(Bet.PREFIX, "")
+                    Address = "/project/" + projectId + "/problem/" + problemId + "/bet/" + record.value.id.Replace(Bet.PREFIX, "")
                 });
             }
 

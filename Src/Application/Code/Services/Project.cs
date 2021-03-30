@@ -138,7 +138,7 @@ namespace ProjectSpeedy.Services
             data.Problems = new System.Collections.Generic.List<Models.General.ListItem>();
 
             // Does update
-            return await this._serviceBase.DocumentUpdate(projectId, Project.PARTITION, data);
+            return await this._serviceBase.DocumentUpdate(Project.PARTITION + ":" + projectId, data);
         }
     }
 }

@@ -25,10 +25,9 @@ namespace ProjectSpeedy.Services
         /// Updates an individual document.
         /// </summary>
         /// <param name="documentId">The id of the document</param>
-        /// <param name="partition">The partition to update the document in</param>
-        /// <param name="document">Document object to create</param>
+        /// <param name="document">Document object to update</param>
         /// <returns>Http content containing the document.</returns>
-        Task<bool> DocumentUpdate(string documentId, string partition, object document);
+        Task<bool> DocumentUpdate(string documentId, object document);
 
         /// <summary>
         /// Call a view and return the JSON to convert into an object.

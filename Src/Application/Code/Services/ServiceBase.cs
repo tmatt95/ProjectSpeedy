@@ -75,16 +75,17 @@ namespace ProjectSpeedy.Services
             // Sets the start and end key if specified.
             if (string.IsNullOrWhiteSpace(startKey) || string.IsNullOrWhiteSpace(endKey))
             {
-                requestAddress = this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/_partition/" + partition + "/_design/" + designDocumentName + "/_view/" + viewName;
+                requestAddress = this._configuration["couchdb:view_get"].Replace("{partition}", partition)
+                    .Replace("{designDocumentName}", designDocumentName)
+                    .Replace("{viewName}", viewName);
             }
             else
             {
-                requestAddress = this._configuration["couchdb:base_url"] +
-                    this._configuration["couchdb:database_name"] +
-                    "/_partition/" +
-                    partition +
-                    "/_design/" + designDocumentName + "/_view/" +
-                    viewName + "?startkey=%22" + startKey + "%22&endkey=%22" + endKey + "%22";
+                requestAddress = this._configuration["couchdb:view_get_keys"].Replace("{partition}", partition)
+                    .Replace("{designDocumentName}", designDocumentName)
+                    .Replace("{viewName}", viewName)
+                    .Replace("{startKey}", startKey)
+                    .Replace("{endKey}", endKey);
             }
 
             // Makes the request.
@@ -133,7 +134,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public async Task<bool> DocumentUpdate(string documentId, string partition, object document)
+        public async Task<bool> DocumentUpdate(string documentId, object document)
         {
             using (var stream = new MemoryStream())
             {
@@ -145,7 +146,7 @@ namespace ProjectSpeedy.Services
                 string content = await reader.ReadToEndAsync();
 
                 // Send the request to add the new document
-                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + partition + ":" + documentId +"?conflicts=true");
+                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:document_update"].Replace("{documentId}", documentId));
                 request.Content = new StringContent(content);
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
                 var client = _clientFactory.CreateClient();

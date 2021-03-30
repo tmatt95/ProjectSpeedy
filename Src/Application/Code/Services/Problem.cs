@@ -109,7 +109,7 @@ namespace ProjectSpeedy.Services
             data.Bets = new System.Collections.Generic.List<Models.General.ListItem>();
 
             // Does update
-            return await this._serviceBase.DocumentUpdate(problemId, Problem.PARTITION, data);
+            return await this._serviceBase.DocumentUpdate(Problem.PARTITION + ":" + problemId, data);
         }
     }
 }

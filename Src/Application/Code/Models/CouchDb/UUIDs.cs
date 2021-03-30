@@ -5,7 +5,7 @@ namespace ProjectSpeedy.Models.CouchDb
     /// <summary>
     /// Information on all projects in the application.
     /// </summary>
-    public class UUIDs
+    public class UuiDs
     {
         public List<string> uuids { get; set; }
     }

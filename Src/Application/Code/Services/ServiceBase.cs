@@ -110,7 +110,7 @@ namespace ProjectSpeedy.Services
             var response = await client.SendAsync(request);
             using var responseStream = await response.Content.ReadAsStreamAsync();
             var uUIDs = await JsonSerializer.DeserializeAsync
-                <Models.CouchDb.UUIDs>(responseStream);
+                <Models.CouchDb.UuiDs>(responseStream);
             return uUIDs.uuids.First();
         }
 
@@ -118,7 +118,7 @@ namespace ProjectSpeedy.Services
         public async Task<HttpContent> DocumentGet(string documentId)
         {
             // Send the request to add the new document
-            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + this._configuration["couchdb:database_name"] + "/" + documentId);
+            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:document_get"].Replace("{documentId}", documentId));
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
             var client = _clientFactory.CreateClient();
 

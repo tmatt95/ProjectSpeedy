@@ -117,7 +117,7 @@ namespace ProjectSpeedy.Services
                 {
                     Id = record.value.id,
                     Name = record.value.name,
-                    Address = "/project/" + projectId + "/" + record.value.id.Replace(Problem.PREFIX, "")
+                    Address = "/project/" + projectId + "/problem/" + record.value.id.Replace(Problem.PREFIX, "")
                 });
             }
 

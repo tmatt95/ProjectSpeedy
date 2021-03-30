@@ -47,6 +47,7 @@ export function Projects(pageProps: IPage)
     <div className="row">
       <div className="col">
         <h1>Projects</h1>
+        <p>A project allows you to group problems and bets together.</p>
       </div>
     </div>
     <CardGrid data={projects}  AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />

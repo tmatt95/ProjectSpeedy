@@ -16,7 +16,7 @@ export function Project(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false };
+    var defaultProject: IProject = { name: "", problems: new Array<CardItem>(), isLoaded: false, description:"" };
     const [project, setProject]: [IProject, Dispatch<IProject>] = useState(defaultProject);
 
     /**
@@ -65,10 +65,13 @@ export function Project(pageProps: IPage)
             <div className="col">
                 <h1>{project.name}</h1>
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
+                <h2>Description</h2>
+                {project.description}
+            
+                <h2>Problems</h2>
+                <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
+                <ProblemNewForm projectId={projectId} setProject={(data: IProject) => { setProject(data);}}/>
             </div>
         </div>
-
-        <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
-        <ProblemNewForm projectId={projectId} setProject={(data: IProject) => { setProject(data);}}/>
     </>;
 }

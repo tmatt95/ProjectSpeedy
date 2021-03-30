@@ -43,25 +43,30 @@ export interface IProject
      * Whether the data has been loaded into the page.
      */
     isLoaded: boolean;
+
+    /**
+     * Project description.
+     */
+    description: string;
 }
 
 /**
  * Contains the model that powers the project page.
  */
- export interface IProblem
- {
-     /**
-      * The name of the project.
-      */
-     name: string;
- 
-     /**
-      * List of problems linked to the project.
-      */
-     bets: CardItem[];
- 
-     /**
-      * Whether the data has been loaded into the page.
-      */
-     isLoaded: boolean;
- }
+export interface IProblem
+{
+    /**
+     * The name of the project.
+     */
+    name: string;
+
+    /**
+     * List of problems linked to the project.
+     */
+    bets: CardItem[];
+
+    /**
+     * Whether the data has been loaded into the page.
+     */
+    isLoaded: boolean;
+}

@@ -114,10 +114,10 @@ function ProjectSection(pageProps: IPage)
   return (
     <>
       <Switch>
-        <Route path={`${match.path}/:projectId/:problemId/:betId`}>
+        <Route path={`${match.path}/:projectId/problem/:problemId/bet/:betId`}>
           <Bet {...pageProps} />
         </Route>
-        <Route path={`${match.path}/:projectId/:problemId`}>
+        <Route path={`${match.path}/:projectId/problem/:problemId`}>
           <Problem {...pageProps} />
         </Route>
         <Route path={`${match.path}/:projectId`}>

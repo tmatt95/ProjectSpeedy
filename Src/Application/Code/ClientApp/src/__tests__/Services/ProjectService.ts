@@ -10,7 +10,6 @@ describe(`The project new form component`,() => {
       let project: IProject = { description: "description", name: "ProjectName", problems: [], isLoaded: true };
       return Promise.resolve(new Response(JSON.stringify(project)));
     });
-    console.log((await ProjectService.GetAll()));
     expect((await ProjectService.Get("ProjectId")).name).toBe("ProjectName");
   });
 });

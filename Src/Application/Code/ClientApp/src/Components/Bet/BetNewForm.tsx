@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { IProblem } from '../../Interfaces/IPage';
 import { ProblemService } from '../../Services/ProblemService';
 import * as bootstrap from 'bootstrap';
+import { BetService } from '../../Services/BetService';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -63,7 +64,7 @@ export default function BetNewForm({ projectId, problemId, setProblem }: { proje
       {
         setTimeout(() =>
         {
-          ProblemService.Put(projectId, JSON.stringify(values)).then(() =>
+          BetService.Put(projectId, problemId, JSON.stringify(values)).then(() =>
           {
             ProblemService.Get(projectId, problemId).then(
               (data) =>

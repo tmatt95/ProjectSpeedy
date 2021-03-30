@@ -31,5 +31,5 @@ jobs:
       - name: Stores published code
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-report
-          path: output/test/code-coverage.html
+          name: project-speedy
+          path: Src/Application/Code/bin/Debug/net5.0/publish

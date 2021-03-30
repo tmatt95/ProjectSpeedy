@@ -5,3 +5,4 @@ Src/.sonarqube/
 Src/Application/Code/.sonarqube/
 Src/Application/.sonarqube/
 Src/Application/lcov.opencover.xml
+Src/Application/Code/appsettings.development.json

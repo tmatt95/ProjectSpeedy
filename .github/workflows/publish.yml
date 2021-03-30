@@ -23,7 +23,7 @@ jobs:
       - name: Publish
         shell: bash
         run: |
-          cd Src/Application/
+          cd Src/Application/Code/
           dotnet clean
           dotnet publish
           

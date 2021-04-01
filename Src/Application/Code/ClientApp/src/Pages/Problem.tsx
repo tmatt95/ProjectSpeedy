@@ -17,7 +17,7 @@ export function Problem(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultProblem: IProblem = { name: "", bets: new Array<CardItem>(), isLoaded: false };
+    var defaultProblem: IProblem = { name: "", successCriteria:"", description:"", bets: new Array<CardItem>(), isLoaded: false };
     const [problem, setProblem]: [IProblem, Dispatch<IProblem>] = useState(defaultProblem);
 
     /**
@@ -65,7 +65,9 @@ export function Problem(pageProps: IPage)
             <div className="col">
                 <h1>{problem.name}</h1>
                 <h2>Description</h2>
+                <p>{problem.description}</p>
                 <h2>Success Criteria</h2>
+                <p>{problem.successCriteria}</p>
                 <h2>Bets</h2>
                 <CardGrid data={problem.bets} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
                 <ProblemBetNewForm

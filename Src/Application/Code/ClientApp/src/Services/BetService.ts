@@ -1,3 +1,5 @@
+import { IBet } from "../Interfaces/IPage";
+
 export class BetService
 {    
     /**
@@ -20,5 +22,18 @@ export class BetService
                  body: data,
               }
          );
+    }
+    
+    /**
+     * Gets a bet.
+     * @param projectId Id of the project the problem is in.
+     * @param problemId Id of the problem to load.
+     * @param betId Id of the bet to load.
+     * @returns information on the problem.
+     */
+     static async Get(projectId: string, problemId: string, betId:string): Promise<IBet>
+     {
+         const response = await fetch(`/api/project/${projectId}/problem/${problemId}/bet/${betId}`);
+         return response.json();
      }
 }

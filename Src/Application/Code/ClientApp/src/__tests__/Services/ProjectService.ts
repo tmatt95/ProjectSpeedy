@@ -1,4 +1,3 @@
-import { CardItem } from '../../Components/CardGrid';
 import { IProject } from '../../Interfaces/IPage';
 import { ProjectService } from '../../Services/ProjectService';
 

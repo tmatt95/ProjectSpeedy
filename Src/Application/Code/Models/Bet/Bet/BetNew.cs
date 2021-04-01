@@ -18,6 +18,6 @@ namespace ProjectSpeedy.Models.Bet
         /// <summary>
         /// Gets or sets the measures of success the bet will be judged against.
         /// </summary>
-        public string MeasuresOfSuccess { get; set; }
+        public string SuccessCriteria { get; set; }
     }
 }

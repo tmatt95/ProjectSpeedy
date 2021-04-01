@@ -61,6 +61,16 @@ export interface IProblem
     name: string;
 
     /**
+     * Description of the problem.
+     */
+    description: string;
+
+    /**
+     * Criteria on when the problem has been fixed.
+     */
+    successCriteria: string;
+
+    /**
      * List of problems linked to the project.
      */
     bets: CardItem[];
@@ -70,3 +80,29 @@ export interface IProblem
      */
     isLoaded: boolean;
 }
+
+/**
+ * Contains the model that powers the project page.
+ */
+ export interface IBet
+ {
+     /**
+      * The name of the project.
+      */
+     name: string;
+
+     /**
+     * Description of the problem.
+     */
+    description: string;
+
+    /**
+     * Criteria on when the problem has been fixed.
+     */
+    successCriteria: string;
+     
+     /**
+      * The status of the bet.
+      */
+     status: string;
+ }

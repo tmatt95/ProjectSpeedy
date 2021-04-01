@@ -49,7 +49,7 @@ namespace ProjectSpeedy.Controllers
                 // Gets the bet and checks the project and problem ids are valid for it.
                 // If the bet cannot be found it will throw a 404 exception.
                 var bet = await this._betService.GetAsync(projectId, problemId, betId);
-                if(bet.ProjectId != projectId || bet.ProblemId != problemId){
+                if(bet.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId || bet.ProblemId != ProjectSpeedy.Services.Problem.PREFIX + problemId){
                     return this.NotFound();
                 }
 

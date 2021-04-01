@@ -67,7 +67,7 @@ export function Project(pageProps: IPage)
                 <h1>{project.name}</h1>
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
                 <h2>Description</h2>
-                {project.description}
+                <p>{project.description}</p>
 
                 <h2>Problems</h2>
                 <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />

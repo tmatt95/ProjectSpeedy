@@ -48,7 +48,7 @@ namespace ProjectSpeedy.Services
                 Created = DateTime.UtcNow,
                 ProjectId = "project:" + projectId,
                 Description = form.Description,
-                SuccessCriteria = form.SuccessCriteria
+                SuccessCriteria = form.SuccessCriteria,
             };
 
             // Creates the project and checks if the id is returned.

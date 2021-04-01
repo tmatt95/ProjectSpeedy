@@ -28,6 +28,16 @@ namespace ProjectSpeedy.Models.Bet
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the bet.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the measures of success the bet will be judged against.
+        /// </summary>
+        public string SuccessCriteria { get; set; }
+
+        /// <summary>
         /// Gets or sets the date / time the bet was created.
         /// </summary>
         public DateTime Created { get; set; }

@@ -45,9 +45,12 @@ namespace ProjectSpeedy.Services
             var newBet = new ProjectSpeedy.Models.Bet.Bet()
             {
                 Name = form.Name,
+                Description = form.Description,
+                SuccessCriteria = form.SuccessCriteria,
                 Created = DateTime.UtcNow,
                 ProjectId = Project.PREFIX + projectId,
-                ProblemId = Problem.PREFIX + problemId
+                ProblemId = Problem.PREFIX + problemId,
+                Status = "Created"
             };
 
             // Creates the project and checks if the id is returned.

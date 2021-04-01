@@ -15,7 +15,7 @@ export function Bet(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "", isLoaded: false, timeCurrent:0, timeTotal:0 };
+    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "", isLoaded: false, timeCurrent: 0, timeTotal: 0 };
     const [bet, setBet]: [IBet, Dispatch<IBet>] = useState(defaultBet);
 
     /**
@@ -181,7 +181,7 @@ export function Bet(pageProps: IPage)
 
     return <>
         <Formik
-            initialValues={{ name: bet.name, description: bet.description, successCriteria:bet.successCriteria, timeTotal:bet.timeTotal } as IBet}
+            initialValues={{ name: bet.name, description: bet.description, successCriteria: bet.successCriteria, timeTotal: bet.timeTotal } as IBet}
             validate={values =>
             {
                 const errors: { name: string, description: string, successCriteria: string, timeTotal: string } = {
@@ -241,7 +241,11 @@ export function Bet(pageProps: IPage)
             )}
         </Formik>
 
-        <h2>Start Bet</h2>
+        <div className="mb-3">
+            <h2>Start Bet</h2>
+            <p>When your ready to begin work on the bet click start. The time will start counting down and the bet will become active. Good luck!</p>
+            <button className="btn btn-primary">Start bet</button>
+        </div>
 
         <nav className="mt-3">
             <div className="nav nav-tabs" id="nav-tab" role="tablist">

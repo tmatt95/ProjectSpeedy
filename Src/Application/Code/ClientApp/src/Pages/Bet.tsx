@@ -15,7 +15,7 @@ export function Bet(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "", isLoaded: false };
+    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "", isLoaded: false, timeCurrent:0, timeTotal:0 };
     const [bet, setBet]: [IBet, Dispatch<IBet>] = useState(defaultBet);
 
     /**
@@ -43,7 +43,8 @@ export function Bet(pageProps: IPage)
                     pageProps.setBreadCrumbs([
                         { address: "/", text: "Projects", isLast: false },
                         { address: `/project/${projectId}`, text: "Project Name", isLast: false },
-                        { address: `/project/${projectId}/${problemId}`, text: "ProblemName", isLast: true }
+                        { address: `/project/${projectId}/problem/${problemId}`, text: "ProblemName", isLast: false },
+                        { address: `/project/${projectId}/problem/${problemId}/bet/${betId}`, text: "BetName", isLast: true }
                     ]);
                 },
                 (error) =>
@@ -76,11 +77,13 @@ export function Bet(pageProps: IPage)
             name: string;
             description: string;
             successCriteria: string;
+            timeTotal: string;
         }>,
         touched: FormikTouched<{
             name: string;
             description: string;
             successCriteria: string;
+            timeTotal: string;
         }>,
         values: IBet
     )
@@ -121,9 +124,10 @@ export function Bet(pageProps: IPage)
                     </div>
                 </div>
 
-                <h2>Measures of Success</h2>
+                <h2>
+                    <label htmlFor="success" className="form-label">Measures of Success</label>
+                </h2>
                 <div className="mb-3">
-                    <label htmlFor="success" className="form-label">What measures will be used to determine when the problem has been fixed?</label>
                     <textarea
                         id="success"
                         name="successCriteria"
@@ -134,6 +138,23 @@ export function Bet(pageProps: IPage)
                     ></textarea>
                     <div id="validationSuccessFeedback" className="invalid-feedback">
                         {errors.successCriteria && touched.successCriteria && errors.successCriteria}
+                    </div>
+                </div>
+
+                <h2>Time Given To Bet (in days)</h2>
+                <div className="mb-3">
+                    <input
+                        id="timeTotal"
+                        type="number"
+                        name="timeTotal"
+                        min="0"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.timeTotal}
+                        className={getFormInputClass(errors !== undefined && errors.timeTotal !== undefined && errors.timeTotal.length > 0, "form-control")}
+                    />
+                    <div id="validationNameFeedback" className="invalid-feedback">
+                        {errors.timeTotal && touched.timeTotal && errors.timeTotal}
                     </div>
                 </div>
             </>
@@ -147,6 +168,9 @@ export function Bet(pageProps: IPage)
 
             <h2>Measures of Success</h2>
             <p>{bet.successCriteria}</p>
+
+            <h2>Time Given To Bet</h2>
+
         </>;
     }
 
@@ -157,13 +181,14 @@ export function Bet(pageProps: IPage)
 
     return <>
         <Formik
-            initialValues={{ name: bet.name, description: bet.description, successCriteria:bet.successCriteria } as IBet}
+            initialValues={{ name: bet.name, description: bet.description, successCriteria:bet.successCriteria, timeTotal:bet.timeTotal } as IBet}
             validate={values =>
             {
-                const errors: { name: string, description: string, successCriteria: string } = {
+                const errors: { name: string, description: string, successCriteria: string, timeTotal: string } = {
                     name: "",
                     description: "",
-                    successCriteria: ""
+                    successCriteria: "",
+                    timeTotal: ""
                 };
 
                 // Are there any errors with the form?
@@ -173,6 +198,12 @@ export function Bet(pageProps: IPage)
                 if (!values.name)
                 {
                     errors.name = 'Required';
+                    hasError = true;
+                }
+
+                if (Number.isNaN(values.timeTotal) === true)
+                {
+                    errors.timeTotal = 'Please eter a valid number';
                     hasError = true;
                 }
 
@@ -202,18 +233,15 @@ export function Bet(pageProps: IPage)
                 isSubmitting,
                 /* and other goodies */
             }) => (
-                <form>
+                <form onReset={handleReset} onSubmit={handleSubmit}>
                     <h1>Bet</h1>
                     <p>Status: {bet.status}</p>
-
                     {getFormSection(handleChange, handleBlur, errors, touched, values)}
-
-                    <h2>Time Given To Bet</h2>
-
-                    <h2>Start Bet</h2>
                 </form>
             )}
         </Formik>
+
+        <h2>Start Bet</h2>
 
         <nav className="mt-3">
             <div className="nav nav-tabs" id="nav-tab" role="tablist">

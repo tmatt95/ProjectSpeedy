@@ -45,7 +45,7 @@ export function Problem(pageProps: IPage)
                     pageProps.setBreadCrumbs([
                         { address: "/", text: "Projects", isLast: false },
                         { address: `/project/${projectId}`, text: "Project Name", isLast: false },
-                        { address: `/project/${projectId}/${problemId}`, text: "ProblemName", isLast: true }
+                        { address: `/project/${projectId}/problem/${problemId}`, text: "ProblemName", isLast: true }
                     ]);
                 },
                 (error) =>

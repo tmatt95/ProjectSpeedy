@@ -109,5 +109,15 @@ export interface IProblem
      /**
      * Whether the data has been loaded into the page.
      */
-    isLoaded: boolean;
+     isLoaded: boolean;
+     
+     /**
+      * Current time into the bet.
+      */
+     timeCurrent: number;
+
+     /**
+      * The total amount of time allocated to the bet.
+      */
+     timeTotal: number;
  }

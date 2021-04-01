@@ -151,6 +151,8 @@ function GetForm(bet: IBet)
                             {errors.timeTotal && touched.timeTotal && errors.timeTotal}
                         </div>
                     </div>
+                    <button>Save</button>
+                    <button>Cancel</button>
                 </form>
             )}
         </Formik>

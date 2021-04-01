@@ -4,6 +4,7 @@ import { IBet, IPage } from "../Interfaces/IPage";
 import { BetService } from "../Services/BetService";
 import BetTabs from "../Components/Bet/BetTabs";
 import BetForm from "../Components/Bet/BetForm";
+import BetStatus from "../Components/Bet/BetStatus";
 
 export function Bet(pageProps: IPage)
 {
@@ -62,15 +63,7 @@ export function Bet(pageProps: IPage)
 
     return <>
         {BetForm(bet)}
-
-        <div className="card">
-            <div className="card-body">
-                <h2>Start Bet</h2>
-                <p>When your ready to begin work on the bet click start. The time will start counting down and the bet will become active. Good luck!</p>
-                <button className="btn btn-primary" onClick={() => { alert("test"); }}>Start bet</button>
-            </div>
-        </div>
-
+        {BetStatus(bet)}
         {BetTabs(bet)}
     </>;
 }

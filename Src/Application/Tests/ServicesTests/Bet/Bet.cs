@@ -25,8 +25,8 @@ namespace ProjectSpeedy.Tests.ServicesTests
         {
             return await Task.FromResult(new ProjectSpeedy.Models.Bet.Bet()
             {
-                ProjectId = "ProjectId",
-                ProblemId = "ProblemId",
+                ProjectId = "project:ProjectId",
+                ProblemId = "problem:ProblemId",
                 Name = "Bet Name"
             });
         }

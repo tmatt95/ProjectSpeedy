@@ -105,4 +105,9 @@ export interface IProblem
       * The status of the bet.
       */
      status: string;
+
+     /**
+     * Whether the data has been loaded into the page.
+     */
+    isLoaded: boolean;
  }

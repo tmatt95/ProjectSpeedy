@@ -2,6 +2,7 @@ import { Dispatch, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IBet, IPage } from "../Interfaces/IPage";
 import { BetService } from "../Services/BetService";
+import { Formik, FormikErrors, FormikTouched } from 'formik';
 
 export function Bet(pageProps: IPage)
 {
@@ -14,7 +15,7 @@ export function Bet(pageProps: IPage)
     /**
      * Page model definition.
      */
-    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "" };
+    var defaultBet: IBet = { name: "", status: "", description: "", successCriteria: "", isLoaded: false };
     const [bet, setBet]: [IBet, Dispatch<IBet>] = useState(defaultBet);
 
     /**
@@ -33,7 +34,7 @@ export function Bet(pageProps: IPage)
                 {
                     // Sets the model against the page.
                     setBet(data);
-                    //data.isLoaded = true;
+                    data.isLoaded = true;
 
                     // Sets the project name.
                     document.title = `Bet ${bet.name}`;
@@ -53,37 +54,166 @@ export function Bet(pageProps: IPage)
         }
     }, [runOnce, pageProps, projectId, problemId, bet.name, betId]);
 
-    function getSectionName()
+    function getFormInputClass(showError: boolean, otherClasses: string): string
     {
+        if (showError)
+        {
+            return "is-invalid " + otherClasses
+        }
+        return otherClasses;
+    }
 
+    function getFormSection(
+        handleChange: {
+            (e: React.ChangeEvent<any>): void;
+            <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any> ? void : (e: string | React.ChangeEvent<any>) => void;
+        },
+        handleBlur: {
+            (e: React.FocusEvent<any>): void;
+            <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
+        },
+        errors: FormikErrors<{
+            name: string;
+            description: string;
+            successCriteria: string;
+        }>,
+        touched: FormikTouched<{
+            name: string;
+            description: string;
+            successCriteria: string;
+        }>,
+        values: IBet
+    )
+    {
         if (bet.status === "Created")
         {
             return <>
-                <h2><label htmlFor="name" className="form-label">Name</label></h2>
-                <input type="text" className="form-control mb-3" id="name" />
+                <h2>
+                    <label htmlFor="name" className="form-label">Name</label>
+                </h2>
+                <div className="mb-3">
+                    <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.name}
+                        className={getFormInputClass(errors !== undefined && errors.name !== undefined && errors.name.length > 0, "form-control")}
+                    />
+                    <div id="validationNameFeedback" className="invalid-feedback">
+                        {errors.name && touched.name && errors.name}
+                    </div>
+                </div>
+
+                <h2><label htmlFor="description" className="form-label">Description</label></h2>
+                <div className="mb-3">
+                    <textarea
+                        id="description"
+                        name="description"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.description}
+                        className={getFormInputClass(errors !== undefined && errors.description !== undefined && errors.description.length > 0, "form-control")}
+                    ></textarea>
+                    <div id="validationDescriptionFeedback" className="invalid-feedback">
+                        {errors.description && touched.description && errors.description}
+                    </div>
+                </div>
+
+                <h2>Measures of Success</h2>
+                <div className="mb-3">
+                    <label htmlFor="success" className="form-label">What measures will be used to determine when the problem has been fixed?</label>
+                    <textarea
+                        id="success"
+                        name="successCriteria"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.successCriteria}
+                        className={getFormInputClass(errors !== undefined && errors.successCriteria !== undefined && errors.successCriteria.length > 0, "form-control")}
+                    ></textarea>
+                    <div id="validationSuccessFeedback" className="invalid-feedback">
+                        {errors.successCriteria && touched.successCriteria && errors.successCriteria}
+                    </div>
+                </div>
             </>
         }
         return <>
             <h2>Name</h2>
             <div className="mb-3">{bet.name}</div>
+
+            <h2>Description</h2>
+            <p>{bet.description}</p>
+
+            <h2>Measures of Success</h2>
+            <p>{bet.successCriteria}</p>
         </>;
     }
 
+    if (bet.isLoaded !== true)
+    {
+        return <></>;
+    }
+
     return <>
-        <h1>Bet</h1>
-        <p>Status: {bet.status}</p>
+        <Formik
+            initialValues={{ name: bet.name, description: bet.description, successCriteria:bet.successCriteria } as IBet}
+            validate={values =>
+            {
+                const errors: { name: string, description: string, successCriteria: string } = {
+                    name: "",
+                    description: "",
+                    successCriteria: ""
+                };
 
-        {getSectionName()}
+                // Are there any errors with the form?
+                let hasError: boolean = false;
 
-        <h2>Description</h2>
-        <p>{bet.description}</p>
+                // New problem name
+                if (!values.name)
+                {
+                    errors.name = 'Required';
+                    hasError = true;
+                }
 
-        <h2>Measures of Success</h2>
-        <p>{bet.successCriteria}</p>
+                // If there are errors then display them.
+                if (hasError === true)
+                {
+                    return errors;
+                }
+                else
+                {
+                    return {};
+                }
+            }}
+            onSubmit={(values, { setSubmitting, setErrors, setStatus, resetForm }) =>
+            {
+                alert("do save");
+            }}
+        >
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                handleReset,
+                isSubmitting,
+                /* and other goodies */
+            }) => (
+                <form>
+                    <h1>Bet</h1>
+                    <p>Status: {bet.status}</p>
 
-        <h2>Time Given To Bet</h2>
+                    {getFormSection(handleChange, handleBlur, errors, touched, values)}
 
-        <h2>Start Bet</h2>
+                    <h2>Time Given To Bet</h2>
+
+                    <h2>Start Bet</h2>
+                </form>
+            )}
+        </Formik>
 
         <nav className="mt-3">
             <div className="nav nav-tabs" id="nav-tab" role="tablist">
@@ -97,6 +227,5 @@ export function Bet(pageProps: IPage)
             <div className="tab-pane fade" id="nav-feedback" role="tabpanel" aria-labelledby="nav-feedback-tab">...</div>
             <div className="tab-pane fade" id="nav-outcomes" role="tabpanel" aria-labelledby="nav-outcomes-tab">...</div>
         </div>
-
     </>;
 }

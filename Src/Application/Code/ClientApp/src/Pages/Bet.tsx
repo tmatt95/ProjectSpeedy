@@ -262,6 +262,7 @@ export function Bet(pageProps: IPage)
         return <></>;
     }
 
+    // TODO split the page into multiple components to lower the complexity of the page.
     return <>
         <Formik
             initialValues={{ name: bet.name, description: bet.description, successCriteria: bet.successCriteria, timeTotal: bet.timeTotal } as IBet}

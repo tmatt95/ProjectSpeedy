@@ -60,13 +60,15 @@ export function Bet(pageProps: IPage)
         return <></>;
     }
 
-    return <>      
+    return <>
         {BetForm(bet)}
 
-        <div className="mb-3">
-            <h2>Start Bet</h2>
-            <p>When your ready to begin work on the bet click start. The time will start counting down and the bet will become active. Good luck!</p>
-            <button className="btn btn-primary" onClick={() => { alert("test"); }}>Start bet</button>
+        <div className="card">
+            <div className="card-body">
+                <h2>Start Bet</h2>
+                <p>When your ready to begin work on the bet click start. The time will start counting down and the bet will become active. Good luck!</p>
+                <button className="btn btn-primary" onClick={() => { alert("test"); }}>Start bet</button>
+            </div>
         </div>
 
         {BetTabs(bet)}

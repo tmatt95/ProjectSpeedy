@@ -64,7 +64,92 @@ export function Bet(pageProps: IPage)
         return otherClasses;
     }
 
-    function getFormSection(
+    function TabComments()
+    {
+        return <>
+            <div className="mb-3 mt-2">
+            <label htmlFor="comment">Add a new comment</label>
+                <textarea
+                    id="comment"
+                    name="comment"
+                    placeholder="New comment..."
+                    className="form-control mt-2"
+                ></textarea>
+                <button className="btn btn-secondary mt-3 mb-3">Add Comment</button>
+                <p>No Existing comments</p>
+            </div>
+
+        </>
+    }
+
+    function GetCommentsFeedbackOutcomes()
+    {
+
+        if (bet.isLoaded === false)
+        {
+            return <></>;
+        }
+
+        if (bet.status === "Created")
+        {
+            return <>
+                <nav className="mt-3">
+                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button className="nav-link active" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="true">Comments</button>
+                    </div>
+                </nav>
+                <div className="tab-content" id="nav-tabContent">
+                    <div className="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">{TabComments()}</div>
+                </div>
+            </>
+        }
+
+        if (bet.status === "In Progress")
+        {
+            return <>
+                <nav className="mt-3">
+                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button className="nav-link active" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="true">Comments</button>
+                        <button className="nav-link" id="nav-feedback-tab" data-bs-toggle="tab" data-bs-target="#nav-feedback" type="button" role="tab" aria-controls="nav-feedback" aria-selected="false">Feedback</button>
+                    </div>
+                </nav>
+                <div className="tab-content" id="nav-tabContent">
+                    <div className="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">{TabComments()}</div>
+                    <div className="tab-pane fade" id="nav-feedback" role="tabpanel" aria-labelledby="nav-feedback-tab">...</div>
+                </div>
+            </>
+        }
+
+        if (bet.status === "Finished")
+        {
+            return <>
+                <nav className="mt-3">
+                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button className="nav-link active" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="true">Comments</button>
+                        <button className="nav-link" id="nav-feedback-tab" data-bs-toggle="tab" data-bs-target="#nav-feedback" type="button" role="tab" aria-controls="nav-feedback" aria-selected="false">Feedback</button>
+                        <button className="nav-link" id="nav-outcomes-tab" data-bs-toggle="tab" data-bs-target="#nav-outcomes" type="button" role="tab" aria-controls="nav-outcomes" aria-selected="false">Outcomes</button>
+                    </div>
+                </nav>
+                <div className="tab-content" id="nav-tabContent">
+                    <div className="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">{TabComments()}</div>
+                    <div className="tab-pane fade" id="nav-feedback" role="tabpanel" aria-labelledby="nav-feedback-tab">...</div>
+                    <div className="tab-pane fade" id="nav-outcomes" role="tabpanel" aria-labelledby="nav-outcomes-tab">...</div>
+                </div>
+            </>
+        }
+    }
+
+    /**
+     * Gets the form section of the page.
+     * TODO Maybe move the form and this section into its own component.
+     * @param handleChange Form handle change event
+     * @param handleBlur Form handle blur event
+     * @param errors 
+     * @param touched 
+     * @param values 
+     * @returns 
+     */
+    function GetFormSection(
         handleChange: {
             (e: React.ChangeEvent<any>): void;
             <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any> ? void : (e: string | React.ChangeEvent<any>) => void;
@@ -236,7 +321,7 @@ export function Bet(pageProps: IPage)
                 <form onReset={handleReset} onSubmit={handleSubmit}>
                     <h1>Bet</h1>
                     <p>Status: {bet.status}</p>
-                    {getFormSection(handleChange, handleBlur, errors, touched, values)}
+                    {GetFormSection(handleChange, handleBlur, errors, touched, values)}
                 </form>
             )}
         </Formik>
@@ -247,17 +332,6 @@ export function Bet(pageProps: IPage)
             <button className="btn btn-primary">Start bet</button>
         </div>
 
-        <nav className="mt-3">
-            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                <button className="nav-link active" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="true">Comments</button>
-                <button className="nav-link" id="nav-feedback-tab" data-bs-toggle="tab" data-bs-target="#nav-feedback" type="button" role="tab" aria-controls="nav-feedback" aria-selected="false">Feedback</button>
-                <button className="nav-link" id="nav-outcomes-tab" data-bs-toggle="tab" data-bs-target="#nav-outcomes" type="button" role="tab" aria-controls="nav-outcomes" aria-selected="false">Outcomes</button>
-            </div>
-        </nav>
-        <div className="tab-content" id="nav-tabContent">
-            <div className="tab-pane fade show active" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">...</div>
-            <div className="tab-pane fade" id="nav-feedback" role="tabpanel" aria-labelledby="nav-feedback-tab">...</div>
-            <div className="tab-pane fade" id="nav-outcomes" role="tabpanel" aria-labelledby="nav-outcomes-tab">...</div>
-        </div>
+        {GetCommentsFeedbackOutcomes()}
     </>;
 }

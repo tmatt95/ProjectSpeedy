@@ -37,49 +37,44 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
           return {};
         }
       }}
-      onSubmit={(values,  {setSubmitting, setErrors, setStatus, resetForm}) =>
+      onSubmit={async (values, { setSubmitting, setErrors, setStatus, resetForm }) =>
       {
-        setTimeout(() =>
-        {
           setSubmitting(false);
-          ProjectService.Put(JSON.stringify(values)).then(async (saveResponse) =>
+          let saveResponse = await ProjectService.Put(JSON.stringify(values));
+          if (saveResponse.status !== 202)
           {
-            if (saveResponse.status !== 202)
-            {
-              // Display error
-              const json:{message:string} = await saveResponse.json();
-              setErrors({ name: json.message });
+            // Display error
+            const json: { message: string } = await saveResponse.json();
+            setErrors({ name: json.message });
 
-              // Refresh data behind dialog.
-              ProjectService.GetAll().then(
+            // Refresh data behind dialog.
+            ProjectService.GetAll().then(
               (data) =>
               {
                 // Display projects on page.
                 setProjects(data);
               });
-            }
-            else
-            {
-              ProjectService.GetAll().then(
-                (data) =>
-                {
-                  // Display projects on page.
-                  setProjects(data);
-  
-                  // Reset form.
-                  resetForm({});
-  
-                  // Close the dialog.
-                  PageFunctions.CloseDialog('newModal');
-                },
-                (error) =>
-                {
-                  alert(error);
-                }
-              );
-            }
-          });
-        }, 400);
+          }
+          else
+          {
+            ProjectService.GetAll().then(
+              (data) =>
+              {
+                // Display projects on page.
+                setProjects(data);
+
+                // Reset form.
+                resetForm({});
+
+                // Close the dialog.
+                PageFunctions.CloseDialog('newModal');
+              },
+              (error) =>
+              {
+                alert(error);
+              }
+            );
+          }
       }}
     >
       {({

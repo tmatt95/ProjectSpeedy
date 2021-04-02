@@ -54,7 +54,7 @@ describe(`The project new form component`, () => {
 
     var init = { "status" : 202  };
     var myResponse = new Response(JSON.stringify({}),init);
-    jest.spyOn(ProblemService, "Put").mockReturnValue(Promise.resolve(myResponse));
+    jest.spyOn(ProjectService, "Put").mockReturnValue(Promise.resolve(myResponse));
 
     // display form.
     act(() => {

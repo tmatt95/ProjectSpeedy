@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom';
+import { render, fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router';
 import { BreadCrumbItem } from '../../Components/BreadCrumbs';
@@ -74,17 +75,29 @@ describe(`The problem component`, () =>
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
-    let name = document.getElementById('new-problem-bet-name') as HTMLInputElement;
-    name.value = "test";
+    await act(async () =>
+    {
+      let name = document.getElementById('new-problem-bet-name') as HTMLInputElement;
+      fireEvent.change(name, { target: { value: 'Name' } });
+    });
 
-    let description = document.getElementById('new-problem-bet-description') as HTMLInputElement;
-    description.value = "test";
+    await act(async () =>
+    {
+      let description = document.getElementById('new-problem-bet-description') as HTMLInputElement;
+      fireEvent.change(description, { target: { value: 'Name' } });
+    });
 
-    let success = document.getElementById('new-problem-bet-success') as HTMLInputElement;
-    success.value = "test";
+    await act(async () =>
+    {
+      let success = document.getElementById('new-problem-bet-success') as HTMLInputElement;
+      fireEvent.change(success, { target: { value: 'Success' } });
+    });
 
-    let buttonSubmit = document.getElementById('add-new') as HTMLButtonElement;
-    buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    await act(async () =>
+    {
+      let buttonSubmit = document.getElementById('problem-bet-new-create') as HTMLButtonElement;
+      buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
   });
 });
 

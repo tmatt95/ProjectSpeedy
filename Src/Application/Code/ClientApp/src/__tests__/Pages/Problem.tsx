@@ -46,7 +46,7 @@ describe(`The problem component`, () =>
     });
   });
 
-  it('can create a new problem successfully', async () =>
+  it('can create a new bet successfully', async () =>
   {
     const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
     jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));
@@ -106,7 +106,7 @@ describe(`The problem component`, () =>
     });
   });
 
-  it('Displays the error if existing item with same name', async () =>
+  it('displays error from server if one sent back on creation of bet', async () =>
   {
     const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
     jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));

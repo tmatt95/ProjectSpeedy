@@ -31,6 +31,7 @@ export function Project(pageProps: IPage)
             setRunOnce(true);
 
             // Loads the projects onto the page
+            //console.log( ProjectService.Get(projectId));
             ProjectService.Get(projectId).then(
                 (data) =>
                 {

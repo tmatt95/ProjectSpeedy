@@ -25,9 +25,9 @@ afterEach(() =>
 
 describe(`The problem component`, () =>
 {
-  it('can render', async() =>
+  it('can render', async () =>
   {
-    const problem : IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria:"" };
+    const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
     jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));
 
     let pageData = {
@@ -35,7 +35,8 @@ describe(`The problem component`, () =>
       breadCrumbs: Array<BreadCrumbItem>(),
       globalMessage: () => { return; }
     }
-    await act( async() => {
+    await act(async () =>
+    {
       ReactDOM.render(
         <MemoryRouter>
           <Problem {...pageData} />
@@ -45,7 +46,7 @@ describe(`The problem component`, () =>
 
   it('can display the add new bet form', async () =>
   {
-    const problem : IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria:"" };
+    const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
     jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));
 
     // Render the projects page
@@ -66,20 +67,24 @@ describe(`The problem component`, () =>
     expect(document.getElementById('newModal')).not.toHaveClass("show");
 
     // Open the new dialog.
-    let button = document.getElementById('add-new');
+    let button = document.getElementById('add-new') as HTMLButtonElement;
     expect(button).not.toBeNull();
-
-    if (button !== null)
+    await act(async () =>
     {
-      expect(button.innerHTML).not.toBeNull();
-      await act(async () =>
-      {
-        if (button !== null)
-        {
-          button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-        }
-      });
-    }
+      button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    let name = document.getElementById('new-problem-bet-name') as HTMLInputElement;
+    name.value = "test";
+
+    let description = document.getElementById('new-problem-bet-description') as HTMLInputElement;
+    description.value = "test";
+
+    let success = document.getElementById('new-problem-bet-success') as HTMLInputElement;
+    success.value = "test";
+
+    let buttonSubmit = document.getElementById('add-new') as HTMLButtonElement;
+    buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
 });
 

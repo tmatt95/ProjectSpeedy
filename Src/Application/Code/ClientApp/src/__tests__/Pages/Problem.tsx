@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { render, fireEvent } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router';
 import { BreadCrumbItem } from '../../Components/BreadCrumbs';
@@ -163,6 +163,9 @@ describe(`The problem component`, () =>
       let buttonSubmit = document.getElementById('problem-bet-new-create') as HTMLButtonElement;
       buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
+    let errorMessage = document.getElementById("validationNameFeedback")
+    expect(errorMessage?.innerHTML).toEqual("There is already a bet with the same name");
+
   });
 });
 

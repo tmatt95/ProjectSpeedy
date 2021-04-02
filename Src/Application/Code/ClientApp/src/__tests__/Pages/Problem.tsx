@@ -105,5 +105,64 @@ describe(`The problem component`, () =>
       buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
   });
+
+  it('Displays the error if existing item with same name', async () =>
+  {
+    const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
+    jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));
+
+    var init = { "status" : 400  };
+    var myResponse = new Response(JSON.stringify({message: "There is already a bet with the same name"}),init);
+    jest.spyOn(BetService, "Put").mockReturnValue(Promise.resolve(myResponse));
+
+    // Render the projects page
+    let pageData = {
+      setBreadCrumbs: () => { return true; },
+      breadCrumbs: Array<BreadCrumbItem>(),
+      globalMessage: () => { return; }
+    }
+    act(() =>
+    {
+      ReactDOM.render(
+        <MemoryRouter>
+          <Problem {...pageData} />
+        </MemoryRouter>, container);
+    });
+
+    // The dialog window should not be visible.
+    expect(document.getElementById('newModal')).not.toHaveClass("show");
+
+    // Open the new dialog.
+    let button = document.getElementById('add-new') as HTMLButtonElement;
+    expect(button).not.toBeNull();
+    await act(async () =>
+    {
+      button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    await act(async () =>
+    {
+      let name = document.getElementById('new-problem-bet-name') as HTMLInputElement;
+      fireEvent.change(name, { target: { value: 'Name' } });
+    });
+
+    await act(async () =>
+    {
+      let description = document.getElementById('new-problem-bet-description') as HTMLInputElement;
+      fireEvent.change(description, { target: { value: 'Name' } });
+    });
+
+    await act(async () =>
+    {
+      let success = document.getElementById('new-problem-bet-success') as HTMLInputElement;
+      fireEvent.change(success, { target: { value: 'Success' } });
+    });
+
+    await act(async () =>
+    {
+      let buttonSubmit = document.getElementById('problem-bet-new-create') as HTMLButtonElement;
+      buttonSubmit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+  });
 });
 

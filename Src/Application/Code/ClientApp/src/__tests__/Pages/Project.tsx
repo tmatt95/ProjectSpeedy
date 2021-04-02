@@ -63,7 +63,7 @@ describe(`The projects component`, () => {
     expect(document.getElementById('newModal')).not.toHaveClass("show");
 
     // Open the new dialog.
-    let button = document.getElementById('add-new');
+    let button = document.getElementById('problem-bet-new-create');
     expect(button).not.toBeNull();
 
     if (button !== null)

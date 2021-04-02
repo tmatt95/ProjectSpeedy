@@ -73,4 +73,19 @@ describe(`The bet status component`, () =>
       expect(elements[0].innerHTML).toBe("Record Results");
     }
   });
+
+  it("renders when an invalid status is sent to it", () =>
+  {
+    let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "Unknown", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
+    act(() =>
+    {
+      render(<BetStatus bet={dummyBet} />, container);
+    });
+
+    expect(container).not.toBeNull();
+    if (container !== null)
+    {
+      expect(container.innerHTML).toBe("");
+    }
+  });
 });

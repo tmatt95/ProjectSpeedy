@@ -62,8 +62,8 @@ export function Bet(pageProps: IPage)
     }
 
     return <>
-        {BetForm(bet)}
-        {BetStatus(bet)}
-        {BetTabs(bet)}
+        <BetForm bet={bet} />
+        <BetStatus bet={bet}/>
+        <BetTabs bet={bet} />
     </>;
 }

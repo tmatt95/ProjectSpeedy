@@ -1,6 +1,6 @@
 import { IBet } from "../../Interfaces/IPage";
 
-export default function BetStatus(bet: IBet)
+export default function BetStatus({ bet }: {bet: IBet})
 {
     switch (bet.status)
     {

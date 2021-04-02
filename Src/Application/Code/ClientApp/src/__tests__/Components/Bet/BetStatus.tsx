@@ -29,7 +29,7 @@ it("renders with or without a name", () =>
   let dummyBet: IBet = {name:"Bet Name", description:"Bet description", status:"Created", isLoaded:true, timeCurrent:0, timeTotal:0, successCriteria:""} as IBet;
   act(() =>
   {
-    render(BetStatus(dummyBet), container);
+    render(<BetStatus bet={dummyBet}/>, container);
   });
 
   expect(container).not.toBeNull();

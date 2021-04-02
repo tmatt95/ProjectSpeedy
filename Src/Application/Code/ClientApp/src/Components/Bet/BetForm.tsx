@@ -159,7 +159,7 @@ function GetForm(bet: IBet)
     </>
 }
 
-export default function BetForm(bet: IBet)
+export default function BetForm({ bet }: {bet: IBet})
 {
     switch (bet.status)
     {
@@ -173,4 +173,5 @@ export default function BetForm(bet: IBet)
             return GetStarted(bet);
         }
     }
+    return <></>;
 }

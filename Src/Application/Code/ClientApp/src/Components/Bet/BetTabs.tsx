@@ -1,7 +1,7 @@
 import { IBet } from "../../Interfaces/IPage";
 import TabComments from "./TabComments";
 
-export default function BetTabs(bet: IBet)
+export default function BetTabs({ bet }: {bet: IBet})
 {
     if (bet.isLoaded === false)
         {
@@ -52,5 +52,7 @@ export default function BetTabs(bet: IBet)
                     </div>
                 </>
             }
-        }
+    }
+    
+    return <></>;
 }

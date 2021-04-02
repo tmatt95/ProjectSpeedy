@@ -6,6 +6,7 @@ import { BreadCrumbItem } from '../../Components/BreadCrumbs';
 import { IProblem } from '../../Interfaces/IPage';
 import { Problem } from '../../Pages/Problem';
 import { ProblemService } from '../../Services/ProblemService';
+import { BetService } from '../../Services/BetService';
 
 let container: HTMLElement | null;
 
@@ -53,7 +54,7 @@ describe(`The problem component`, () =>
     var myBlob = new Blob();
     var init = { "status" : 202  };
     var myResponse = new Response(myBlob,init);
-    jest.spyOn(ProblemService, "Put").mockReturnValue(Promise.resolve(myResponse));
+    jest.spyOn(BetService, "Put").mockReturnValue(Promise.resolve(myResponse));
 
     // Render the projects page
     let pageData = {

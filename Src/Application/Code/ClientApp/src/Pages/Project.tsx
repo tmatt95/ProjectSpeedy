@@ -76,52 +76,50 @@ export function Project(pageProps: IPage)
                     title="Add Project"
                     description="Use the form to quickly add problems. These can be fleshed out after being created."
                     buttonText="Add Problem"
-                    saveAction={(values, setSubmitting, resetForm, setErrors) =>
+                    saveAction={async (values, setSubmitting, resetForm, setErrors) =>
                     {
-                        ProblemService.Put(projectId, JSON.stringify(values)).then(async (saveResponse) =>
+                        let saveResponse = await ProblemService.Put(projectId, JSON.stringify(values))
+
+                        // We have finished submitting the form.
+                        setSubmitting(false);
+
+                        if (saveResponse.status !== 202)
                         {
+                            const json: { message: string } = await saveResponse.json();
+                            setErrors({ name: json.message });
 
-                            // We have finished submitting the form.
-                            setSubmitting(false);
+                            ProjectService.Get(projectId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProject(data);
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+                        }
+                        else
+                        {
+                            ProjectService.Get(projectId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProject(data);
 
-                            if (saveResponse.status !== 202)
-                            {
-                                const json: { message: string } = await saveResponse.json();
-                                setErrors({ name: json.message });
+                                    // Resets the add new problem form.
+                                    resetForm({});
 
-                                ProjectService.Get(projectId).then(
-                                    (data) =>
-                                    {
-                                        // Sets the model against the page.
-                                        setProject(data);
-                                    },
-                                    (error) =>
-                                    {
-                                        alert(error);
-                                    }
-                                );
-                            }
-                            else
-                            {
-                                ProjectService.Get(projectId).then(
-                                    (data) =>
-                                    {
-                                        // Sets the model against the page.
-                                        setProject(data);
-
-                                        // Resets the add new problem form.
-                                        resetForm({});
-
-                                        // Close the dialog.
-                                        PageFunctions.CloseDialog('newModal');
-                                    },
-                                    (error) =>
-                                    {
-                                        alert(error);
-                                    }
-                                );
-                            }
-                        });
+                                    // Close the dialog.
+                                    PageFunctions.CloseDialog('newModal');
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+                        }
                     }} />
             </div>
         </div>

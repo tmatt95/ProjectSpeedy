@@ -74,51 +74,50 @@ export function Problem(pageProps: IPage)
                     title="Add Bet"
                     description="Use the form to quickly add new bets that you hope will help solve the problem. These can be fleshed out after being created."
                     buttonText="Add Bet"
-                    saveAction={(values, setSubmitting, resetForm, setErrors) =>
+                    saveAction={async (values, setSubmitting, resetForm, setErrors) =>
                     {
-                        BetService.Put(projectId, problemId, JSON.stringify(values)).then(async (saveResponse) =>
+                        let saveResponse = await BetService.Put(projectId, problemId, JSON.stringify(values));
+
+                        // We have finished submitting the form.
+                        setSubmitting(false);
+
+                        if (saveResponse.status !== 202)
                         {
-                             // We have finished submitting the form.
-                             setSubmitting(false);
+                            const json: { message: string } = await saveResponse.json();
+                            setErrors({ name: json.message });
 
-                            if (saveResponse.status !== 202)
-                            {
-                                const json: { message: string } = await saveResponse.json();
-                                setErrors({ name: json.message });
+                            ProblemService.Get(projectId, problemId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProblem(data);
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+                        }
+                        else
+                        {
+                            ProblemService.Get(projectId, problemId).then(
+                                (data) =>
+                                {
+                                    // Sets the model against the page.
+                                    setProblem(data);
 
-                                ProblemService.Get(projectId, problemId).then(
-                                    (data) =>
-                                    {
-                                        // Sets the model against the page.
-                                        setProblem(data);
-                                    },
-                                    (error) =>
-                                    {
-                                        alert(error);
-                                    }
-                                );
-                            }
-                            else
-                            {
-                                ProblemService.Get(projectId, problemId).then(
-                                    (data) =>
-                                    {
-                                        // Sets the model against the page.
-                                        setProblem(data);
+                                    // Resets the add new problem form.
+                                    resetForm({});
 
-                                        // Resets the add new problem form.
-                                        resetForm({});
-
-                                        // Close the dialog.
-                                        PageFunctions.CloseDialog('newModal');
-                                    },
-                                    (error) =>
-                                    {
-                                        alert(error);
-                                    }
-                                );
-                            }
-                        });
+                                    // Close the dialog.
+                                    PageFunctions.CloseDialog('newModal');
+                                },
+                                (error) =>
+                                {
+                                    alert(error);
+                                }
+                            );
+                        }
                     }} />
             </div>
         </div>

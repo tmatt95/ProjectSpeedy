@@ -46,6 +46,12 @@ describe(`The projects component`, () => {
     const project : IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
     jest.spyOn(ProjectService, "Get").mockReturnValue(Promise.resolve(project));
 
+    var myBlob = new Blob();
+    var init = { "status" : 202 , "statusText" : "SuperSmashingGreat!" };
+    var myResponse = new Response(myBlob,init);
+    jest.spyOn(ProjectService, "Put").mockReturnValue(Promise.resolve(myResponse));
+
+
     // Render the projects page
     let pageData = {
       setBreadCrumbs: () => { return true; },

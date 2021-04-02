@@ -45,10 +45,15 @@ describe(`The problem component`, () =>
     });
   });
 
-  it('can display the add new bet form', async () =>
+  it('can create a new problem successfully', async () =>
   {
     const problem: IProblem = { name: "Name", bets: [], isLoaded: false, description: "Description", successCriteria: "" };
     jest.spyOn(ProblemService, "Get").mockReturnValue(Promise.resolve(problem));
+
+    var myBlob = new Blob();
+    var init = { "status" : 202  };
+    var myResponse = new Response(myBlob,init);
+    jest.spyOn(ProblemService, "Put").mockReturnValue(Promise.resolve(myResponse));
 
     // Render the projects page
     let pageData = {

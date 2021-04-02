@@ -4,7 +4,7 @@ export default function BetStatus(bet: IBet)
 {
     switch (bet.status)
     {
-        case "Created": {
+        case 'Created': {
             return <div className="card">
                 <div className="card-body">
                     <h2>Start Bet</h2>
@@ -13,11 +13,23 @@ export default function BetStatus(bet: IBet)
                 </div>
             </div>
         }
-        case "In Progress": {
-            return <>In Progress sect</>
+        case 'In Progress': {
+            return <div className="card">
+                <div className="card-body">
+                    <h2>Time Left</h2>
+                    <button className="btn btn-primary" onClick={() => { alert("test"); }}>Finish Bet Early</button>
+                </div>
+            </div>
         }
-        case "Finished": {
-            return <>Finished sect</>
+        case 'Finished': {
+            return <div className="card">
+                <div className="card-body">
+                    <h2>Record Results</h2>
+                    <p>What will you do next?</p>
+                    <button className="btn btn-primary" onClick={() => { alert("test"); }}>Save Result</button>
+                </div>
+            </div>
         }
     }
+    return <></>
 }

@@ -1,4 +1,3 @@
-import { notDeepEqual } from 'node:assert';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import ProblemBetNewForm from '../../Components/ProblemBetNewForm';

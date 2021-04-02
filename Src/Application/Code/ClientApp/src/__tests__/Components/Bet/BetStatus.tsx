@@ -24,18 +24,53 @@ afterEach(() =>
   }
 });
 
-it("renders with or without a name", () =>
+describe(`The bet status component`, () =>
 {
-  let dummyBet: IBet = {name:"Bet Name", description:"Bet description", status:"Created", isLoaded:true, timeCurrent:0, timeTotal:0, successCriteria:""} as IBet;
-  act(() =>
+  it("renders correctly when status is created", () =>
   {
-    render(<BetStatus bet={dummyBet}/>, container);
+    let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "Created", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
+    act(() =>
+    {
+      render(<BetStatus bet={dummyBet} />, container);
+    });
+
+    expect(container).not.toBeNull();
+    if (container !== null)
+    {
+      let elements: HTMLCollectionOf<HTMLHeadingElement> = container.getElementsByTagName("h2");
+      expect(elements[0].innerHTML).toBe("Start Bet");
+    }
   });
 
-  expect(container).not.toBeNull();
-  if (container !== null)
+  it("renders correctly when status is in progress", () =>
   {
-    let elements: HTMLCollectionOf<HTMLHeadingElement> = container.getElementsByTagName("h2");
-    expect(elements[0].innerHTML).toBe("Start Bet"); 
-  }
+    let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "In Progress", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
+    act(() =>
+    {
+      render(<BetStatus bet={dummyBet} />, container);
+    });
+
+    expect(container).not.toBeNull();
+    if (container !== null)
+    {
+      let elements: HTMLCollectionOf<HTMLHeadingElement> = container.getElementsByTagName("h2");
+      expect(elements[0].innerHTML).toBe("Time Left");
+    }
+  });
+
+  it("renders correctly when status is finished", () =>
+  {
+    let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "Finished", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
+    act(() =>
+    {
+      render(<BetStatus bet={dummyBet} />, container);
+    });
+
+    expect(container).not.toBeNull();
+    if (container !== null)
+    {
+      let elements: HTMLCollectionOf<HTMLHeadingElement> = container.getElementsByTagName("h2");
+      expect(elements[0].innerHTML).toBe("Record Results");
+    }
+  });
 });

@@ -41,7 +41,7 @@ describe(`The bet tabs component`, () =>
     }
   });
 
-  it("renders correctly when status is created", () =>
+  it("renders 1 tab when status is created", () =>
   {
     let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "Created", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
     act(() =>
@@ -56,7 +56,7 @@ describe(`The bet tabs component`, () =>
     }
   });
 
-  it("renders correctly when status is in progress", () =>
+  it("renders 2 tabs when status is in progress", () =>
   {
     let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "In Progress", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
     act(() =>
@@ -71,7 +71,7 @@ describe(`The bet tabs component`, () =>
     }
   });
 
-  it("renders correctly when status is finished", () =>
+  it("renders 3 tabs when status is finished", () =>
   {
     let dummyBet: IBet = { name: "Bet Name", description: "Bet description", status: "Finished", isLoaded: true, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
     act(() =>

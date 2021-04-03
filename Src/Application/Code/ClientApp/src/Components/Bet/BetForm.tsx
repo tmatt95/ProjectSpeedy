@@ -151,15 +151,21 @@ function GetForm(bet: IBet)
                             {errors.timeTotal && touched.timeTotal && errors.timeTotal}
                         </div>
                     </div>
-                    <button type="submit" id="bet-update">Save</button>
-                    <button>Cancel</button>
+                    <div className="row mb-3">
+                        <div className="col">
+                            <button className="btn btn-danger">Cancel</button>
+                        </div>
+                        <div className="col text-end">
+                            <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="bet-update">Save</button>
+                        </div>
+                    </div>
                 </form>
             )}
         </Formik>
     </>
 }
 
-export default function BetForm({ bet }: {bet: IBet})
+export default function BetForm({ bet }: { bet: IBet })
 {
     switch (bet.status)
     {

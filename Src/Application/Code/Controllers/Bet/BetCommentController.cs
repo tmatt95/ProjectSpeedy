@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -15,9 +16,27 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<BetCommentController> _logger;
 
-        public BetCommentController(ILogger<BetCommentController> logger)
+        /// <summary>
+        /// Contains services needed to interact with problems.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProblem _problemServices;
+
+        /// <summary>
+        /// Contains services needed to interact with bet comments.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IBetComment _betCommentService;
+
+        /// <summary>
+        /// All bet comment related actions.
+        /// </summary>
+        /// <param name="logger">Used to log any errors which occur in this controller.</param>
+        /// <param name="problemServices">Allows us to interact with problems.</param>
+        /// <param name="betCommentService">Allows us to interact with bet comments.</param>
+        public BetCommentController(ILogger<BetCommentController> logger, ProjectSpeedy.Services.IProblem problemServices, ProjectSpeedy.Services.IBetComment betCommentService)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._problemServices = problemServices;
+            this._betCommentService = betCommentService;
         }
 
         /// <summary>
@@ -29,11 +48,31 @@ namespace ProjectSpeedy.Controllers
         /// <param name="form">Form containing the comment.</param>
         /// <returns>If the comment was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment")]
-        public ActionResult Put(string projectId, string problemId, string betId, Models.BetComment.BetCommentNewUpdate form)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(string projectId, string problemId, string betId, Models.BetComment.BetCommentNewUpdate form)
         {
             try
             {
-                return this.Accepted();
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Gets the problem and checks the project id / bet id is valid against it.
+                var problem = await this._problemServices.GetAsync(projectId, problemId);
+                if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId ||
+                !problem.Bets.Any( b => b.Id == ProjectSpeedy.Services.Bet.PREFIX + betId)){
+                    return this.NotFound();
+                }
+
+                // Tries to add the comment
+                if (await this._betCommentService.CreateAsync(projectId, problemId, betId, form))
+                {
+                    return this.Accepted();
+                }
+
+                // If we get here something has gone wrong.
+                return this.Problem();
             }
             catch (Exception e)
             {

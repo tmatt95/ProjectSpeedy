@@ -170,7 +170,7 @@ namespace Tests.Controllers
         }
 
         /// <summary>
-        /// Tries to add a comment successfully.
+        /// Tries to add a comment but does not get a success response from the service.
         /// </summary>
         /// <returns>Unit test task</returns>
         [Test]
@@ -182,6 +182,62 @@ namespace Tests.Controllers
                 {
                     // Arrange
                     this._problemServices = new ProjectSpeedy.Tests.ServicesTests.ProblemData();
+                    this._betCommentService = new ProjectSpeedy.Tests.ServicesTests.BetCommentDataNoCreate();
+                    this._controller = new ProjectSpeedy.Controllers.BetCommentController(this._logger.Object, this._problemServices, this._betCommentService);
+
+                    // Act
+                    var test = await this._controller.PutAsync("ProjectId", "ProblemId", "BetId", new ProjectSpeedy.Models.BetComment.BetCommentNewUpdate(){
+                        Comment="Test comment"
+                    });
+
+                    // Assert
+                    var result = test as ObjectResult;
+                    Assert.AreEqual(500, result.StatusCode);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to add a comment but gets a non 404 exception from the service.
+        /// </summary>
+        /// <returns>Unit test task</returns>
+        [Test]
+        public async System.Threading.Tasks.Task PutExceptionServiceWebOther()
+        {
+            using (var stream = new MemoryStream())
+            {
+                using (var streamBets = new MemoryStream())
+                {
+                    // Arrange
+                    this._problemServices = new ProjectSpeedy.Tests.ServicesTests.ProblemDataNotFoundOther();
+                    this._betCommentService = new ProjectSpeedy.Tests.ServicesTests.BetCommentDataNoCreate();
+                    this._controller = new ProjectSpeedy.Controllers.BetCommentController(this._logger.Object, this._problemServices, this._betCommentService);
+
+                    // Act
+                    var test = await this._controller.PutAsync("ProjectId", "ProblemId", "BetId", new ProjectSpeedy.Models.BetComment.BetCommentNewUpdate(){
+                        Comment="Test comment"
+                    });
+
+                    // Assert
+                    var result = test as ObjectResult;
+                    Assert.AreEqual(500, result.StatusCode);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to add a comment but gets an exception thrown from the service.
+        /// </summary>
+        /// <returns>Unit test task</returns>
+        [Test]
+        public async System.Threading.Tasks.Task PutExceptionService()
+        {
+            using (var stream = new MemoryStream())
+            {
+                using (var streamBets = new MemoryStream())
+                {
+                    // Arrange
+                    this._problemServices = new ProjectSpeedy.Tests.ServicesTests.ProblemDataException();
                     this._betCommentService = new ProjectSpeedy.Tests.ServicesTests.BetCommentDataNoCreate();
                     this._controller = new ProjectSpeedy.Controllers.BetCommentController(this._logger.Object, this._problemServices, this._betCommentService);
 

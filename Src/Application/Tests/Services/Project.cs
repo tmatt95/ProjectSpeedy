@@ -47,7 +47,7 @@ namespace Tests.Services
             var test = await projectService.CreateAsync(form);
 
             // Assert
-            Assert.AreEqual(test, false);
+            Assert.AreEqual(false, test);
         }
 
         // Get all no data

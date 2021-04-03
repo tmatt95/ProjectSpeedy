@@ -39,28 +39,22 @@ describe(`The project new form component`, () => {
     });
 
     // Try and submit form.
-    let button = document.getElementById('problem-bet-new-create');
+    let button = document.getElementById('bet-update') as HTMLButtonElement;
     expect(button).not.toBeNull();
 
-    if (button !== null)
+    expect(button.innerHTML).toBe("Save");
+    await act(async () =>
     {
-      expect(button.innerHTML).toBe("Button Text");
-      await act(async () =>
-      {
-        if (button !== null)
-        {
-          button.dispatchEvent(new MouseEvent("click", { bubbles: true })); 
-        }
-      });
-  
-      // Check that there is an error for the name.
-      let nameError = document.getElementById('validationNameFeedback');
-      expect(nameError).not.toBeNull();
+      button.dispatchEvent(new MouseEvent("click", { bubbles: true })); 
+    });
 
-      if (nameError !== null)
-      {
-        expect(nameError.innerHTML).toBe("Required"); 
-      }
+    // Check that there is an error for the name.
+    let nameError = document.getElementById('validationNameFeedback');
+    expect(nameError).not.toBeNull();
+
+    if (nameError !== null)
+    {
+      expect(nameError.innerHTML).toBe("Required"); 
     }
   });
 });

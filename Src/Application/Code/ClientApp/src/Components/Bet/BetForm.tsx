@@ -151,7 +151,7 @@ function GetForm(bet: IBet)
                             {errors.timeTotal && touched.timeTotal && errors.timeTotal}
                         </div>
                     </div>
-                    <button type="submit">Save</button>
+                    <button type="submit" id="bet-update">Save</button>
                     <button>Cancel</button>
                 </form>
             )}

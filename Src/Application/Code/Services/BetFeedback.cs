@@ -53,7 +53,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public bool Delete(string projectId, string problemId, string betId, string commentId)
+        public bool Delete(string projectId, string problemId, string betId, string feedbackId)
         {
             throw new NotImplementedException();
         }

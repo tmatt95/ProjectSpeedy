@@ -1,23 +1,28 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import App  from '../App';
 
-let container;
+let container: HTMLDivElement | null;
 
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 });
 
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
+afterEach(() =>
+{
+  if (container !== null)
+  {
+    document.body.removeChild(container);
+    container = null; 
+  }
 });
 
 describe(`App component`, () => {
   it('can render the app', () => {
     act(() => {
-      render(
+      ReactDOM.render(
         <App/>,
         container);
     });

@@ -2,24 +2,28 @@ import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import {Projects} from '../../Pages/Projects';
 
-let container;
+let container: HTMLDivElement | null;
 
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 });
 
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
+afterEach(() =>
+{
+  if (container !== null)
+  {
+    document.body.removeChild(container);
+    container = null; 
+  }
 });
 
 describe(`The projects component`, () => {
   it('can render', () => {
     let pageData = {
       setBreadCrumbs: () => { return true; },
-      breadCrumbs: Array([]),
-      globalMessage: (alertMessage) => { return; }
+      breadCrumbs: Array(),
+      globalMessage: () => { return; }
     }
     act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
   });
@@ -28,8 +32,8 @@ describe(`The projects component`, () => {
     // Render the projects page
     let pageData = {
       setBreadCrumbs: () => { return true; },
-      breadCrumbs: Array([]),
-      globalMessage: (alertMessage) => { return; }
+      breadCrumbs: Array(),
+      globalMessage: () => { return; }
     }
     act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
 
@@ -37,7 +41,7 @@ describe(`The projects component`, () => {
     expect(document.getElementById('newModal')).not.toHaveClass("show");
 
     // Open the new dialog.
-    let button = document.getElementById('add-new');
+    let button = document.getElementById('add-new') as HTMLButtonElement;
     expect(button.innerHTML).not.toBeNull();
     await act(async () => {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true }));

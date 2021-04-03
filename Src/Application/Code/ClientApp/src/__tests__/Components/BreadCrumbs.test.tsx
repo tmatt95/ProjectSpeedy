@@ -1,31 +1,36 @@
 import { screen } from '@testing-library/react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { BreadCrumbs } from '../../Components/BreadCrumbs';
+import { BreadCrumbItem, BreadCrumbs } from '../../Components/BreadCrumbs';
 import
 {
   BrowserRouter as Router,
 } from "react-router-dom";
 
-let container;
+let container: HTMLDivElement | null;
 
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 });
 
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
+afterEach(() =>
+{
+  if (container !== null)
+  {
+    document.body.removeChild(container);
+    container = null; 
+  }
 });
 
 describe(`The breadcrumb component`, () => {
   it('can render with one item in it', () => {
     act(() => {
-      let breadCrumbData = new Array();
+      let breadCrumbData = new Array<BreadCrumbItem>();
       breadCrumbData.push({
         address: "Address",
-        text: "Name"
+        text: "Name",
+        isLast: true
       });
       let data = {
         breadCrumbs: breadCrumbData

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import ProjectNewForm from '../../../Components/Projects/ProjectNewForm';
 import { IProject } from '../../../Interfaces/IPage';
-import { ProblemService } from '../../../Services/ProblemService';
 import { ProjectService } from '../../../Services/ProjectService';
 
 let container: HTMLDivElement | null;

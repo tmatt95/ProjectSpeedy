@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
@@ -7,21 +6,18 @@ namespace Tests.Services
     public class ServiceBase
     {
         [Test]
-        [Ignore("WIP")]
-        public async System.Threading.Tasks.Task DocumentCreate()
+        public async System.Threading.Tasks.Task GenerateIdOk()
         {
             // Arrange
-            //var httpClient = new Mock<System.Net.Http.IHttpClientFactory>();
-            //var config = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
-            //var serviceBase = new ProjectSpeedy.Services.ServiceBase(httpClient.Object, config.Object);
+            var config = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
+            var httpHandler = new ProjectSpeedy.Tests.ServicesTests.HttpHandlerCreate();
+            var serviceBase = new ProjectSpeedy.Services.ServiceBase(config.Object, httpHandler);
 
             // Act
-            // var test = await serviceBase.DocumentCreate(new ProjectSpeedy.Models.Project.ProjectNew(){
-            //     Name="Project"
-            // }, "Partition");
+            var test = await serviceBase.GenerateId();
 
-            // // Assert
-            // Assert.AreEqual(true, test);
+            // Assert
+            Assert.AreEqual("NewId", test);
         }
     }
 }

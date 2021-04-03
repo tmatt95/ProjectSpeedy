@@ -14,11 +14,6 @@ namespace ProjectSpeedy.Services
     public class ServiceBase : IServiceBase
     {
         /// <summary>
-        /// This will make the API calls without using a third party library.
-        /// </summary>
-        private readonly IHttpClientFactory _clientFactory;
-
-        /// <summary>
         /// Needed to read the CouchDB settings for the application from appsettings.
         /// </summary>
         private readonly IConfiguration _configuration;
@@ -31,11 +26,10 @@ namespace ProjectSpeedy.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="clientFactory">Lets us carry out http requests from the app</param>
         /// <param name="configuration">Used to access application settings</param>
-        public ServiceBase(IHttpClientFactory clientFactory, IConfiguration configuration, IHttpHandler httpHandler)
+        /// <param name="httpHandler">Used to make API calls</param>
+        public ServiceBase(IConfiguration configuration, IHttpHandler httpHandler)
         {
-            this._clientFactory = clientFactory;
             this._configuration = configuration;
             this._httpHandler = httpHandler;
         }

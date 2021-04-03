@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Castle.Core.Configuration;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
@@ -44,6 +43,46 @@ namespace Tests.Services
         }
 
         [Test]
+        public async System.Threading.Tasks.Task CreateDocumentOk()
+        {
+            // Arrange
+            var inMemorySettings = new Dictionary<string, string> {
+                {"couchdb:document_create", "{DocumentId"}
+            };
+            Microsoft.Extensions.Configuration.IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+            var httpHandler = new ProjectSpeedy.Tests.ServicesTests.HttpHandlerCreate();
+            var serviceBase = new ProjectSpeedy.Services.ServiceBase(configuration, httpHandler);
+
+            // Act
+            var test = await serviceBase.DocumentCreate(new ProjectSpeedy.Models.Bet.Bet(), "Parition");
+
+            // Assert
+            Assert.NotNull(test);
+        }
+
+         [Test]
+        public async System.Threading.Tasks.Task UpdateDocumentOk()
+        {
+            // Arrange
+            var inMemorySettings = new Dictionary<string, string> {
+                {"couchdb:document_update", "{DocumentId"}
+            };
+            Microsoft.Extensions.Configuration.IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+            var httpHandler = new ProjectSpeedy.Tests.ServicesTests.HttpHandlerCreate();
+            var serviceBase = new ProjectSpeedy.Services.ServiceBase(configuration, httpHandler);
+
+            // Act
+            var test = await serviceBase.DocumentUpdate("DocumentId", new ProjectSpeedy.Models.Bet.Bet());
+
+            // Assert
+            Assert.NotNull(test);
+        }
+
+        [Test]
         public async System.Threading.Tasks.Task GetViewOkNoKeys()
         {
             // Arrange
@@ -64,7 +103,7 @@ namespace Tests.Services
             Assert.NotNull(test);
         }
 
-         [Test]
+        [Test]
         public async System.Threading.Tasks.Task GetViewOkKeys()
         {
             // Arrange

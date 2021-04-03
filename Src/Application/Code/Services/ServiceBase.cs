@@ -56,7 +56,7 @@ namespace ProjectSpeedy.Services
                 response.EnsureSuccessStatusCode();
 
                 // Returns the Id of the newly created record.
-                return document.GetType().Name + ":" + newId;
+                return newId;
             }
         }
 

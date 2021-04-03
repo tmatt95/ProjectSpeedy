@@ -16,7 +16,7 @@ namespace Tests.Services
             {
                 Comment = "Comment"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.BetComment.BetCommentNewUpdate>(), ProjectSpeedy.Services.BetComment.PARTITION))
+            mockTest.Setup(d => d.DocumentCreate(It.IsAny<ProjectSpeedy.Models.BetComment.BetCommentNewUpdate>(), ProjectSpeedy.Services.BetComment.PARTITION))
                 .Returns(Task.FromResult("TestNewId"));
 
             // Act
@@ -36,7 +36,7 @@ namespace Tests.Services
             {
                 Comment = "Comment"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.BetComment.BetCommentNewUpdate>(), ProjectSpeedy.Services.BetComment.PARTITION))
+            mockTest.Setup(d => d.DocumentCreate(It.IsAny<ProjectSpeedy.Models.BetComment.BetCommentNewUpdate>(), ProjectSpeedy.Services.BetComment.PARTITION))
                 .Returns(Task.FromResult(""));
 
             // Act

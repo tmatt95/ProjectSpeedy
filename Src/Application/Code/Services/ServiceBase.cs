@@ -35,7 +35,7 @@ namespace ProjectSpeedy.Services
         }
 
         /// <inheritdoc />
-        public async Task<string> DocumetCreate(object document, string partition)
+        public async Task<string> DocumentCreate(object document, string partition)
         {
             using (var stream = new MemoryStream())
             {

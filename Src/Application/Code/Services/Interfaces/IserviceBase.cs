@@ -46,6 +46,6 @@ namespace ProjectSpeedy.Services
         /// <param name="document">Document object to create</param>
         /// <param name="partition">The partition to create the document in</param>
         /// <returns>Id of the newly created document.</returns>
-        Task<string> DocumetCreate(object document, string partition);
+        Task<string> DocumentCreate(object document, string partition);
     }
 }

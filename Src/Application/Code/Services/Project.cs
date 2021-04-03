@@ -53,7 +53,7 @@ namespace ProjectSpeedy.Services
             };
 
             // Creates the project and checks if the id is returned.
-            var newId = await this._serviceBase.DocumetCreate(newProject, Project.PARTITION);
+            var newId = await this._serviceBase.DocumentCreate(newProject, Project.PARTITION);
             return !string.IsNullOrWhiteSpace(newId);
         }
 

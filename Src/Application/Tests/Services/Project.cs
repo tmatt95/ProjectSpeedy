@@ -20,7 +20,7 @@ namespace Tests.Services
             {
                 Name = "Test Project"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Project.ProjectNew>(), "project"))
+            mockTest.Setup(d => d.DocumentCreate(It.IsAny<ProjectSpeedy.Models.Project.ProjectNew>(), "project"))
                 .Returns(Task.FromResult("TestNewId"));
 
             // Act
@@ -40,7 +40,7 @@ namespace Tests.Services
             {
                 Name = "Test Project"
             };
-            mockTest.Setup(d => d.DocumetCreate(It.IsAny<ProjectSpeedy.Models.Project.Project>(), "project"))
+            mockTest.Setup(d => d.DocumentCreate(It.IsAny<ProjectSpeedy.Models.Project.Project>(), "project"))
                 .Returns(Task.FromResult(""));
 
             // Act

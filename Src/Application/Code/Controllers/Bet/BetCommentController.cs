@@ -128,15 +128,7 @@ namespace ProjectSpeedy.Controllers
         [HttpDelete("/api/project/{projectId}/problem/{problemId}/bet/{betId}/comment/{commentId}")]
         public ActionResult Delete(string projectId, string problemId, string betId, string commentId)
         {
-            try
-            {
-                return this.Accepted();
-            }
-            catch (Exception e)
-            {
-                this._logger.LogError(e, e.Message);
-                return this.Problem();
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

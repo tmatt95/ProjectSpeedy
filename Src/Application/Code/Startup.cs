@@ -41,6 +41,7 @@ namespace ProjectSpeedy
 
             // Add services
             services.AddScoped<ProjectSpeedy.Services.IBetComment, ProjectSpeedy.Services.BetComment>();
+            services.AddScoped<ProjectSpeedy.Services.IBetFeedback, ProjectSpeedy.Services.BetFeedback>();
             services.AddScoped<ProjectSpeedy.Services.IBet, ProjectSpeedy.Services.Bet>();
             services.AddScoped<ProjectSpeedy.Services.IProblem, ProjectSpeedy.Services.Problem>();
             services.AddScoped<ProjectSpeedy.Services.IProject, ProjectSpeedy.Services.Project>();

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -15,9 +17,21 @@ namespace ProjectSpeedy.Controllers
         /// </summary>
         private readonly ILogger<BetFeedbackController> _logger;
 
-        public BetFeedbackController(ILogger<BetFeedbackController> logger)
+        /// <summary>
+        /// Contains services needed to interact with problems.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IProblem _problemServices;
+        
+        /// <summary>
+        /// Used to capture any errors this controller encounters.
+        /// </summary>
+        private readonly ProjectSpeedy.Services.IBetFeedback _betFeedback;
+
+        public BetFeedbackController(ILogger<BetFeedbackController> logger, ProjectSpeedy.Services.IBetFeedback iBetFeedback, ProjectSpeedy.Services.IProblem problemServices)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._betFeedback = iBetFeedback;
+            this._problemServices = problemServices;
         }
 
         /// <summary>
@@ -28,11 +42,43 @@ namespace ProjectSpeedy.Controllers
         /// <param name="betId">Bet identifier</param>
         /// <returns>If the feedback was added successfully.</returns>
         [HttpPut("/api/project/{projectId}/problem/{problemId}/bet/{betId}/feedback")]
-        public ActionResult Put(string projectId, string problemId, string betId)
+        public async System.Threading.Tasks.Task<ActionResult> PutAsync(string projectId, string problemId, string betId, ProjectSpeedy.Models.BetFeedback.BetFeedbackNewUpdate form)
         {
             try
             {
-                return this.Accepted();
+                // Checks we have a valid request.
+                if (form == null || !ModelState.IsValid)
+                {
+                    return this.BadRequest();
+                }
+
+                // Gets the problem and checks the project id / bet id is valid against it.
+                var problem = await this._problemServices.GetAsync(projectId, problemId);
+                if(problem.ProjectId != ProjectSpeedy.Services.Project.PREFIX + projectId ||
+                !problem.Bets.Any( b => b.Id == ProjectSpeedy.Services.Bet.PREFIX + betId)){
+                    return this.NotFound();
+                }
+
+                // Tries to add the comment
+                if (await this._betFeedback.CreateAsync(projectId, problemId, betId, form))
+                {
+                    return this.Accepted();
+                }
+
+                // If we get here something has gone wrong.
+                return this.Problem();
+            }
+            catch (HttpRequestException e)
+            {
+                // Can we find the problem.
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+
+                // There has been a problem loading or saving data.
+                this._logger.LogError(e, e.Message);
+                return this.Problem();
             }
             catch (Exception e)
             {

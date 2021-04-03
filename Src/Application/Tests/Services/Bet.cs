@@ -25,7 +25,7 @@ namespace Tests.Services
             var test = await betService.CreateAsync("ProjectId", "ProblemId", form);
 
             // Assert
-            Assert.AreEqual(test, true);
+            Assert.AreEqual(true, test);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Tests.Services
             var test = await betService.CreateAsync("ProjectId", "ProblemId", form);
 
             // Assert
-            Assert.AreEqual(test, false);
+            Assert.AreEqual(false, test);
         }
 
         [Test]

@@ -27,7 +27,7 @@ namespace Tests.Services
             var test = await projectService.CreateAsync(form);
 
             // Assert
-            Assert.AreEqual(test, true);
+            Assert.AreEqual(true, test);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Tests.Services
                 // Assert
                 Assert.IsInstanceOf<ProjectSpeedy.Models.Projects.ProjectsView>(test);
                 Assert.IsNotNull(test.rows);
-                Assert.AreEqual(test.rows.Count, 0);
+                Assert.AreEqual(0, test.rows.Count);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Tests.Services
             // Assert
             Assert.IsInstanceOf<ProjectSpeedy.Models.Projects.ProjectsView>(test);
             Assert.IsNotNull(test.rows);
-            Assert.AreEqual(test.rows.Count, 1);
+            Assert.AreEqual(1, test.rows.Count);
         }
 
         // Get project

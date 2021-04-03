@@ -26,7 +26,7 @@ namespace Tests.Services
             var test = await problemService.CreateAsync("ProjectId", form);
 
             // Assert
-            Assert.AreEqual(test, true);
+            Assert.AreEqual(true, test);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Tests.Services
             var test = await problemService.CreateAsync("ProjectId", form);
 
             // Assert
-            Assert.AreEqual(test, false);
+            Assert.AreEqual(false, test);
         }
 
         // Get project

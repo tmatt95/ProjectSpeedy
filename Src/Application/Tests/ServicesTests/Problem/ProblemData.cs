@@ -31,7 +31,7 @@ namespace ProjectSpeedy.Tests.ServicesTests
                 Bets = new System.Collections.Generic.List<Models.General.ListItem>(){
                     new Models.General.ListItem(){
                         Name = "Problem Name",
-                        Id = "ProblemId",
+                        Id = "bet:BetId",
                         Status = "New"
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -72,6 +73,18 @@ namespace ProjectSpeedy.Controllers
                 }
 
                 // If we get here something has gone wrong.
+                return this.Problem();
+            }
+            catch (HttpRequestException e)
+            {
+                // Can we find the problem.
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+
+                // There has been a problem loading or saving data.
+                this._logger.LogError(e, e.Message);
                 return this.Problem();
             }
             catch (Exception e)

@@ -20,12 +20,48 @@ afterEach(() =>
 });
 
 describe(`The project new form component`, () => {
-  it('can render', () => {
+  it('can render', () =>
+  {
     act(() =>
     {
       let dummyBet: IBet = { name: "", description: "", status: "", isLoaded: false, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
       ReactDOM.render(<BetForm bet={dummyBet} />, container);
     });
-  })
+  });
+
+  it('can validate the form', async () => {
+
+    // display form.
+    act(() =>
+    {
+      let dummyBet: IBet = { name: "", description: "", status: "Created", isLoaded: false, timeCurrent: 0, timeTotal: 0, successCriteria: "" } as IBet;
+      ReactDOM.render(<BetForm bet={dummyBet} />, container);
+    });
+
+    // Try and submit form.
+    let button = document.getElementById('problem-bet-new-create');
+    expect(button).not.toBeNull();
+
+    if (button !== null)
+    {
+      expect(button.innerHTML).toBe("Button Text");
+      await act(async () =>
+      {
+        if (button !== null)
+        {
+          button.dispatchEvent(new MouseEvent("click", { bubbles: true })); 
+        }
+      });
+  
+      // Check that there is an error for the name.
+      let nameError = document.getElementById('validationNameFeedback');
+      expect(nameError).not.toBeNull();
+
+      if (nameError !== null)
+      {
+        expect(nameError.innerHTML).toBe("Required"); 
+      }
+    }
+  });
 });
 

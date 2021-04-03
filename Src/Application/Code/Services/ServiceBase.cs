@@ -24,14 +24,20 @@ namespace ProjectSpeedy.Services
         private readonly IConfiguration _configuration;
 
         /// <summary>
+        /// Carries out all http requests
+        /// </summary>
+        private readonly IHttpHandler _httpHandler;
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="clientFactory">Lets us carry out http requests from the app</param>
         /// <param name="configuration">Used to access application settings</param>
-        public ServiceBase(IHttpClientFactory clientFactory, IConfiguration configuration)
+        public ServiceBase(IHttpClientFactory clientFactory, IConfiguration configuration, IHttpHandler httpHandler)
         {
             this._clientFactory = clientFactory;
             this._configuration = configuration;
+            this._httpHandler = httpHandler;
         }
 
         /// <inheritdoc />
@@ -49,14 +55,8 @@ namespace ProjectSpeedy.Services
                 using var reader = new StreamReader(stream);
                 string content = await reader.ReadToEndAsync();
 
-                // Send the request to add the new document
-                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:document_create"].Replace("{documentId}", partition + ":" + newId));
-                request.Content = new StringContent(content);
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
-                var client = _clientFactory.CreateClient();
-
                 // Convert response to output
-                var response = await client.SendAsync(request);
+                var response = await this._httpHandler.PutAsync(this._configuration["couchdb:document_create"].Replace("{documentId}", partition + ":" + newId), new StringContent(content));
 
                 // Ensures is has created ok.
                 response.EnsureSuccessStatusCode();
@@ -88,13 +88,8 @@ namespace ProjectSpeedy.Services
                     .Replace("{endKey}", endKey);
             }
 
-            // Makes the request.
-            var request = new HttpRequestMessage(HttpMethod.Get, requestAddress);
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
-            var client = _clientFactory.CreateClient();
-
             // Convert response to output.
-            var response = await client.SendAsync(request);
+            var response = await this._httpHandler.GetAsync(requestAddress);
 
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
@@ -106,9 +101,7 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<string> GenerateId()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:base_url"] + "_uuids");
-            var client = _clientFactory.CreateClient();
-            var response = await client.SendAsync(request);
+            var response = await this._httpHandler.GetAsync(this._configuration["couchdb:base_url"] + "_uuids");
             using var responseStream = await response.Content.ReadAsStreamAsync();
             var uUIDs = await JsonSerializer.DeserializeAsync
                 <Models.CouchDb.UuiDs>(responseStream);
@@ -118,13 +111,8 @@ namespace ProjectSpeedy.Services
         /// <inheritdoc />
         public async Task<HttpContent> DocumentGet(string documentId)
         {
-            // Send the request to add the new document
-            var request = new HttpRequestMessage(HttpMethod.Get, this._configuration["couchdb:document_get"].Replace("{documentId}", documentId));
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
-            var client = _clientFactory.CreateClient();
-
-            // Convert response to output
-            var response = await client.SendAsync(request);
+            // Get document
+            var response = await this._httpHandler.GetAsync(this._configuration["couchdb:document_get"].Replace("{documentId}", documentId));
 
             // Ensures is has created ok.
             response.EnsureSuccessStatusCode();
@@ -145,14 +133,8 @@ namespace ProjectSpeedy.Services
                 using var reader = new StreamReader(stream);
                 string content = await reader.ReadToEndAsync();
 
-                // Send the request to add the new document
-                var request = new HttpRequestMessage(HttpMethod.Put, this._configuration["couchdb:document_update"].Replace("{documentId}", documentId));
-                request.Content = new StringContent(content);
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", this._configuration["couchdb:authentication"]);
-                var client = _clientFactory.CreateClient();
-
                 // Convert response to output
-                var response = await client.SendAsync(request);
+                var response = await this._httpHandler.PutAsync(this._configuration["couchdb:document_update"].Replace("{documentId}", documentId), new StringContent(content));
 
                 // Ensures is has created ok.
                 response.EnsureSuccessStatusCode();

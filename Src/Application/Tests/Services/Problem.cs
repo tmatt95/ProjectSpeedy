@@ -94,5 +94,49 @@ namespace Tests.Services
             Assert.IsNotNull(test);
             Assert.AreEqual("Problem Name", test.Name);
         }
+
+        [Test]
+        public async System.Threading.Tasks.Task TestUpdateValidAsync()
+        {
+            // Arrange
+            var mockTest = new Mock<ProjectSpeedy.Services.IServiceBase>();
+            var problemService = new ProjectSpeedy.Services.Problem(mockTest.Object);
+
+            // Form to go into function
+            var form = new ProjectSpeedy.Models.Problem.ProblemUpdate()
+            {
+                Name = "Test Problem",
+                Description = "Description"
+            };
+
+            // Response from document get
+            HttpResponseMessage response = new HttpResponseMessage();
+            string content = JsonSerializer.Serialize(new ProjectSpeedy.Models.Problem.Problem(){
+                Name="Problem Name",
+                Description="Problem Description"
+            });
+            response.Content = new StringContent(content);
+            mockTest.Setup(d => d.DocumentGet(It.IsAny<string>()))
+                .Returns(Task.FromResult(response.Content));
+
+            // Response from view get
+            HttpResponseMessage responseView = new HttpResponseMessage();
+            string contentView = JsonSerializer.Serialize(new ProjectSpeedy.Models.CouchDb.View.ViewResult(){
+                rows = new List<ProjectSpeedy.Models.CouchDb.View.ListItem>()
+            });
+            responseView.Content = new StringContent(contentView);
+            mockTest.Setup(d => d.ViewGet(It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>(),It.IsAny<string>()))
+                .Returns(Task.FromResult(responseView.Content));
+
+            // Response from document update
+            mockTest.Setup(d => d.DocumentUpdate(It.IsAny<string>(),It.IsAny<ProjectSpeedy.Models.Problem.Problem>()))
+                .Returns(Task.FromResult(true));
+
+            // Act
+            var test = await problemService.UpdateAsync("ProjectId", "ProblemId", form);
+
+            // Assert
+            Assert.AreEqual(true, test);
+        }
     }
 }

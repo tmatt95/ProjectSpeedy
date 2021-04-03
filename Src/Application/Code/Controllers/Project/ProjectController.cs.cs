@@ -161,14 +161,6 @@ namespace ProjectSpeedy.Controllers
             {
                 return this.Accepted();
             }
-            catch (HttpRequestException e)
-            {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
-                {
-                    return NotFound();
-                }
-                return this.Problem();
-            }
             catch (Exception e)
             {
                 this._logger.LogError(e, e.Message);

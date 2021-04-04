@@ -23,7 +23,8 @@ describe(`The projects component`, () => {
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
   });
@@ -33,7 +34,8 @@ describe(`The projects component`, () => {
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     act(() => { ReactDOM.render(<Projects {...pageData} />, container); });
 

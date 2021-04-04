@@ -35,7 +35,8 @@ describe(`The problem component`, () =>
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array<BreadCrumbItem>(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     await act(async () =>
     {
@@ -60,7 +61,8 @@ describe(`The problem component`, () =>
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array<BreadCrumbItem>(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     act(() =>
     {
@@ -119,7 +121,8 @@ describe(`The problem component`, () =>
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array<BreadCrumbItem>(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     act(() =>
     {

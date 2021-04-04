@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch } from 'react';
+import React, { useState, useEffect, Dispatch } from 'react';
 import { useParams } from "react-router-dom";
 import ProblemBetNewForm from '../Components/ProblemBetNewForm';
 import { CardGrid, CardItem } from '../Components/CardGrid'
@@ -6,6 +6,7 @@ import { IPage, IProblem } from '../Interfaces/IPage';
 import { ProblemService } from '../Services/ProblemService';
 import { PageFunctions } from './PageFunctions';
 import { BetService } from '../Services/BetService';
+import ProblemUpdateForm from '../Components/Problem/ProblemUpdateForm';
 
 export function Problem(pageProps: IPage)
 {
@@ -67,11 +68,9 @@ export function Problem(pageProps: IPage)
     return <>
         <div className="row">
             <div className="col">
-                <h1>{problem.name}</h1>
-                <h2>Description</h2>
-                <p>{problem.description}</p>
-                <h2>Success Criteria</h2>
-                <p>{problem.successCriteria}</p>
+                <h1>Problem</h1>
+                <ProblemUpdateForm pageProps={pageProps} problem={problem} problemId={problemId} projectId={projectId} />
+                
                 <h2>Bets</h2>
                 <CardGrid data={problem.bets} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
                 <ProblemBetNewForm

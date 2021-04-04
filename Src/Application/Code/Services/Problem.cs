@@ -112,6 +112,7 @@ namespace ProjectSpeedy.Services
             // Merges in new changes
             data.Description = form.Description;
             data.Name = form.Name;
+            data.SuccessCriteria = form.SuccessCriteria;
             data.Bets = new System.Collections.Generic.List<Models.General.ListItem>();
 
             // Does update

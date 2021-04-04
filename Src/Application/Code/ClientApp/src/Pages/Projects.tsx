@@ -21,7 +21,11 @@ export function Projects(pageProps: IPage)
     if (runOnce === false)
     {
       document.title = 'Projects';
-      pageProps.setBreadCrumbs([{ text: "Projects", address: "/", isLast: true }]);
+      
+      // Hides any previous messages
+      pageProps.globalMessageHide();
+
+      // We only want to run this once on page load.
       setRunOnce(true);
 
       // Loads the projects onto the page

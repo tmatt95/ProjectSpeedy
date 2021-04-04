@@ -24,5 +24,10 @@ namespace ProjectSpeedy.Models.General
         /// Gets or sets the address of the item.
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Used to store icon classes.
+        /// </summary>
+        public string IconClasses { get; set; }
     }
 }

@@ -53,7 +53,7 @@ export default function App()
   const [globalMessage, setGlobalMessage]: [IGlobalMessage, Dispatch<IGlobalMessage>] = useState({ message: "", class: "d-none" });
 
   // Used to store the data used to generate the breadcrumbs for the page.
-  var initalCrumbs: BreadCrumbItem[] = [{ text: "Projects", address: "/", isLast: true }];
+  var initalCrumbs: BreadCrumbItem[] = [];
   const [breadCrumbs, setBreadCrumbs]: [BreadCrumbItem[], Dispatch<BreadCrumbItem[]>] = useState(initalCrumbs);
 
   var pageProps: IPage = {

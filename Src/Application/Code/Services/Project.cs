@@ -79,7 +79,8 @@ namespace ProjectSpeedy.Services
                 {
                     Id = record.value.id,
                     Name = record.value.name,
-                    Address = "/project/" + record.value.id.Replace(Project.PREFIX, "")
+                    Address = "/project/" + record.value.id.Replace(Project.PREFIX, ""),
+                    IconClasses = "bi bi-journals grid-card-icon"
                 });
             }
 
@@ -117,7 +118,8 @@ namespace ProjectSpeedy.Services
                 {
                     Id = record.value.id,
                     Name = record.value.name,
-                    Address = "/project/" + projectId + "/problem/" + record.value.id.Replace(Problem.PREFIX, "")
+                    Address = "/project/" + projectId + "/problem/" + record.value.id.Replace(Problem.PREFIX, ""),
+                    IconClasses = "bi bi-journal grid-card-icon"
                 });
             }
 

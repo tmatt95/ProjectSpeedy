@@ -15,18 +15,23 @@ export interface CardItem
      * Text to display in the breadcrumb.
      */
     name: string;
+
+    /**
+     * css class for the icon
+     */
+     iconClasses: string;
 }
 
 /**
 * Will render a card used extensively across all the menues in the application.
 * @param CardItem props Object properties 
 */
-function Card({ address, name }: CardItem)
+function Card({ address, name, iconClasses }: CardItem)
 {
     return <Link to={address}>
         <div className="card">
             <div className="card-body text-center">
-                <div><i className="bi bi-journal grid-card-icon"></i></div>
+                <div><i className={iconClasses}></i></div>
                 {name}
             </div>
         </div>
@@ -45,7 +50,7 @@ export function CardGrid({ data, AddNewClick }: { data: CardItem[], AddNewClick:
                 <button className="btn btn-link p-0 w-100" onClick={AddNewClick} id="add-new">
                     <div className="card">
                         <div className="card-body text-center">
-                            <div><i className="bi bi-journal-plus grid-card-icon"></i></div>
+                            <div><i className="bi bi-plus-square-dotted grid-card-icon"></i></div>
                             Add New
                         </div>
                     </div>
@@ -53,7 +58,7 @@ export function CardGrid({ data, AddNewClick }: { data: CardItem[], AddNewClick:
             </div>
             {data.map((t, index: number) =>
                 <div key={index} className="col-md-6 col-lg-4 pt-2">
-                    <Card address={t.address} name={t.name} />
+                    <Card address={t.address} name={t.name} iconClasses={t.iconClasses} />
                 </div>
             )}
         </div>

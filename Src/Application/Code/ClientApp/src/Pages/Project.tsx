@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch } from 'react';
+import React, { useState, useEffect, Dispatch } from 'react';
 import { useParams } from "react-router-dom";
 import { CardGrid, CardItem } from '../Components/CardGrid'
 import { IPage, IProject } from '../Interfaces/IPage';
@@ -6,6 +6,7 @@ import { ProjectService } from '../Services/ProjectService';
 import ProblemBetNewForm from '../Components/ProblemBetNewForm';
 import { PageFunctions } from './PageFunctions';
 import { ProblemService } from '../Services/ProblemService';
+import ProjectUpdateForm from '../Components/Projects/ProjectUpdateForm';
 
 export function Project(pageProps: IPage)
 {
@@ -65,19 +66,24 @@ export function Project(pageProps: IPage)
    */
     const [dialogOpened, setDialogOpened] = useState(false);
 
+    if (project.isLoaded === false)
+    {
+        return <></>;
+    }
+
     // Output the page view.
     return <>
         <div className="row">
             <div className="col">
-                <h1>{project.name}</h1>
+                <h1>Project</h1>
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
-                <h2>Description</h2>
-                <p>{project.description}</p>
+                
+                <ProjectUpdateForm pageProps={pageProps} project={project} projectId={projectId}/>
 
                 <h2>Problems</h2>
                 <CardGrid data={project.problems} AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
                 <ProblemBetNewForm
-                    title="Add Project"
+                    title="Add Problem"
                     description="Use the form to quickly add problems. These can be fleshed out after being created."
                     buttonText="Add Problem"
                     saveAction={async (values, setSubmitting, resetForm, setErrors) =>

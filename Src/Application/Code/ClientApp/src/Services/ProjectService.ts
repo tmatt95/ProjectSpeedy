@@ -18,28 +18,47 @@ export class ProjectService
      * Gets a project.
      * @returns Project info.
      */
-     static async Get(projectId:string): Promise<IProject>
-     {
-         const response = await fetch(`/api/project/${projectId}`);
-         return response.json();
+    static async Get(projectId: string): Promise<IProject>
+    {
+        const response = await fetch(`/api/project/${projectId}`);
+        return response.json();
     }
-    
+
     /**
      * Adds a new project.
      * @returns Adds a new project
      */
-     static async Put(data:string): Promise<Response>
-     {
+    static async Put(data: string): Promise<Response>
+    {
         return fetch(
-             "/api/project/",
-             {
+            "/api/project/",
+            {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                 body: data,
-              }
-         );
-     }
+                body: data,
+            }
+        );
+    }
+
+    /**
+     * Update a new project.
+     * @returns Adds a new project
+     */
+    static async Post(projectId: string, data: string): Promise<Response>
+    {
+        return fetch(
+            `/api/project/${projectId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: data,
+            }
+        );
+    }
 }

@@ -14,7 +14,7 @@ namespace ProjectSpeedy.Models.Project
         public string _rev { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the document.
+        /// Gets or sets the id of the document in couchdb.
         /// </summary>
         public string _id { get; set; }
 

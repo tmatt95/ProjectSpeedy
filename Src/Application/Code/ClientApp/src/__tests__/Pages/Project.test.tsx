@@ -6,11 +6,12 @@ import { BreadCrumbItem } from '../../Components/BreadCrumbs';
 import { IProject } from '../../Interfaces/IPage';
 import { Project } from '../../Pages/Project';
 import { ProblemService } from '../../Services/ProblemService';
-import {ProjectService} from '../../Services/ProjectService';
+import { ProjectService } from '../../Services/ProjectService';
 
 let container: HTMLElement | null;
 
-beforeEach(() => {
+beforeEach(() =>
+{
   container = document.createElement('div');
   document.body.appendChild(container);
 });
@@ -20,14 +21,15 @@ afterEach(() =>
   if (container !== null)
   {
     document.body.removeChild(container);
-    container = null; 
+    container = null;
   }
 });
 
-describe(`The projects component`, () => {
+describe(`The projects component`, () =>
+{
   it('can render', async () =>
   {
-    const project : IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
+    const project: IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
     jest.spyOn(ProjectService, "Get").mockReturnValue(Promise.resolve(project));
 
     let pageData = {
@@ -36,7 +38,8 @@ describe(`The projects component`, () => {
       globalMessage: () => { return; },
       globalMessageHide: () => { return; }
     }
-    await act( async() => {
+    await act(async () =>
+    {
       ReactDOM.render(
         <MemoryRouter>
           <Project {...pageData} />
@@ -46,14 +49,13 @@ describe(`The projects component`, () => {
 
   it('can display the add new problem form', async () =>
   {
-    const project : IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
+    const project: IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
     jest.spyOn(ProjectService, "Get").mockReturnValue(Promise.resolve(project));
 
     var myBlob = new Blob();
-    var init = { "status" : 202 , "statusText" : "SuperSmashingGreat!" };
-    var myResponse = new Response(myBlob,init);
+    var init = { "status": 202, "statusText": "SuperSmashingGreat!" };
+    var myResponse = new Response(myBlob, init);
     jest.spyOn(ProjectService, "Put").mockReturnValue(Promise.resolve(myResponse));
-
 
     // Render the projects page
     let pageData = {
@@ -62,14 +64,15 @@ describe(`The projects component`, () => {
       globalMessage: () => { return; },
       globalMessageHide: () => { return; }
     }
-    act(() => {
+    act(() =>
+    {
       ReactDOM.render(
         <MemoryRouter>
           <Project {...pageData} />
         </MemoryRouter>, container);
     });
 
-    // The dialog window should not be visible.
+    //The dialog window should not be visible.
     expect(document.getElementById('newModal')).not.toHaveClass("show");
 
     // Open the new dialog.
@@ -85,7 +88,7 @@ describe(`The projects component`, () => {
         {
           button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
         }
-      }); 
+      });
     }
   });
 
@@ -95,8 +98,8 @@ describe(`The projects component`, () => {
     jest.spyOn(ProjectService, "Get").mockReturnValue(Promise.resolve(problem));
 
     var myBlob = new Blob();
-    var init = { "status" : 202  };
-    var myResponse = new Response(myBlob,init);
+    var init = { "status": 202 };
+    var myResponse = new Response(myBlob, init);
     jest.spyOn(ProblemService, "Put").mockReturnValue(Promise.resolve(myResponse));
 
     // Render the projects page
@@ -155,8 +158,8 @@ describe(`The projects component`, () => {
     const problem: IProject = { name: "Name", problems: [], isLoaded: false, description: "Description" };
     jest.spyOn(ProjectService, "Get").mockReturnValue(Promise.resolve(problem));
 
-    var init = { "status" : 400  };
-    var myResponse = new Response(JSON.stringify({message: "There is already a bet with the same name"}),init);
+    var init = { "status": 400 };
+    var myResponse = new Response(JSON.stringify({ message: "There is already a bet with the same name" }), init);
     jest.spyOn(ProblemService, "Put").mockReturnValue(Promise.resolve(myResponse));
 
     // Render the projects page

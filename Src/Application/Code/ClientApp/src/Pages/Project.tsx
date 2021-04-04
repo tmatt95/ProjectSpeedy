@@ -36,7 +36,6 @@ export function Project(pageProps: IPage)
             setRunOnce(true);
 
             // Loads the projects onto the page
-            //console.log( ProjectService.Get(projectId));
             ProjectService.Get(projectId).then(
                 (data) =>
                 {
@@ -66,18 +65,12 @@ export function Project(pageProps: IPage)
    */
     const [dialogOpened, setDialogOpened] = useState(false);
 
-    if (project.isLoaded === false)
-    {
-        return <></>;
-    }
-
     // Output the page view.
     return <>
         <div className="row">
             <div className="col">
                 <h1>Project</h1>
                 <p>Once a problem has been added we can then make bets on actions that can fix the issues.</p>
-                
                 <ProjectUpdateForm pageProps={pageProps} project={project} projectId={projectId}/>
 
                 <h2>Problems</h2>

@@ -13,6 +13,11 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
 
 export default function ProjectUpdateForm({ projectId, project, pageProps }: { projectId: string, project: IProject, pageProps: IPage })
 {
+  if (project.isLoaded === false)
+  {
+    return <></>;
+  }
+
   return (<>
     <Formik
       initialValues={{ name: project.name, description: project.description }}
@@ -41,15 +46,15 @@ export default function ProjectUpdateForm({ projectId, project, pageProps }: { p
       {
         let saveResponse = await ProjectService.Post(projectId, JSON.stringify(values));
         if (saveResponse.status !== 202)
-          {
-            // Display error
-            const json: { message: string } = await saveResponse.json();
-            setErrors({ name: json.message });
-          }
-          else
-          {
-            pageProps.globalMessage({message: "You have updated the project", class:"alert-success"})
-          }
+        {
+          // Display error
+          const json: { message: string } = await saveResponse.json();
+          setErrors({ name: json.message });
+        }
+        else
+        {
+          pageProps.globalMessage({ message: "You have updated the project", class: "alert-success" })
+        }
       }}
     >
       {({

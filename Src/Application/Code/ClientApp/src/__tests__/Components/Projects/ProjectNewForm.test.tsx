@@ -21,10 +21,19 @@ afterEach(() =>
   }
 });
 
-describe(`The project new form component`, () => {
+describe(`The project new form component`, () =>
+{
+  let pageData = {
+    setBreadCrumbs: () => { return true; },
+    breadCrumbs: Array(),
+    globalMessage: () => { return; },
+    globalMessageHide: () => { return; }
+  }
+
   it('can render', () => {
+    
     act(() => {
-      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} />, container);
+      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} pageProps={pageData} />, container);
     });
   })
 
@@ -32,7 +41,7 @@ describe(`The project new form component`, () => {
 
     // display form.
     act(() => {
-      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} />, container);
+      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} pageProps={pageData} />, container);
     });
 
     // Try and submit form.
@@ -57,7 +66,7 @@ describe(`The project new form component`, () => {
 
     // display form.
     act(() => {
-      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} />, container);
+      ReactDOM.render(<ProjectNewForm setProjects={() => { return true }} pageProps={pageData} />, container);
     });
 
     // Sets the name of the new project

@@ -121,6 +121,9 @@ namespace ProjectSpeedy.Services
                 });
             }
 
+            // Orders the problems by name asc
+            project.Problems = project.Problems.OrderBy(r => r.Name).ToList();
+
             // Saves the result to cache and returns it.
             this._cachedProjects.Add(projectId, project);
             return project;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace ProjectSpeedy.Services
@@ -92,6 +93,9 @@ namespace ProjectSpeedy.Services
                     Address = "/project/" + projectId + "/problem/" + problemId + "/bet/" + record.value.id.Replace(Bet.PREFIX, "")
                 });
             }
+
+            // Orders the bets by name asc
+            problem.Bets = problem.Bets.OrderBy(r => r.Name).ToList();
 
             // Adds problem to cache and returns it
             this._cachedProblems.Add(problemId, problem);

@@ -94,7 +94,7 @@ export default function ProjectNewForm({ setProjects, pageProps }: { setProjects
       }) => (
         <form onReset={handleReset} onSubmit={handleSubmit} id="new-form">
           <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProjectModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div className="modal-content">
                 <div className="modal-header">
                   <h2 className="modal-title" id="newProjectModalLabel">New Project</h2>

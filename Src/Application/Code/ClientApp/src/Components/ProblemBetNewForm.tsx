@@ -93,7 +93,7 @@ export default function ProblemBetNewForm({ title, description, buttonText, save
       }) => (
         <form onReset={handleReset} onSubmit={handleSubmit} id="new-form">
           <div className="modal fade" id="newModal" tabIndex={-1} aria-labelledby="newProblemBetModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div className="modal-content">
                 <div className="modal-header">
                   <h3 className="modal-title" id="newProblemBetModalLabel">{title}</h3>

@@ -42,7 +42,7 @@ describe(`The project new form component`, () => {
     let button = document.getElementById('bet-update') as HTMLButtonElement;
     expect(button).not.toBeNull();
 
-    expect(button.innerHTML).toBe("Save");
+    expect(button.innerHTML).toBe("Update");
     await act(async () =>
     {
       button.dispatchEvent(new MouseEvent("click", { bubbles: true })); 

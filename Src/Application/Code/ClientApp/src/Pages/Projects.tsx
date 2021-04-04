@@ -4,6 +4,7 @@ import { IPage } from '../Interfaces/IPage';
 import { ProjectService } from '../Services/ProjectService'
 import ProjectNewForm from '../Components/Projects/ProjectNewForm'
 import { PageFunctions } from './PageFunctions';
+import { BreadCrumbItem } from '../Components/BreadCrumbs';
 
 export function Projects(pageProps: IPage) 
 {
@@ -24,6 +25,7 @@ export function Projects(pageProps: IPage)
       
       // Hides any previous messages
       pageProps.globalMessageHide();
+      pageProps.setBreadCrumbs(new Array<BreadCrumbItem>())
 
       // We only want to run this once on page load.
       setRunOnce(true);

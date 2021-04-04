@@ -69,6 +69,7 @@ export default function ProjectUpdateForm({ projectId, project, pageProps }: { p
         /* and other goodies */
       }) => (
         <form onReset={handleReset} onSubmit={handleSubmit}>
+          <h2>Info</h2>
           <div className="mb-3">
             <label htmlFor="project-name" className="form-label">Name</label>
             <input

@@ -70,6 +70,7 @@ export default function ProblemUpdateForm({ projectId, problemId, problem, pageP
         /* and other goodies */
       }) => (
         <form onReset={handleReset} onSubmit={handleSubmit}>
+           <h2>Info</h2>
           <div className="mb-3">
             <label htmlFor="problem-name" className="form-label">Name</label>
             <input

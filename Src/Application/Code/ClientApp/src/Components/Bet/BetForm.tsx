@@ -84,10 +84,9 @@ function GetForm(bet: IBet)
             }) => (
                 <form onReset={handleReset} onSubmit={handleSubmit}>
                     <h1>Bet</h1>
+                    <h2>Info</h2>
                     <p>Status: {bet.status}</p>
-                    <h2>
-                        <label htmlFor="name" className="form-label">Name</label>
-                    </h2>
+                    <label htmlFor="name" className="form-label">Name</label>
                     <div className="mb-3">
                         <input
                             id="name"
@@ -103,7 +102,7 @@ function GetForm(bet: IBet)
                         </div>
                     </div>
 
-                    <h2><label htmlFor="description" className="form-label">Description</label></h2>
+                    <label htmlFor="description" className="form-label">Description</label>
                     <div className="mb-3">
                         <textarea
                             id="description"
@@ -118,9 +117,7 @@ function GetForm(bet: IBet)
                         </div>
                     </div>
 
-                    <h2>
-                        <label htmlFor="success" className="form-label">Measures of Success</label>
-                    </h2>
+                    <label htmlFor="success" className="form-label">Measures of Success</label>
                     <div className="mb-3">
                         <textarea
                             id="success"
@@ -135,7 +132,7 @@ function GetForm(bet: IBet)
                         </div>
                     </div>
 
-                    <h2>Time Given To Bet (in days)</h2>
+                    Time Given To Bet (in days)
                     <div className="mb-3">
                         <input
                             id="timeTotal"
@@ -153,10 +150,7 @@ function GetForm(bet: IBet)
                     </div>
                     <div className="row mb-3">
                         <div className="col">
-                            <button className="btn btn-danger">Cancel</button>
-                        </div>
-                        <div className="col text-end">
-                            <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="bet-update">Save</button>
+                            <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="bet-update">Update</button>
                         </div>
                     </div>
                 </form>

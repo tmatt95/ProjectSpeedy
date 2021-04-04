@@ -81,6 +81,9 @@ export default function ProjectUpdateForm({ projectId, project, pageProps }: { p
               value={values.name}
               className={getFormInputClass(errors !== undefined && errors.name !== undefined && errors.name.length > 0, "form-control")}
             />
+            <div id="validationNameFeedback" className="invalid-feedback">
+              {errors.name && touched.name && errors.name}
+            </div>
           </div>
 
           <div className="mb-3">
@@ -103,7 +106,6 @@ export default function ProjectUpdateForm({ projectId, project, pageProps }: { p
               <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="bet-update">Update</button>
             </div>
           </div>
-
         </form>
       )}
     </Formik>

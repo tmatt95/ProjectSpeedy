@@ -22,6 +22,11 @@ export interface IPage
      * Function you can call to display a message at the top of the page.
      */
     globalMessage: (alertMessage: IGlobalMessage) => void;
+
+    /**
+     * Hide a global message.
+     */
+    globalMessageHide:() => void;
 }
 
 /**

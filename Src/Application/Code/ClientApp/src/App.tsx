@@ -31,7 +31,7 @@ export default function App()
       return <>
         <div className={classes} role="alert">
           {message.message}
-          <button type="button" className="btn-close" onClick={() => setGlobalMessage({ message: "", class: "d-none" })} aria-label="Close"></button>
+          <button type="button" className="btn-close" onClick={() => GlobalMessageHide()} aria-label="Close"></button>
         </div>
       </>;
     }
@@ -40,6 +40,14 @@ export default function App()
       return <></>
     }
   }
+
+  /**
+   * Hides the global message
+   */
+  function GlobalMessageHide()
+  {
+    setGlobalMessage({ message: "", class: "d-none" })
+  };
 
   // Used to store page messages.
   const [globalMessage, setGlobalMessage]: [IGlobalMessage, Dispatch<IGlobalMessage>] = useState({ message: "", class: "d-none" });
@@ -52,6 +60,7 @@ export default function App()
     breadCrumbs: breadCrumbs,
     setBreadCrumbs: (crumbs: BreadCrumbItem[]) => { setBreadCrumbs(crumbs) },
     globalMessage: (alertMessage: IGlobalMessage) => setGlobalMessage(alertMessage),
+    globalMessageHide: () => { GlobalMessageHide()}
   }
 
   return (

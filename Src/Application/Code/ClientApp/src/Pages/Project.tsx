@@ -28,6 +28,10 @@ export function Project(pageProps: IPage)
     {
         if (runOnce === false)
         {
+            // Hides any previous messages
+            pageProps.globalMessageHide();
+
+            // We only want to run this once on page load.
             setRunOnce(true);
 
             // Loads the projects onto the page
@@ -102,6 +106,8 @@ export function Project(pageProps: IPage)
                         }
                         else
                         {
+                            pageProps.globalMessage({ message: "You have added a problem", class: "alert-success" });
+
                             ProjectService.Get(projectId).then(
                                 (data) =>
                                 {

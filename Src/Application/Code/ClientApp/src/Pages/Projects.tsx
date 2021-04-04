@@ -51,6 +51,6 @@ export function Projects(pageProps: IPage)
       </div>
     </div>
     <CardGrid data={projects}  AddNewClick={(e) => { PageFunctions.DisplayModal(e, dialogOpened, (newValue) => { setDialogOpened(newValue) }) }} />
-    <ProjectNewForm setProjects={(data: CardItem[]) =>setProjects(data)}/>
+    <ProjectNewForm setProjects={(data: CardItem[]) => setProjects(data)} pageProps={pageProps}/>
   </>);
 }

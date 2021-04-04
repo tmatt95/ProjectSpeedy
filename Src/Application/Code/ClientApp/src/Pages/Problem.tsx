@@ -28,6 +28,10 @@ export function Problem(pageProps: IPage)
     {
         if (runOnce === false)
         {
+            // Hides any previous messages
+            pageProps.globalMessageHide();
+
+            // We only want to run this once on page load.
             setRunOnce(true);
 
             // Loads the projects onto the page
@@ -100,6 +104,8 @@ export function Problem(pageProps: IPage)
                         }
                         else
                         {
+                            pageProps.globalMessage({ message: "You have added a bet", class: "alert-success" });
+
                             ProblemService.Get(projectId, problemId).then(
                                 (data) =>
                                 {

@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { ProjectService } from '../../Services/ProjectService';
 import { CardItem } from '../CardGrid';
 import { PageFunctions } from '../../Pages/PageFunctions';
+import { IPage } from '../../Interfaces/IPage';
 
 function getFormInputClass(showError: boolean, otherClasses: string): string
 {
@@ -12,7 +13,7 @@ function getFormInputClass(showError: boolean, otherClasses: string): string
   return otherClasses;
 }
 
-export default function ProjectNewForm({ setProjects }: { setProjects: (data: CardItem[]) => void })
+export default function ProjectNewForm({ setProjects, pageProps }: { setProjects: (data: CardItem[]) => void, pageProps:IPage })
 {
   return (<>
     <Formik
@@ -68,6 +69,9 @@ export default function ProjectNewForm({ setProjects }: { setProjects: (data: Ca
 
                 // Close the dialog.
                 PageFunctions.CloseDialog('newModal');
+
+                // Displays a message to let the user know they have added the project ok.
+                pageProps.globalMessage({message: "You have added a project", class:"alert-success"})
               },
               (error) =>
               {

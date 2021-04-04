@@ -27,6 +27,10 @@ export function Bet(pageProps: IPage)
     {
         if (runOnce === false)
         {
+            // Hides any previous messages
+            pageProps.globalMessageHide();
+
+            // We only want to run this once on page load.
             setRunOnce(true);
 
             // Loads the projects onto the page

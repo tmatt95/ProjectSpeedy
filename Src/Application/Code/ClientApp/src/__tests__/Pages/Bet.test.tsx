@@ -32,7 +32,8 @@ describe(`The bet page`, () => {
     let pageData = {
       setBreadCrumbs: () => { return true; },
       breadCrumbs: Array<BreadCrumbItem>(),
-      globalMessage: () => { return; }
+      globalMessage: () => { return; },
+      globalMessageHide: () => { return; }
     }
     await act(async() => {
       ReactDOM.render(

@@ -119,7 +119,7 @@ export default function ProblemUpdateForm({ projectId, problemId, problem, pageP
 
           <div className="row mb-3">
             <div className="col">
-              <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="bet-update">Update</button>
+              <button type="submit" disabled={isSubmitting} className="btn btn-primary" id="problem-update">Update</button>
             </div>
           </div>
 

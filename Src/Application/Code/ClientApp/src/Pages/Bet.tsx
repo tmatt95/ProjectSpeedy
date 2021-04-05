@@ -9,8 +9,8 @@ import BetStatus from "../Components/Bet/BetStatus";
 export function Bet(pageProps: IPage)
 {
     /**
-         * GET parameters.
-         */
+     * GET parameters.
+     */
     let { problemId, projectId, betId }: { problemId: string, projectId: string, betId: string } = useParams();
 
     /**
@@ -67,7 +67,7 @@ export function Bet(pageProps: IPage)
 
     return <>
         <BetForm bet={bet} />
-        <BetStatus bet={bet}/>
+        <BetStatus bet={bet} />
         <BetTabs bet={bet} />
     </>;
 }

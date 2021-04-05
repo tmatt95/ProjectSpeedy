@@ -47,7 +47,7 @@ export default function App()
   function GlobalMessageHide()
   {
     setGlobalMessage({ message: "", class: "d-none" })
-  };
+  }
 
   // Used to store page messages.
   const [globalMessage, setGlobalMessage]: [IGlobalMessage, Dispatch<IGlobalMessage>] = useState({ message: "", class: "d-none" });

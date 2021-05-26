@@ -35,7 +35,7 @@ namespace Tests.Controllers
             // Taken from https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt
             var result = test.Result as OkObjectResult;
             Assert.IsNotNull(result.Value);
-            Assert.AreEqual(((ProjectSpeedy.Models.Projects.ProjectsView) result.Value).rows.Count, 1);
+            Assert.AreEqual(1,((ProjectSpeedy.Models.Projects.ProjectsView) result.Value).rows.Count);
         }
 
         [Test]

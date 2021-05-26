@@ -51,7 +51,7 @@ namespace Tests.Controllers
                     var result = test.Result as OkObjectResult;
                     Assert.IsNull(test.Value);
                     Assert.AreEqual(200, result.StatusCode);
-                    Assert.AreEqual(((ProjectSpeedy.Models.Problem.Problem)result.Value).Name, "Problem Name");
+                    Assert.AreEqual("Problem Name", ((ProjectSpeedy.Models.Problem.Problem)result.Value).Name);
                 }
             }
         }
